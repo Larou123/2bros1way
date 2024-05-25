@@ -11,9 +11,12 @@ Adafruit_Arcada arcada;
 Adafruit_NeoPixel neopixels = Adafruit_NeoPixel(NEOPIXEL_COUNT, NEOPIXEL_PIN, NEO_GRB + NEO_KHZ800);
 //character variable
 int characterX = 80;
-const int characterY = 84;
+int characterY = 84;
 const int characterWidht = 4;
 const int characterHeigh = 10;
+int jumpCounter=0;
+bool isJumping=false;
+
 void setup() {
   // Initialize Arcada library
   if (!arcada.arcadaBegin()) {
@@ -62,6 +65,33 @@ void loop() {
     moveCharacter(1, 0);
     delay(35);
   }
+ //jump
+  if (buttonState & ARCADA_BUTTONMASK_A && !isJumping) {
+    //jump
+    isJumping = true;
+    jumpCounter = 10;
+  }
+
+  if (isJumping && jumpCounter > 5){
+    moveCharacter(0,-5);
+    if (!(buttonState & ARCADA_BUTTONMASK_LEFT) && !(buttonState & ARCADA_BUTTONMASK_RIGHT)){
+      delay(35);
+    }
+  }
+
+  if (isJumping && jumpCounter < 5){
+    moveCharacter(0,5);
+    if (!(buttonState & ARCADA_BUTTONMASK_LEFT) && !(buttonState & ARCADA_BUTTONMASK_RIGHT)){
+      delay(35);
+    }
+  }
+
+  if (jumpCounter == 0){
+    isJumping = false;
+  }
+
+  jumpCounter--; 
+  
   
   // Perform standard board functions
   yield();
@@ -79,7 +109,7 @@ void errorReporter(const char *error) {
 
 void drawMap() {
   // land
-  arcada.display->fillRect(0, 64, 170, 54, ARCADA_GREEN);
+  arcada.display->fillRect(0, 64, 200, 54, ARCADA_GREEN);
 
   // sky
   arcada.display->fillRect(0, 0, 170, 94, ARCADA_CYAN);
@@ -106,6 +136,22 @@ void moveCharacter(int nx, int ny) {
   if (characterX < 0) characterX = 0;
   if (characterX > 156) characterX = 156;
 
+    characterY += ny;
+  // set limits at the borders
+  if (characterY < 0) characterY = 0;
+  if (characterY > 156) characterY = 156;
+
   // draw new position
   drawCharacter();
+}
+
+void jump(){
+  for (int i = 0; i < 5; i++){
+    moveCharacter(0,-5);
+    delay(50);
+  }
+  for (int i = 0; i < 5; i++){
+    moveCharacter(0,5);
+    delay(50);
+  }
 }
