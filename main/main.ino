@@ -9,7 +9,8 @@
 // Global variables
 Adafruit_Arcada arcada;
 Adafruit_NeoPixel neopixels = Adafruit_NeoPixel(NEOPIXEL_COUNT, NEOPIXEL_PIN, NEO_GRB + NEO_KHZ800);
-//character variable
+
+//character variables
 int characterX = 80;
 int characterY = 84;
 const int characterWidht = 4;
@@ -46,7 +47,7 @@ void setup() {
 
 void loop() {
   // Read button state
-  uint8_t buttonState = arcada.readButtons();
+  //uint8_t buttonState = arcada.readButtons();
   
   drawCharacter();
   //test text
@@ -55,44 +56,8 @@ void loop() {
   arcada.display->println("This is just a test!");
 
   //movement
-  if (buttonState & ARCADA_BUTTONMASK_LEFT) {
-    //move left
-    moveCharacter(-1, 0);
-    delay(35);
-  }
-  if (buttonState & ARCADA_BUTTONMASK_RIGHT) {
-    //move left
-    moveCharacter(1, 0);
-    delay(35);
-  }
- //jump
-  if (buttonState & ARCADA_BUTTONMASK_A && !isJumping) {
-    //jump
-    isJumping = true;
-    jumpCounter = 10;
-  }
+  moveInGame();
 
-  if (isJumping && jumpCounter > 5){
-    moveCharacter(0,-5);
-    if (!(buttonState & ARCADA_BUTTONMASK_LEFT) && !(buttonState & ARCADA_BUTTONMASK_RIGHT)){
-      delay(35);
-    }
-  }
-
-  if (isJumping && jumpCounter < 5){
-    moveCharacter(0,5);
-    if (!(buttonState & ARCADA_BUTTONMASK_LEFT) && !(buttonState & ARCADA_BUTTONMASK_RIGHT)){
-      delay(35);
-    }
-  }
-
-  if (jumpCounter == 0){
-    isJumping = false;
-  }
-
-  jumpCounter--; 
-  
-  
   // Perform standard board functions
   yield();
 }
@@ -109,7 +74,7 @@ void errorReporter(const char *error) {
 
 void drawMap() {
   // land
-  arcada.display->fillRect(0, 64, 200, 54, ARCADA_GREEN);
+  arcada.display->fillRect(0, 64, 200, 74, ARCADA_GREEN);
 
   // sky
   arcada.display->fillRect(0, 0, 170, 94, ARCADA_CYAN);
@@ -145,13 +110,46 @@ void moveCharacter(int nx, int ny) {
   drawCharacter();
 }
 
-void jump(){
-  for (int i = 0; i < 5; i++){
-    moveCharacter(0,-5);
-    delay(50);
+void moveInGame(){
+  uint8_t buttonState = arcada.readButtons();
+  //jump
+  if (buttonState & ARCADA_BUTTONMASK_A && !isJumping) {
+    //jump
+    isJumping = true;
+    jumpCounter = 10;
   }
-  for (int i = 0; i < 5; i++){
+
+  if (isJumping && jumpCounter > 5){
+    moveCharacter(0,-5);
+    if (!(buttonState & ARCADA_BUTTONMASK_LEFT) && !(buttonState & ARCADA_BUTTONMASK_RIGHT)){
+      delay(35);
+    }
+  }
+
+  if (isJumping && jumpCounter < 5){
     moveCharacter(0,5);
-    delay(50);
+    if (!(buttonState & ARCADA_BUTTONMASK_LEFT) && !(buttonState & ARCADA_BUTTONMASK_RIGHT)){
+      delay(35);
+    }
+  }
+
+  if (jumpCounter == 0){
+    isJumping = false;
+  }
+
+  jumpCounter--;
+
+  //move right
+  if (buttonState & ARCADA_BUTTONMASK_LEFT) {
+    //move left
+    moveCharacter(-1, 0);
+    delay(35);
+  }
+  
+  //move left
+  if (buttonState & ARCADA_BUTTONMASK_RIGHT) {
+    //move left
+    moveCharacter(1, 0);
+    delay(35);
   }
 }
