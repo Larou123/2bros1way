@@ -11,7 +11,7 @@ Adafruit_Arcada arcada;
 Adafruit_NeoPixel neopixels = Adafruit_NeoPixel(NEOPIXEL_COUNT, NEOPIXEL_PIN, NEO_GRB + NEO_KHZ800);
 //character variable
 int characterX = 80;
-const int characterY = 54;
+const int characterY = 84;
 const int characterWidht = 4;
 const int characterHeigh = 10;
 void setup() {
@@ -79,10 +79,10 @@ void errorReporter(const char *error) {
 
 void drawMap() {
   // land
-  arcada.display->fillRect(0, 64, 160, 64, ARCADA_GREEN);
+  arcada.display->fillRect(0, 64, 170, 54, ARCADA_GREEN);
 
   // sky
-  arcada.display->fillRect(0, 0, 160, 64, ARCADA_CYAN);
+  arcada.display->fillRect(0, 0, 170, 94, ARCADA_CYAN);
 
   // obstacles
   //cada.display->fillRect(40, 15, 10, 10, ARCADA_RED); 
