@@ -17,7 +17,7 @@ const int characterWidht = 4;
 const int characterHeigh = 10;
 int jumpCounter=0;
 bool isJumping=false;
-
+int lives = 5;
 
 //menu variable
 const char *menu_options[3] = {"Start", "Options", "Credits"};
@@ -38,7 +38,7 @@ void setup() {
   // Initialize NeoPixels
   neopixels.begin();
   neopixels.clear();
-  neopixels.show();
+  neopixels.setBrightness(50);
 
   // Initialize display
   arcada.displayBegin();
@@ -101,15 +101,14 @@ void moveCharacter(int nx, int ny) {
 
   // update character position
   characterX += nx;
-  // set limits at the borders
-  if (characterX < 0) characterX = 0;
-  if (characterX > 156) characterX = 156;
+   characterY += ny;
 
-    characterY += ny;
   // set limits at the borders
-  if (characterY < 0) characterY = 0;
-  if (characterY > 156) characterY = 156;
-
+  if (characterX < 0 || characterX > 156 ){
+    characterX = 84;
+    lives--;
+  }
+   
   // draw new position
   drawCharacter();
 }
@@ -158,6 +157,7 @@ void moveInGame(){
   }
 }
 void game(){
+  show_lives(lives);
   if (arcada.readButtons() & ARCADA_BUTTONMASK_START){
     inGame = false;
     inMenu = true;
@@ -183,4 +183,13 @@ void menu(){
     inGame = true;
     drawMap();
   }
+}
+
+void show_lives(int liv){
+  neopixels.clear();
+  for (uint8_t i = 0; i < liv;i++){
+    neopixels.setPixelColor(i,neopixels.Color(0,15,0));
+  }
+  neopixels.show();
+  if (lives == 0) lives = 5;
 }
