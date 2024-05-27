@@ -18,6 +18,14 @@ const int characterHeigh = 10;
 int jumpCounter=0;
 bool isJumping=false;
 
+
+//menu variable
+const char *menu_options[3] = {"Start", "Options", "Credits"};
+bool inMenu = true;
+
+//gameplay variable
+bool inGame = false;
+
 void setup() {
   // Initialize Arcada library
   if (!arcada.arcadaBegin()) {
@@ -42,22 +50,18 @@ void setup() {
   // Draw the framebuffer to the screen
   arcada.blitFrameBuffer(0, 0, true, false);
 
+  //map
   drawMap();
 }
 
 void loop() {
-  // Read button state
-  //uint8_t buttonState = arcada.readButtons();
+  // select
+  if (inMenu){
+    menu();
+  } else if (inGame){
+    game();
+  }
   
-  drawCharacter();
-  //test text
-  arcada.display->setCursor(2, 3);
-  arcada.display->setTextColor(ARCADA_BLACK);
-  arcada.display->println("This is just a test!");
-
-  //movement
-  moveInGame();
-
   // Perform standard board functions
   yield();
 }
@@ -151,5 +155,32 @@ void moveInGame(){
     //move left
     moveCharacter(1, 0);
     delay(35);
+  }
+}
+void game(){
+  if (arcada.readButtons() & ARCADA_BUTTONMASK_START){
+    inGame = false;
+    inMenu = true;
+  }
+
+  drawCharacter();
+  //test text
+  arcada.display->setCursor(2, 3);
+  arcada.display->setTextColor(ARCADA_BLACK);
+  arcada.display->println("This is just a test!");
+
+  //movement
+  moveInGame();
+}
+
+void menu(){
+  arcada.getCanvas()->fillScreen(ARCADA_WHITE);
+  
+  uint8_t menu_opt = arcada.menu(menu_options, 3, ARCADA_WHITE, ARCADA_BLACK);
+
+  if (menu_opt == 0){
+    inMenu = false;
+    inGame = true;
+    drawMap();
   }
 }
