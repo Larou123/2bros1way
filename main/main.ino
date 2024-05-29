@@ -17,6 +17,7 @@ const int characterWidht = 4;
 const int characterHeigh = 10;
 int jumpCounter=0;
 bool isJumping=false;
+bool wasJumping=false;
 int lives = 5;
 
 //menu variable
@@ -116,11 +117,13 @@ void moveCharacter(int nx, int ny) {
 void moveInGame(){
   uint8_t buttonState = arcada.readButtons();
   //jump
-  if (buttonState & ARCADA_BUTTONMASK_A && !isJumping) {
+    if (buttonState & ARCADA_BUTTONMASK_A && !wasJumping && !isJumping) {
     //jump
     isJumping = true;
     jumpCounter = 10;
   }
+  wasJumping = buttonState & ARCADA_BUTTONMASK_A;
+
 
   if (isJumping && jumpCounter > 5){
     moveCharacter(0,-5);
