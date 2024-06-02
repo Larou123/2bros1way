@@ -8,7 +8,7 @@
 
 // Draw character
 void drawCharacter() {
-  arcada.getCanvas()->drawRGBBitmap(characterX, characterY ,char_man,32, 32);
+  arcada.getCanvas()->drawRGBBitmap(characterX, characterY ,char_man,char_man_mask,32, 32);
 }
 
 // Move character

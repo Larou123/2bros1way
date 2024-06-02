@@ -10,7 +10,7 @@
 
 void drawCloud(){
   // Draws from image and tries to give movement
-  arcada.getCanvas()->drawRGBBitmap(cloudX-characterPos, cloudY , cloud_img,40,20);
+  arcada.getCanvas()->drawRGBBitmap(cloudX-characterPos, cloudY , cloud_img,cloud_mask,40,20);
 }
 
 // Draws map
