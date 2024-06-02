@@ -4,6 +4,8 @@
 #include "map.h"
 #include "gameplay.h"
 #include "menu.h"
+#include "char.h"
+#include "map_img.h"
 
 
 void setup() {
@@ -24,14 +26,9 @@ void setup() {
   arcada.displayBegin();
   arcada.createFrameBuffer(ARCADA_TFT_WIDTH, ARCADA_TFT_HEIGHT);
 
-  // Start with black screen
-  arcada.getCanvas()->fillScreen(ARCADA_BLACK);
-
-  // Draw the framebuffer to the screen
-  arcada.blitFrameBuffer(0, 0, true, false);
-
-  //map
+  // Draw map
   drawMap();
+  updateDisplay();
 }
 
 void loop() {
@@ -55,11 +52,3 @@ void errorReporter(const char *error) {
     yield();
   }
 }
-
-
-
-
-
-
-
-

@@ -3,6 +3,7 @@
 
 // Global include
 #include "globals.h"
+#include <Adafruit_GFX.h>
 
 //Menu selection
 void menu(){
@@ -14,6 +15,8 @@ void menu(){
     inMenu = false;
     inGame = true;
     drawMap();
+    drawCharacter();
+    updateDisplay();
   }
 }
 

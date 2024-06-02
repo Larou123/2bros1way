@@ -3,21 +3,23 @@
 
 // Global include
 #include "globals.h"
+#include "map_img.h"
+
+// 160 * 128
+
+
+void drawCloud(){
+  // Draws from image and tries to give movement
+  arcada.getCanvas()->drawRGBBitmap(cloudX-characterPos, cloudY , cloud_img,40,20);
+}
 
 // Draws map
 void drawMap() {
-  // land
-  arcada.display->fillRect(0, 94, 170, 74, ARCADA_GREEN);
+  // Draws from image
+  arcada.getCanvas()->drawRGBBitmap(0, 0 , map_img, 160,128);
 
-  // sky
-  arcada.display->fillRect(0, 0, 170, 94, ARCADA_CYAN);
-
-  // obstacles
-  //cada.display->fillRect(40, 15, 10, 10, ARCADA_RED); 
-  //arcada.display->fillRect(70, 50, 10, 10, ARCADA_RED); 
-
-  // border
-  //arcada.display->drawRect(10, 10, 100, 60, ARCADA_WHITE);
+  // Draw cloud
+  drawCloud();
 }
 
 #endif

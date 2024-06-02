@@ -3,29 +3,34 @@
 
 // Global include
 #include "globals.h"
+#include "char.h"
+#include "map_img.h"
 
 // Draw character
 void drawCharacter() {
-  arcada.display->fillRect(characterX, characterY, characterWidht, characterHeigh, ARCADA_BLACK);
+  arcada.getCanvas()->drawRGBBitmap(characterX, characterY ,char_man,32, 32);
 }
 
 // Move character
 void moveCharacter(int nx, int ny) {
-  // Clear previous character position
-  arcada.display->fillRect(characterX, characterY, characterWidht, characterHeigh, ARCADA_CYAN);
-
   // Update character position
   characterX += nx;
-   characterY += ny;
+  characterY += ny;
 
   // Set limits at the borders
-  if (characterX < 0 || characterX > 156 ){
-    characterX = 84;
+  if (characterX > 156 ){
+    characterX = 5;
+    characterPos = 0;
     lives--;
+  }
+
+  if (characterX < 0 ){
+    characterX = 0;
   }
    
   // Draw new position
   drawCharacter();
+  updateDisplay();
 }
 
 // Show current lives in neopixels

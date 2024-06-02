@@ -4,7 +4,7 @@
 #include <Adafruit_NeoPixel.h>
 
 #include "globals.h"
-
+#include "map.h"
 
 
 void moveInGame(){
@@ -20,59 +20,61 @@ void moveInGame(){
 
   if (isJumping && jumpCounter > 5){
     moveCharacter(0,-5);
-    if (!(buttonState & ARCADA_BUTTONMASK_LEFT) && !(buttonState & ARCADA_BUTTONMASK_RIGHT)){
-      delay(35);
-    }
   }
 
   if (isJumping && jumpCounter < 5){
     moveCharacter(0,5);
-    if (!(buttonState & ARCADA_BUTTONMASK_LEFT) && !(buttonState & ARCADA_BUTTONMASK_RIGHT)){
-      delay(35);
-    }
   }
 
   if (jumpCounter == 0){
-    isJumping = false;
+      isJumping = false;
   }
+  
 
   jumpCounter--;
 
-  //move right
+  //move left
   if (buttonState & ARCADA_BUTTONMASK_LEFT) {
     //move left
-    moveCharacter(-1, 0);
-    delay(35);
+    if (characterPos > 0){
+      characterPos--;
+    }
+    moveCharacter(-speed, 0);
   }
   
-  //move left
+  //move right
   if (buttonState & ARCADA_BUTTONMASK_RIGHT) {
-    //move left
-    moveCharacter(1, 0);
-    delay(35);
+    //move right
+    if (characterPos < 100){
+      characterPos++;
+    }
+    moveCharacter(speed, 0);
   }
 }
 
 void game(){
-  //lives
+  // Show lives
   show_lives();
 
-  //test text
-  arcada.display->setCursor(2, 3);
-  arcada.display->setTextColor(ARCADA_BLACK);
-  arcada.display->println("This is just a test!");
+  // Update map
+  drawMap();
 
-  //start button
+  //test text
+  arcada.getCanvas()->setCursor(2, 3);
+  arcada.getCanvas()->setTextColor(ARCADA_BLACK);
+  //arcada.getCanvas()->println("This is just a test!");
+
+  // Start button presses
   if (arcada.readButtons() & ARCADA_BUTTONMASK_START){
     inGame = false;
     inMenu = true;
   }
   
-  drawCharacter();
-  
-  //movement
+  // Draw Character
+  //drawCharacter();
+
+  // Movement
   moveInGame();
 }
-
 
 #endif
