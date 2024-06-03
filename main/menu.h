@@ -14,8 +14,6 @@ void menu(){
   if (menu_opt == 0){
     inMenu = false;
     inGame = true;
-    drawMap();
-    drawCharacter();
     updateDisplay();
   }
 }

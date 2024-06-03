@@ -5,13 +5,21 @@
 
 #include "globals.h"
 #include "map.h"
+#include "character.h"
+#include "item.h"
 
+// Help function to update display
+void updateDisplay(){
+  drawMap();
+  drawCharacter();
+  arcada.blitFrameBuffer(0, 0, true);
+}
 
+// Movement during game
 void moveInGame(){
   uint8_t buttonState = arcada.readButtons();
-  //jump
+  // --------------------------------- Jump --------------------------------------------
    if (buttonState & ARCADA_BUTTONMASK_A && !wasJumping && !isJumping) {
-    //jump
     isJumping = true;
     jumpCounter = 10;
   }
@@ -33,7 +41,7 @@ void moveInGame(){
 
   jumpCounter--;
 
-  //move left
+  // --------------------------------- To Left ---------------------------------
   if (buttonState & ARCADA_BUTTONMASK_LEFT) {
     //move left
     if (characterPos > 0){
@@ -42,7 +50,7 @@ void moveInGame(){
     moveCharacter(-speed, 0);
   }
   
-  //move right
+  // --------------------------------- To Right ---------------------------------
   if (buttonState & ARCADA_BUTTONMASK_RIGHT) {
     //move right
     if (characterPos < 100){
@@ -50,14 +58,43 @@ void moveInGame(){
     }
     moveCharacter(speed, 0);
   }
+
+  // --------------------------------- Throw item ---------------------------------
+  if ((buttonState & ARCADA_BUTTONMASK_B) && itemPicked) {
+    isThrowing = true;
+    itemCounter = 5;
+    itemPicked = false;
+  }
+
+  // Lineal movement
+  if (isThrowing){
+    itemX += throwSpeed;
+  }
+
+  // Diagonal movement
+  if (wasThrown && itemY < 100){
+    itemX += throwSpeed/2;
+    itemY += throwSpeed/2;
+  }
+
+  // Start diagonal movement
+  if (itemCounter == 0){
+      isThrowing = false;
+      itemY += throwSpeed/2;
+      wasThrown = true;
+  }
+
+  // Stop diagonal movement
+  if (itemY >= 100){
+      wasThrown = false;
+  }
+  
+  itemCounter--;
 }
 
 void game(){
   // Show lives
   show_lives();
-
-  // Update map
-  drawMap();
 
   //test text
   arcada.getCanvas()->setCursor(2, 3);
@@ -70,14 +107,14 @@ void game(){
     inMenu = true;
   }
   
-  // Draw Character
-  //drawCharacter();
-
   // Movement
   moveInGame();
 
   // Pick item
   pickItem();
+
+  // Update display
+  updateDisplay();
 }
 
 #endif

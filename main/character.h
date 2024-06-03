@@ -9,9 +9,12 @@
 
 // Draw character
 void drawCharacter() {
-  arcada.getCanvas()->drawRGBBitmap(characterX, characterY ,char_man,char_man_mask,32, 32);
+  arcada.getCanvas()->drawRGBBitmap(characterX, characterY ,char_man,char_man_mask,characterWidht, characterHeigh);
+  // If item picked, then draw it next character
   if (itemPicked){
-    drawItem(characterX + 27,characterY+15, itemW, itemH, itemC);
+    itemX = characterX + 27;
+    itemY =  characterY+15;
+    drawItem(itemX,itemY, itemW, itemH, itemC);  
   }
 }
 
@@ -31,10 +34,6 @@ void moveCharacter(int nx, int ny) {
   if (characterX < 0 ){
     characterX = 0;
   }
-   
-  // Draw new position
-  drawCharacter();
-  updateDisplay();
 }
 
 // Show current lives in neopixels
