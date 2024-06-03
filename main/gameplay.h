@@ -75,6 +75,9 @@ void game(){
 
   // Movement
   moveInGame();
+
+  // Pick item
+  pickItem();
 }
 
 #endif

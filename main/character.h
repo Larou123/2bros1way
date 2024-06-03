@@ -5,10 +5,14 @@
 #include "globals.h"
 #include "char.h"
 #include "map_img.h"
+#include "item.h"
 
 // Draw character
 void drawCharacter() {
   arcada.getCanvas()->drawRGBBitmap(characterX, characterY ,char_man,char_man_mask,32, 32);
+  if (itemPicked){
+    drawItem(characterX + 27,characterY+15, itemW, itemH, itemC);
+  }
 }
 
 // Move character

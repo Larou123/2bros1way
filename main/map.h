@@ -4,7 +4,7 @@
 // Global include
 #include "globals.h"
 #include "map_img.h"
-
+#include "item.h"
 // 160 * 128
 
 
@@ -20,6 +20,11 @@ void drawMap() {
 
   // Draw cloud
   drawCloud();
+
+  // Draw item
+  if (!itemPicked){
+    drawItem(itemX,itemY,itemW,itemH,itemC);
+  }
 }
 
 #endif

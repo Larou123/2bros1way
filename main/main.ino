@@ -6,6 +6,7 @@
 #include "menu.h"
 #include "char.h"
 #include "map_img.h"
+#include "item.h"
 
 
 void setup() {

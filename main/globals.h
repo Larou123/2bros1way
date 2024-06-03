@@ -26,6 +26,8 @@ bool isJumping=false;
 bool wasJumping=false;
 int lives = 5;
 
+void drawCharacter();
+
 // Gameplay variables
 bool inGame = false;
 
@@ -38,8 +40,19 @@ int cloudX = 60;
 int cloudY = 27;
 int distanceCloud = 60;
 
+void drawMap();
+// Item variables
+bool itemPicked = false;
+int itemX = 100;
+int itemY = 95;
+int itemW = 5;
+int itemH = 5;
+int itemC = ARCADA_BLACK;
+
 // Help Functions
 void updateDisplay(){
   arcada.blitFrameBuffer(0, 0, true);
 }
+
+
 #endif
