@@ -7,7 +7,7 @@
 #include "char.h"
 #include "map_img.h"
 #include "item.h"
-
+#include "obstacle.h"
 
 void setup() {
   // Initialize Arcada library
@@ -28,7 +28,6 @@ void setup() {
   arcada.createFrameBuffer(ARCADA_TFT_WIDTH, ARCADA_TFT_HEIGHT);
 
   // Draw map
-  drawMap();
   updateDisplay();
 }
 

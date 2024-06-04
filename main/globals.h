@@ -43,6 +43,7 @@ bool inMenu = true;
 int cloudX = 60;
 int cloudY = 27;
 int distanceCloud = 60;
+int ground = 100;
 
 // ----------- FUNCTIONS
 void drawMap();
@@ -50,7 +51,7 @@ void drawMap();
 // --------------------------------- ITEM ---------------------------------
 // ----------- VARIABLES
 bool itemPicked = false;
-int itemX = 100;
+int itemX = 60;
 int itemY = 100;
 int itemW = 5;
 int itemH = 5;

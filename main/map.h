@@ -5,6 +5,7 @@
 #include "globals.h"
 #include "map_img.h"
 #include "item.h"
+#include "obstacle.h"
 // 160 * 128
 
 
@@ -25,6 +26,9 @@ void drawMap() {
   if (!itemPicked){
     drawItem(itemX,itemY,itemW,itemH,itemC);
   }
+
+  // Draw obstacle
+  drawObstacle();
 }
 
 #endif
