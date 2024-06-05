@@ -25,10 +25,10 @@ void moveCharacter(int nx, int ny) {
   characterY += ny;
 
   // Set limits at the borders
-  if (characterX > 156 ){
+  if (characterX > 250 ){
     characterX = 5;
-    characterPos = 0;
-    lives--;
+    //characterPos = 0;
+    //lives--;
   }
 
   if (characterX < 0 ){
