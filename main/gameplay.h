@@ -21,16 +21,16 @@ void moveInGame(){
   // --------------------------------- Jump --------------------------------------------
    if (buttonState & ARCADA_BUTTONMASK_A && !wasJumping && !isJumping) {
     isJumping = true;
-    jumpCounter = 10;
+    jumpCounter = 23;
   }
   wasJumping = buttonState & ARCADA_BUTTONMASK_A;
 
 
-  if (isJumping && jumpCounter > 5){
+  if (isJumping && jumpCounter > 15){
     moveCharacter(0,-5);
   }
 
-  if (isJumping && jumpCounter < 5){
+  if (isJumping && jumpCounter < 8){
     moveCharacter(0,5);
   }
 
@@ -44,7 +44,7 @@ void moveInGame(){
   // --------------------------------- To Left ---------------------------------
   if (buttonState & ARCADA_BUTTONMASK_LEFT) {
     //move left
-    if (characterPos > 0){
+    if (characterX == 20 && characterPos >= 0){
       characterPos--;
     }
     moveCharacter(-speed, 0);
@@ -53,7 +53,7 @@ void moveInGame(){
   // --------------------------------- To Right ---------------------------------
   if (buttonState & ARCADA_BUTTONMASK_RIGHT) {
     //move right
-    if (characterPos < 1000){
+    if (characterX == 50 && characterPos <= 540){
       characterPos++;
     }
     moveCharacter(speed, 0);
@@ -62,6 +62,7 @@ void moveInGame(){
   // --------------------------------- Throw item ---------------------------------
   if ((buttonState & ARCADA_BUTTONMASK_B) && itemPicked) {
     isThrowing = true;
+    itemX += characterPos;
     itemCounter = 5;
     itemPicked = false;
   }

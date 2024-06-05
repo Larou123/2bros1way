@@ -9,7 +9,7 @@
 
 // Draw character
 void drawCharacter() {
-  arcada.getCanvas()->drawRGBBitmap(characterX, characterY ,char_man,char_man_mask,characterWidht, characterHeigh);
+  arcada.getCanvas()->drawRGBBitmap(characterX, characterY ,char_man,char_man_mask,32, 32);
   // If item picked, then draw it next character
   if (itemPicked){
     itemX = characterX + 27;
@@ -35,8 +35,8 @@ void moveCharacter(int nx, int ny) {
     characterX = 20;
   }
 
-  if (characterX > 100){
-    characterX = 100;
+  if (characterX > 50){
+    characterX = 50;
   }
 }
 
