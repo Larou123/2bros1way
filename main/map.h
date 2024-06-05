@@ -27,7 +27,7 @@ void drawMap() {
 
   // Draw item
   if (!itemPicked){
-    drawItem(itemX-characterPos,itemY,itemW,itemH,itemC);
+    drawItem(itemX,itemY,itemW,itemH,itemC);
   }
 
   // Draw obstacle
