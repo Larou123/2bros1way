@@ -14,7 +14,7 @@ void drawCharacter() {
   if (itemPicked){
     itemX = characterX + 27;
     itemY =  characterY+15;
-    drawItem(itemX,itemY, itemW, itemH, itemC);  
+    drawItem(itemX-characterPos,itemY, itemW, itemH, itemC);  
   }
 }
 

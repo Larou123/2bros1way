@@ -18,14 +18,16 @@ void drawCloud(){
 void drawMap() {
   // Draws from image
   arcada.getCanvas()->drawRGBBitmap(0, 0 , map_img, 160,128);
-  arcada.getCanvas()->drawRGBBitmap(0-characterPos, 80 , ground_img, 328,48);
+  arcada.getCanvas()->drawRGBBitmap(0-characterPos, 81 , ground_img, 320,48);
+  arcada.getCanvas()->drawRGBBitmap(320-characterPos, 81 , ground_img, 320,48);
+  
 
   // Draw cloud
   drawCloud();
 
   // Draw item
   if (!itemPicked){
-    drawItem(itemX,itemY,itemW,itemH,itemC);
+    drawItem(itemX-characterPos,itemY,itemW,itemH,itemC);
   }
 
   // Draw obstacle
