@@ -16,7 +16,7 @@ Adafruit_NeoPixel neopixels = Adafruit_NeoPixel(NEOPIXEL_COUNT, NEOPIXEL_PIN, NE
 // --------------------------------- CHARACTER ---------------------------------
 // ----------- VARIABLES
 int speed = 1;
-int characterPos = 0;
+int characterPos = 20;
 int characterX = 5;
 int characterY = 73;
 const int characterWidht = 32;

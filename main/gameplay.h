@@ -53,7 +53,7 @@ void moveInGame(){
   // --------------------------------- To Right ---------------------------------
   if (buttonState & ARCADA_BUTTONMASK_RIGHT) {
     //move right
-    if (characterPos < 100){
+    if (characterPos < 1000){
       characterPos++;
     }
     moveCharacter(speed, 0);
