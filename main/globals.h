@@ -1,7 +1,6 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H
 
-//Adafruit includes
 #include <Adafruit_Arcada.h>
 #include <Adafruit_NeoPixel.h>
 
@@ -30,10 +29,16 @@ int characterX = 20;
 int characterY = ground - 32;
 const int characterWidht = 32;
 const int characterHeigh = 32;
-int jumpCounter=0;
-bool isJumping=false;
-bool wasJumping=false;
+int jumpCounter = 0;
+bool isJumping = false;
+bool wasJumping = false;
 int lives = 5;
+
+// Sprite-Daten für die Laufanimation
+extern const unsigned short run_frame_0[1024];
+extern const unsigned short run_frame_1[1024];
+extern const unsigned short run_frame_2[1024];
+extern const unsigned short run_frame_3[1024];
 
 // ----------- FUNCTIONS
 void drawCharacter();
@@ -47,15 +52,13 @@ bool inGame = false;
 const char *menu_options[3] = {"Start", "Options", "Credits"};
 bool inMenu = true;
 
-
-
 // --------------------------------- ITEM ---------------------------------
 // ----------- VARIABLES
 bool itemPicked = false;
 int itemW = 5;
 int itemH = 5;
 int itemX = 60;
-int itemY = ground-itemH;
+int itemY = ground - itemH;
 int itemC = ARCADA_BLACK;
 int itemCounter = 0;
 bool isThrowing = false;

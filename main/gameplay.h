@@ -15,51 +15,96 @@ void updateDisplay(){
   arcada.blitFrameBuffer(0, 0, true);
 }
 
+// Function to show "You Win" screen
+void showWinScreen() {
+  arcada.getCanvas()->fillScreen(ARCADA_WHITE);
+  arcada.getCanvas()->setTextColor(ARCADA_BLACK);
+  arcada.getCanvas()->setCursor(50, 40);
+  arcada.getCanvas()->println("You Win!");
+  arcada.getCanvas()->setCursor(30, 60);
+  arcada.getCanvas()->println("Press A to Restart");
+  arcada.blitFrameBuffer(0, 0, true);
+
+  while (true) {
+    uint8_t buttonState = arcada.readButtons();
+    if (buttonState & ARCADA_BUTTONMASK_A) {
+      // Reset game state and restart
+      characterPos = 0;  // Reset character position
+      inGame = true;
+      updateDisplay();
+      break;
+    }
+    yield();
+  }
+}
+
+// Variables for jump physics
+float jumpVelocity = 0;
+float gravity = 0.5;  // Gravity acceleration
+float jumpPower = -5;  // Initial jump velocity for the first jump
+float doubleJumpPower = -4;  // Initial jump velocity for the second jump (less negative for a lower jump)
+bool canDoubleJump = false;  // To track if a double jump is allowed
+bool jumpPressed = false;  // To track if the jump button is pressed
+
 // Movement during game
 void moveInGame(){
   uint8_t buttonState = arcada.readButtons();
-  // --------------------------------- Jump --------------------------------------------
-   if (buttonState & ARCADA_BUTTONMASK_A && !wasJumping && !isJumping) {
-    isJumping = true;
-    jumpCounter = 23;
+
+  // Jump logic
+  if (buttonState & ARCADA_BUTTONMASK_A) {
+    if (!jumpPressed) {
+      if (!isJumping) {
+        isJumping = true;
+        jumpVelocity = jumpPower;
+        canDoubleJump = true;  // Allow double jump
+      } else if (canDoubleJump) {
+        jumpVelocity = doubleJumpPower;
+        canDoubleJump = false;  // Disable double jump after use
+      }
+      jumpPressed = true;  // Mark the jump button as pressed
+    }
+  } else {
+    jumpPressed = false;  // Reset the jump button status when released
   }
-  wasJumping = buttonState & ARCADA_BUTTONMASK_A;
 
-
-  if (isJumping && jumpCounter > 15){
-    moveCharacter(0,-5);
-  }
-
-  if (isJumping && jumpCounter < 8){
-    moveCharacter(0,5);
-  }
-
-  if (jumpCounter == 0){
+  if (isJumping) {
+    moveCharacter(0, jumpVelocity);
+    jumpVelocity += gravity;
+    if (characterY >= ground - 32) {  // Check if character has landed on the ground
       isJumping = false;
+      characterY = ground - 32;  // Reset to ground level
+      canDoubleJump = false;  // Reset double jump
+    }
   }
-  
 
-  jumpCounter--;
-
-  // --------------------------------- To Left ---------------------------------
+  // To Left
   if (buttonState & ARCADA_BUTTONMASK_LEFT) {
-    //move left
+    facingRight = false; // Schaut nach links
+    isRunning = true; // Läuft
+    // Move left
     if (characterX == 20 && characterPos >= 0){
       characterPos--;
     }
     moveCharacter(-speed, 0);
   }
-  
-  // --------------------------------- To Right ---------------------------------
+
+  // To Right
   if (buttonState & ARCADA_BUTTONMASK_RIGHT) {
-    //move right
+    facingRight = true; // Schaut nach rechts
+    isRunning = true; // Läuft
+    // Move right
     if (characterX == 50 && characterPos <= 540){
       characterPos++;
     }
     moveCharacter(speed, 0);
   }
 
-  // --------------------------------- Throw item ---------------------------------
+  // Stop running
+  if (!(buttonState & (ARCADA_BUTTONMASK_LEFT | ARCADA_BUTTONMASK_RIGHT))) {
+    isRunning = false; // Steht
+  }
+
+  // Throw item
   if ((buttonState & ARCADA_BUTTONMASK_B) && itemPicked) {
     isThrowing = true;
     itemX += characterPos;
@@ -67,7 +112,7 @@ void moveInGame(){
     itemPicked = false;
   }
 
-  // Lineal movement
+  // Linear movement
   if (isThrowing){
     itemX += throwSpeed;
   }
@@ -89,25 +134,25 @@ void moveInGame(){
   if (itemY >= 100){
       wasThrown = false;
   }
-  
+
   itemCounter--;
+
+  // Check win condition
+  if (characterPos >= 540) { // Adjusting the win condition for easier testing
+    showWinScreen();
+  }
 }
 
 void game(){
   // Show lives
   show_lives();
 
-  //test text
-  arcada.getCanvas()->setCursor(2, 3);
-  arcada.getCanvas()->setTextColor(ARCADA_BLACK);
-  //arcada.getCanvas()->println("This is just a test!");
-
   // Start button presses
   if (arcada.readButtons() & ARCADA_BUTTONMASK_START){
     inGame = false;
     inMenu = true;
   }
-  
+
   // Movement
   moveInGame();
 

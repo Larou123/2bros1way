@@ -30,10 +30,7 @@ void drawMap() {
     drawItem(itemX-characterPos,itemY,itemW,itemH,itemC);
   }
   
-
-
-
-
+  
   // Draw obstacle
   drawObstacle();
 }
