@@ -3,36 +3,38 @@
 
 #include <Adafruit_Arcada.h>
 #include <Adafruit_NeoPixel.h>
+#include "item_img.h" // Hinzufügen der Item-Definitionen
+#include "item.h"
 
 // Arcada and Neopixel defines
 #define NEOPIXEL_PIN    8
 #define NEOPIXEL_COUNT  5 
 
-Adafruit_Arcada arcada;
-Adafruit_NeoPixel neopixels = Adafruit_NeoPixel(NEOPIXEL_COUNT, NEOPIXEL_PIN, NEO_GRB + NEO_KHZ800);
+extern Adafruit_Arcada arcada;
+extern Adafruit_NeoPixel neopixels;
 
 // --------------------------------- MAP ---------------------------------
 // ----------- VARIABLES
-int cloudX = 60;
-int cloudY = 27;
-int distanceCloud = 60;
-int ground = 110;
+extern int cloudX;
+extern int cloudY;
+extern int distanceCloud;
+extern int ground;
 
 // ----------- FUNCTIONS
 void drawMap();
 
 // --------------------------------- CHARACTER ---------------------------------
 // ----------- VARIABLES
-int speed = 1;
-int characterPos = 0;
-int characterX = 20;
-int characterY = ground - 32;
-const int characterWidht = 32;
-const int characterHeigh = 32;
-int jumpCounter = 0;
-bool isJumping = false;
-bool wasJumping = false;
-int lives = 5;
+extern int speed;
+extern int characterPos;
+extern int characterX;
+extern int characterY;
+extern const int characterWidht;
+extern const int characterHeigh;
+extern int jumpCounter;
+extern bool isJumping;
+extern bool wasJumping;
+extern int lives;
 
 // Sprite-Daten für die Laufanimation
 extern const unsigned short run_frame_0[1024];
@@ -45,27 +47,29 @@ void drawCharacter();
 
 // --------------------------------- GAMEPLAY ---------------------------------
 // ----------- VARIABLES
-bool inGame = false;
+extern bool inGame;
 
 // --------------------------------- MENU ---------------------------------
 // ----------- VARIABLES
-const char *menu_options[3] = {"Start", "Options", "Credits"};
-bool inMenu = true;
+extern const char *menu_options[3];
+extern bool inMenu;
 
 // --------------------------------- ITEM ---------------------------------
 // ----------- VARIABLES
-bool itemPicked = false;
-int itemW = 5;
-int itemH = 5;
-int itemX = 60;
-int itemY = ground - itemH;
-int itemC = ARCADA_BLACK;
-int itemCounter = 0;
-bool isThrowing = false;
-bool wasThrown = false;
-int throwSpeed = 5;
+extern bool itemPicked;
+extern int itemW;
+extern int itemH;
+extern int itemX;
+extern int itemY;
+extern int itemC;
+extern int itemCounter;
+extern bool isThrowing;
+extern bool wasThrown;
+extern int throwSpeed;
+extern Item* currentItem; // Deklaration von currentItem
 
 // ----------- FUNCTIONS
-void drawItem();
+void drawItem(int x, int y, int w, int h, int color);
+void pickItem();
 
 #endif

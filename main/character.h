@@ -73,24 +73,24 @@ void moveCharacter(int nx, int ny) {
   // Set limits at the borders
   if (characterX > 156 ){
     characterX = 5;
-    characterPos = 0;
+       characterPos = 0;
     lives--;
   }
 
-  if (characterX < 20){
+  if (characterX < 20) {
     characterX = 20;
   }
 
-  if (characterX > 50){
+  if (characterX > 50) {
     characterX = 50;
   }
 }
 
 // Show current lives in neopixels
-void show_lives(){
+void show_lives() {
   neopixels.clear();
-  for (uint8_t i = 0; i < lives;i++){
-    neopixels.setPixelColor(i,neopixels.Color(0,15,0));
+  for (uint8_t i = 0; i < lives; i++) {
+    neopixels.setPixelColor(i, neopixels.Color(0, 15, 0));
   }
   neopixels.show();
   if (lives == 0) lives = 5;

@@ -1,0 +1,55 @@
+#include "globals.h"
+#include "item_img.h"
+
+
+Adafruit_Arcada arcada;
+Adafruit_NeoPixel neopixels = Adafruit_NeoPixel(NEOPIXEL_COUNT, NEOPIXEL_PIN, NEO_GRB + NEO_KHZ800);
+
+int cloudX = 60;
+int cloudY = 27;
+int distanceCloud = 60;
+int ground = 110;
+
+int speed = 1;
+int characterPos = 0;
+int characterX = 20;
+int characterY = ground - 32;
+const int characterWidht = 32;
+const int characterHeigh = 32;
+int jumpCounter = 0;
+bool isJumping = false;
+bool wasJumping = false;
+int lives = 5;
+
+bool inGame = false;
+const char *menu_options[3] = {"Start", "Options", "Credits"};
+bool inMenu = true;
+
+bool itemPicked = false;
+int itemW = 16;
+int itemH = 16;
+int itemX = 60;
+int itemY = ground - itemH;
+int itemC = ARCADA_BLACK;
+int itemCounter = 0;
+bool isThrowing = false;
+bool wasThrown = false;
+int throwSpeed = 5;
+Item* currentItem = nullptr; // Definition von currentItem
+
+void drawItem(int x, int y, int w, int h, int color) {
+    if (currentItem) {
+        currentItem->draw(x, y);
+    } else {
+        arcada.getCanvas()->fillRect(x, y, w, h, color);
+    }
+}
+
+void pickItem() {
+    int itemTmp = itemX - characterPos;
+    if (!itemPicked) {
+        if ((-32 <= characterX - itemTmp) && ((characterX - itemTmp) <= 32) && (arcada.readButtons() & ARCADA_BUTTONMASK_DOWN)) {
+            itemPicked = true;
+        }
+    }
+}
