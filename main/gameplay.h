@@ -7,11 +7,15 @@
 #include "map.h"
 #include "character.h"
 #include "item.h"
+#include "enemy.h"
+#include "boss.h"
 
 // Help function to update display
 void updateDisplay(){
   drawMap();
   drawCharacter();
+  drawEnemy();
+  drawBoss();
   arcada.blitFrameBuffer(0, 0, true);
 }
 
@@ -82,7 +86,7 @@ void moveInGame(){
     facingRight = false; // Schaut nach links
     isRunning = true; // Läuft
     // Move left
-    if (characterX == 20 && characterPos >= 0){
+    if (!bossActive && characterX == 20 && characterPos >= 0){
       characterPos--;
     }
     moveCharacter(-speed, 0);
@@ -93,7 +97,7 @@ void moveInGame(){
     facingRight = true; // Schaut nach rechts
     isRunning = true; // Läuft
     // Move right
-    if (characterX == 50 && characterPos <= 540){
+    if (!bossActive && characterX == 50 && characterPos <= 540){
       characterPos++;
     }
     moveCharacter(speed, 0);
@@ -158,6 +162,12 @@ void game(){
 
   // Pick item
   pickItem();
+
+  // Enemy movement
+  moveEnemy();
+
+  // Boss movement
+  moveBoss();
 
   // Update display
   updateDisplay();

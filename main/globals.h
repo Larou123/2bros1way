@@ -35,6 +35,8 @@ extern int jumpCounter;
 extern bool isJumping;
 extern bool wasJumping;
 extern int lives;
+extern int rightLimit;
+extern int leftLimit;
 
 // Sprite-Daten für die Laufanimation
 extern const unsigned short run_frame_0[1024];
@@ -72,4 +74,25 @@ extern Item* currentItem; // Deklaration von currentItem
 void drawItem(int x, int y, int w, int h, int color);
 void pickItem();
 
+// --------------------------------- ENEMY ---------------------------------
+// ----------- VARIABLES
+extern float enemyX;
+extern int enemyY;
+extern int enemyW;
+extern int enemyH;
+extern float enemySpeed;
+extern bool movingRight;
+extern int distanceEnemy;
+
+// --------------------------------- BOSS ---------------------------------
+// ----------- VARIABLES
+extern int bossW;
+extern int bossH;
+extern float bossX;
+extern int bossY;
+extern float bossSpeed;
+extern bool bossRight;
+extern int distanceboss;
+extern bool bossActive;
+extern float currentBossX;
 #endif

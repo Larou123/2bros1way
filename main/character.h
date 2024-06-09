@@ -77,12 +77,12 @@ void moveCharacter(int nx, int ny) {
     lives--;
   }
 
-  if (characterX < 20) {
-    characterX = 20;
+  if (characterX < leftLimit) {
+    characterX = leftLimit;
   }
 
-  if (characterX > 50) {
-    characterX = 50;
+  if (characterX > rightLimit) {
+    characterX = rightLimit;
   }
 }
 

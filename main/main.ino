@@ -7,6 +7,8 @@
 #include "map_img.h"
 #include "item.h" // Hinzufügen der Item-Definitionen
 #include "obstacle.h"
+#include "enemy.h"
+#include "boss.h"
 
 void setup() {
     // Initialize Arcada library

@@ -5,11 +5,13 @@
 Adafruit_Arcada arcada;
 Adafruit_NeoPixel neopixels = Adafruit_NeoPixel(NEOPIXEL_COUNT, NEOPIXEL_PIN, NEO_GRB + NEO_KHZ800);
 
+// MAP
 int cloudX = 60;
 int cloudY = 27;
 int distanceCloud = 60;
 int ground = 110;
 
+// CHARACTER
 int speed = 1;
 int characterPos = 0;
 int characterX = 20;
@@ -20,11 +22,15 @@ int jumpCounter = 0;
 bool isJumping = false;
 bool wasJumping = false;
 int lives = 5;
+int rightLimit = 50;
+int leftLimit = 20;
 
+// GAME
 bool inGame = false;
 const char *menu_options[3] = {"Start", "Options", "Credits"};
 bool inMenu = true;
 
+// ITEM
 bool itemPicked = false;
 int itemW = 16;
 int itemH = 16;
@@ -53,3 +59,23 @@ void pickItem() {
         }
     }
 }
+
+// ENEMY
+int enemyW = 10;
+int enemyH = 5;
+float enemyX = 100;
+int enemyY = ground - enemyH;
+float enemySpeed = 0.5;
+bool movingRight = true;
+int distanceEnemy = 25;
+
+// BOSS
+int bossW = 30;
+int bossH = 50;
+float bossX = 530;
+int bossY = ground - bossH;
+float bossSpeed = 0.5;
+bool bossRight = true;
+bool bossActive = false;
+float currentBossX = bossX;
+
