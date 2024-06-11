@@ -34,13 +34,17 @@ bool inMenu = true;
 bool itemPicked = false;
 int itemW = 16;
 int itemH = 16;
-int itemX = 60;
+float itemX = 60;
 int itemY = ground - itemH;
 int itemC = ARCADA_BLACK;
-int itemCounter = 0;
 bool isThrowing = false;
 bool wasThrown = false;
-int throwSpeed = 5;
+// Variables for throw item physics
+float throwVelocityX = 0;
+float throwVelocityY = 0;
+float throwPower = 3;
+float bouncePower = 1;
+bool hasBounced = false;
 Item* currentItem = nullptr; // Definition von currentItem
 
 void drawItem(int x, int y, int w, int h, int color) {

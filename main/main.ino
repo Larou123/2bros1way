@@ -28,11 +28,14 @@ void setup() {
     arcada.displayBegin();
     arcada.createFrameBuffer(ARCADA_TFT_WIDTH, ARCADA_TFT_HEIGHT);
 
-    // Draw map
-    updateDisplay();
 
     // Set current item to Bomb
     currentItem = new Bomb();
+
+    // Draw map
+    updateDisplay();
+
+    
 }
 
 void loop() {

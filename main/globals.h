@@ -61,13 +61,17 @@ extern bool inMenu;
 extern bool itemPicked;
 extern int itemW;
 extern int itemH;
-extern int itemX;
+extern float itemX;
 extern int itemY;
 extern int itemC;
-extern int itemCounter;
 extern bool isThrowing;
 extern bool wasThrown;
-extern int throwSpeed;
+extern float throwVelocityX;
+extern float throwVelocityY;
+extern float throwVelocity;
+extern float throwPower;
+extern bool hasBounced;
+extern float bouncePower;
 extern Item* currentItem; // Deklaration von currentItem
 
 // ----------- FUNCTIONS

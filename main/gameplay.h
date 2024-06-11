@@ -60,6 +60,7 @@ void moveInGame(){
       if (!isJumping) {
         isJumping = true;
         jumpVelocity = jumpPower;
+        speed = 2;
         canDoubleJump = true;  // Allow double jump
       } else if (canDoubleJump) {
         jumpVelocity = doubleJumpPower;
@@ -76,6 +77,7 @@ void moveInGame(){
     jumpVelocity += gravity;
     if (characterY >= ground - 32) {  // Check if character has landed on the ground
       isJumping = false;
+      speed = 1;
       characterY = ground - 32;  // Reset to ground level
       canDoubleJump = false;  // Reset double jump
     }
@@ -87,7 +89,7 @@ void moveInGame(){
     isRunning = true; // Läuft
     // Move left
     if (!bossActive && characterX == 20 && characterPos >= 0){
-      characterPos--;
+      characterPos -= speed;
     }
     moveCharacter(-speed, 0);
   }
@@ -98,7 +100,7 @@ void moveInGame(){
     isRunning = true; // Läuft
     // Move right
     if (!bossActive && characterX == 50 && characterPos <= 540){
-      characterPos++;
+      characterPos += speed;
     }
     moveCharacter(speed, 0);
   }
@@ -111,35 +113,50 @@ void moveInGame(){
   // Throw item
   if ((buttonState & ARCADA_BUTTONMASK_B) && itemPicked) {
     isThrowing = true;
-    itemX += characterPos;
-    itemCounter = 5;
     itemPicked = false;
+    itemX += characterPos;
+    if (isJumping){
+      bouncePower = 2;
+    } else {
+      bouncePower = 1;
+    }
   }
 
-  // Linear movement
-  if (isThrowing){
-    itemX += throwSpeed;
+  // Item movement
+  // Initial power throw
+  if (isThrowing) {
+    if (facingRight) {
+      throwVelocityX = throwPower;
+    } else {
+      throwVelocityX = -throwPower;
+    }
+    throwVelocityY = -throwPower;
+
+    isThrowing = false;
+    wasThrown = true;
+    hasBounced = false;
   }
 
-  // Diagonal movement
-  if (wasThrown && itemY < 100){
-    itemX += throwSpeed/2;
-    itemY += throwSpeed/2;
-  }
+  // Item movement after being thrown
+  if (wasThrown) {
+    itemX += throwVelocityX;
+    itemY += throwVelocityY;
 
-  // Start diagonal movement
-  if (itemCounter == 0){
-      isThrowing = false;
-      itemY += throwSpeed/2;
-      wasThrown = true;
-  }
+    throwVelocityY += gravity;
 
-  // Stop diagonal movement
-  if (itemY >= 100){
-      wasThrown = false;
-  }
+    if ((itemY + itemH) >= ground) {
+      itemY = ground - itemH;
 
-  itemCounter--;
+      if (!hasBounced) {
+        throwVelocityY = -bouncePower;
+        hasBounced = true;
+      } else {
+        throwVelocityX = 0;
+        throwVelocityY = 0;
+        wasThrown = false;
+      }
+    }
+  }
 
   // Check win condition
   if (characterPos >= 540) { // Adjusting the win condition for easier testing
