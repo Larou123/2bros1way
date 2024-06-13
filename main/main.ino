@@ -9,6 +9,7 @@
 #include "obstacle.h"
 #include "enemy.h"
 #include "boss.h"
+#include "joystick.h"
 
 void setup() {
     // Initialize Arcada library
@@ -28,6 +29,8 @@ void setup() {
     arcada.displayBegin();
     arcada.createFrameBuffer(ARCADA_TFT_WIDTH, ARCADA_TFT_HEIGHT);
 
+    // Init joystick button
+    js_init();
 
     // Set current item to Bomb
     currentItem = new Bomb();
