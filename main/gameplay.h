@@ -9,6 +9,7 @@
 #include "item.h"
 #include "enemy.h"
 #include "boss.h"
+#include "joystick.h"
 
 // Help function to update display
 void updateDisplay(){
@@ -54,6 +55,50 @@ bool jumpPressed = false;  // To track if the jump button is pressed
 void moveInGame(){
   uint8_t buttonState = arcada.readButtons();
 
+  // Test joystick
+  if (js_getButton()){
+    arcada.getCanvas()->setTextColor(ARCADA_WHITE);
+    arcada.getCanvas()->setCursor(30, 10);
+    arcada.getCanvas()->println("JOYSTICK PRESSED!");
+    arcada.blitFrameBuffer(0, 0, true);
+  }
+
+  if (js_getDirection() == JS_RIGHT){
+    arcada.getCanvas()->setTextColor(ARCADA_WHITE);
+    arcada.getCanvas()->setCursor(30, 20);
+    arcada.getCanvas()->println("JOYSTICK RIGHT!");
+    arcada.getCanvas()->setCursor(50, 30);
+    arcada.getCanvas()->println(analogRead(xPin));
+    arcada.blitFrameBuffer(0, 0, true);
+  }
+
+   else if (js_getDirection() == JS_LEFT){
+    arcada.getCanvas()->setTextColor(ARCADA_WHITE);
+    arcada.getCanvas()->setCursor(30, 30);
+    arcada.getCanvas()->println("JOYSTICK LEFT!");
+    arcada.getCanvas()->setCursor(50, 20);
+    arcada.getCanvas()->println(analogRead(xPin));
+    arcada.blitFrameBuffer(0, 0, true);
+  }
+
+  else if (js_getDirection() == JS_UP){
+    arcada.getCanvas()->setTextColor(ARCADA_WHITE);
+    arcada.getCanvas()->setCursor(30, 40);
+    arcada.getCanvas()->println("JOYSTICK UP!");
+    arcada.getCanvas()->setCursor(50, 20);
+    arcada.getCanvas()->println(analogRead(yPin));
+    arcada.blitFrameBuffer(0, 0, true);
+  }
+
+  else if (js_getDirection() == JS_DOWN){
+    arcada.getCanvas()->setTextColor(ARCADA_WHITE);
+    arcada.getCanvas()->setCursor(30, 50);
+    arcada.getCanvas()->println("JOYSTICK DOWN!");
+    arcada.getCanvas()->setCursor(50, 20);
+    arcada.getCanvas()->println(analogRead(yPin));
+    arcada.blitFrameBuffer(0, 0, true);
+  }
+  
   // Jump logic
   if (buttonState & ARCADA_BUTTONMASK_A) {
     if (!jumpPressed) {
