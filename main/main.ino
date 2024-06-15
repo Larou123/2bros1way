@@ -32,13 +32,8 @@ void setup() {
     // Init joystick button
     js_init();
 
-    // Set current item to Bomb
-    currentItem = new Bomb();
-
     // Draw map
-    updateDisplay();
-
-    
+    updateDisplay();  
 }
 
 void loop() {
@@ -51,11 +46,6 @@ void loop() {
 
     // Perform standard board functions
     yield();
-
-    // Beispiel: Zeichnen des aktuellen Items
-    if (!itemPicked) {
-        drawItem(itemX - characterPos, itemY, itemW, itemH, itemC);
-    }
 }
 
 void errorReporter(const char *error) {

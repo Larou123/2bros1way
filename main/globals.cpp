@@ -1,9 +1,8 @@
 #include "globals.h"
-#include "item_img.h"
-
 
 Adafruit_Arcada arcada;
 Adafruit_NeoPixel neopixels = Adafruit_NeoPixel(NEOPIXEL_COUNT, NEOPIXEL_PIN, NEO_GRB + NEO_KHZ800);
+unsigned long frameDelay = 100; // Zeit zwischen den Frames in Millisekunden
 
 // MAP
 int cloudX = 60;
@@ -45,24 +44,10 @@ float throwVelocityY = 0;
 float throwPower = 3;
 float bouncePower = 1;
 bool hasBounced = false;
-Item* currentItem = nullptr; // Definition von currentItem
 
-void drawItem(int x, int y, int w, int h, int color) {
-    if (currentItem) {
-        currentItem->draw(x, y);
-    } else {
-        arcada.getCanvas()->fillRect(x, y, w, h, color);
-    }
-}
-
-void pickItem() {
-    int itemTmp = itemX - characterPos;
-    if (!itemPicked) {
-        if ((-32 <= characterX - itemTmp) && ((characterX - itemTmp) <= 32) && (arcada.readButtons() & ARCADA_BUTTONMASK_DOWN)) {
-            itemPicked = true;
-        }
-    }
-}
+bool bomb_expl = false;
+int expl_count = 0;
+bool item_active = true;
 
 // ENEMY
 int enemyW = 10;

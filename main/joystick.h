@@ -11,7 +11,7 @@ typedef enum{
 } Direction;
 
 // var
-const int xPin = A2; // X-axis of joystick connected to analog pin A2
+const int xPin = A0; // X-axis of joystick connected to analog pin A2
 const int yPin = A1; // Y-axis of joystick connected to analog pin A1
 const int buttonPin = 5; // Button of joystick connected to digital pin 5
 const int neutral = 512;

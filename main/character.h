@@ -22,8 +22,7 @@ const unsigned char *jumpLeftMask = char_jump_left_mask;
 int currentSprite = 0; // Aktuelles Sprite
 
 // Zeitsteuerung für die Animation
-unsigned long lastFrameChange = 0;
-const unsigned long frameDelay = 100; // Zeit zwischen den Frames in Millisekunden
+unsigned long lastFrameChangeChar = 0;
 
 // Richtung des Charakters
 bool facingRight = true; // True = rechts, False = links
@@ -32,8 +31,8 @@ bool isRunning = false; // True = läuft, False = steht
 void drawCharacter() {
   // Überprüfe, ob genug Zeit vergangen ist, um das Sprite zu wechseln
   unsigned long currentMillis = millis();
-  if (currentMillis - lastFrameChange >= frameDelay) {
-    lastFrameChange = currentMillis;
+  if (currentMillis - lastFrameChangeChar >= frameDelay) {
+    lastFrameChangeChar = currentMillis;
     if (isRunning && !isJumping) {
       currentSprite = (currentSprite + 1) % 2; // Wechsel zwischen den Lauf-Sprites
     } else {
@@ -60,7 +59,7 @@ void drawCharacter() {
   if (itemPicked) {
     itemX = characterX + (facingRight ? 27 : -5);
     itemY = characterY + 5;
-    drawItem(itemX, itemY, itemW, itemH, itemC);  
+    drawItem(itemX,itemY);  
   }
 }
 

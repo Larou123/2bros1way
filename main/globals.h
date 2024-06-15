@@ -3,8 +3,7 @@
 
 #include <Adafruit_Arcada.h>
 #include <Adafruit_NeoPixel.h>
-#include "item_img.h" // Hinzufügen der Item-Definitionen
-#include "item.h"
+
 
 // Arcada and Neopixel defines
 #define NEOPIXEL_PIN    8
@@ -12,7 +11,7 @@
 
 extern Adafruit_Arcada arcada;
 extern Adafruit_NeoPixel neopixels;
-
+extern unsigned long frameDelay;
 // --------------------------------- MAP ---------------------------------
 // ----------- VARIABLES
 extern int cloudX;
@@ -72,12 +71,14 @@ extern float throwVelocity;
 extern float throwPower;
 extern bool hasBounced;
 extern float bouncePower;
-extern Item* currentItem; // Deklaration von currentItem
 
+extern bool bomb_expl;
+extern int expl_count;
+extern bool item_active;
 // ----------- FUNCTIONS
-void drawItem(int x, int y, int w, int h, int color);
-void pickItem();
-
+extern void drawItem(int x, int y);
+extern void pickItem();
+extern void bomb_explode();
 // --------------------------------- ENEMY ---------------------------------
 // ----------- VARIABLES
 extern float enemyX;

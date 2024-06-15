@@ -17,6 +17,8 @@ void updateDisplay(){
   drawCharacter();
   drawEnemy();
   drawBoss();
+  // Bomb explosion
+  bomb_explode();
   arcada.blitFrameBuffer(0, 0, true);
 }
 
@@ -199,6 +201,7 @@ void moveInGame(){
         throwVelocityX = 0;
         throwVelocityY = 0;
         wasThrown = false;
+        bomb_expl = true;
       }
     }
   }
