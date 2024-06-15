@@ -13,6 +13,7 @@ const unsigned short *runLeftSprites[] = {run_frame_1, run_frame_3};
 const unsigned char *runRightMasks[] = {run_frame_0_mask, run_frame_2_mask};
 const unsigned char *runLeftMasks[] = {run_frame_1_mask, run_frame_3_mask};
 
+
 // Sprites für die Sprunganimation
 const unsigned short *jumpRightSprite = char_jump_right;
 const unsigned short *jumpLeftSprite = char_jump_left;
@@ -38,7 +39,7 @@ void drawCharacter() {
     } else {
       currentSprite = 0; // Standbild oder Sprungbild
     }
-  }
+}
 
   // Zeichne das aktuelle Sprite basierend auf der Richtung und dem Zustand (springend oder laufend)
   if (isJumping) {
@@ -93,6 +94,57 @@ void show_lives() {
   }
   neopixels.show();
   if (lives == 0) lives = 5;
+}
+
+//--------------------------- VOGEL -------------------------------------------------------------
+// Sprites für die Laufanimation
+/*
+const unsigned short *flyUpSprites[] = {fly_frame_0, fly_frame_2};
+const unsigned short *flyDownSprites[] = {fly_frame_1, fly_frame_3};
+const unsigned char *flyUpMasks[] = {fly_frame_0_mask, fly_frame_2_mask};
+const unsigned char *flyDownMasks[] = {fly_frame_1_mask, fly_frame_3_mask};*/
+
+int currentSpriteComp = 0; // Aktuelles Sprite
+
+// Zeitsteuerung für die Animation
+unsigned long lastFrameChangeComp = 0;
+
+void drawCompanion() {
+  // Überprüfe, ob genug Zeit vergangen ist, um das Sprite zu wechseln
+  unsigned long currentMillis = millis();
+  if (currentMillis - lastFrameChangeChar >= frameDelay) {
+    lastFrameChangeComp = currentMillis;
+    currentSpriteComp = (currentSpriteComp + 1) % 2; // Wechsel zwischen den Lauf-Sprites
+  }
+  // Zeichne das aktuelle Sprite basierend auf der Richtung und dem Zustand (springend oder laufend)
+
+  //arcada.getCanvas()->drawRGBBitmap(companionX, companionY, flyUpSprites[currentSpriteComp], flyUpMasks[currentSpriteComp], companionWidht, companionHeigh);
+  //arcada.getCanvas()->drawRGBBitmap(companionX, companionY, flyDownSprites[currentSpriteComp], flyDownMasks[currentSpriteComp], companionWidht, companionHeigh);
+  arcada.getCanvas()->fillRect(companionX, companionY,companionWidht, companionHeigh,ARCADA_WHITE);
+}
+
+// Move character
+void moveCompanion(int nx, int ny) {
+  // Update character position
+  companionX += nx;
+  companionY += ny;
+
+  // Set limits at the borders
+  if (companionX < leftLimit) {
+    companionX = leftLimit;
+  }
+
+  if (companionX > 140-companionWidht) {
+    companionX = 140-companionWidht;
+  }
+
+  if (companionY < upLimit) {
+    companionY = upLimit;
+  }
+
+  if (companionY > downLimit) {
+    companionY = downLimit;
+  }
 }
 
 #endif

@@ -46,6 +46,15 @@ extern const unsigned short run_frame_3[1024];
 // ----------- FUNCTIONS
 void drawCharacter();
 
+//------------------------COMPANION---------------
+// COMPANION
+extern int speedComp;
+extern int companionX;
+extern int companionY;
+extern const int companionWidht;
+extern const int companionHeigh;
+extern int upLimit;
+extern int downLimit;
 // --------------------------------- GAMEPLAY ---------------------------------
 // ----------- VARIABLES
 extern bool inGame;

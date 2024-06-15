@@ -17,6 +17,7 @@ void updateDisplay(){
   drawCharacter();
   drawEnemy();
   drawBoss();
+  drawCompanion();
   // Bomb explosion
   bomb_explode();
   arcada.blitFrameBuffer(0, 0, true);
@@ -55,52 +56,8 @@ bool jumpPressed = false;  // To track if the jump button is pressed
 
 // Movement during game
 void moveInGame(){
-  uint8_t buttonState = arcada.readButtons();
+  int buttonState = arcada.readButtons();
 
-  // Test joystick
-  if (js_getButton()){
-    arcada.getCanvas()->setTextColor(ARCADA_WHITE);
-    arcada.getCanvas()->setCursor(30, 10);
-    arcada.getCanvas()->println("JOYSTICK PRESSED!");
-    arcada.blitFrameBuffer(0, 0, true);
-  }
-
-  if (js_getDirection() == JS_RIGHT){
-    arcada.getCanvas()->setTextColor(ARCADA_WHITE);
-    arcada.getCanvas()->setCursor(30, 20);
-    arcada.getCanvas()->println("JOYSTICK RIGHT!");
-    arcada.getCanvas()->setCursor(50, 30);
-    arcada.getCanvas()->println(analogRead(xPin));
-    arcada.blitFrameBuffer(0, 0, true);
-  }
-
-   else if (js_getDirection() == JS_LEFT){
-    arcada.getCanvas()->setTextColor(ARCADA_WHITE);
-    arcada.getCanvas()->setCursor(30, 30);
-    arcada.getCanvas()->println("JOYSTICK LEFT!");
-    arcada.getCanvas()->setCursor(50, 20);
-    arcada.getCanvas()->println(analogRead(xPin));
-    arcada.blitFrameBuffer(0, 0, true);
-  }
-
-  else if (js_getDirection() == JS_UP){
-    arcada.getCanvas()->setTextColor(ARCADA_WHITE);
-    arcada.getCanvas()->setCursor(30, 40);
-    arcada.getCanvas()->println("JOYSTICK UP!");
-    arcada.getCanvas()->setCursor(50, 20);
-    arcada.getCanvas()->println(analogRead(yPin));
-    arcada.blitFrameBuffer(0, 0, true);
-  }
-
-  else if (js_getDirection() == JS_DOWN){
-    arcada.getCanvas()->setTextColor(ARCADA_WHITE);
-    arcada.getCanvas()->setCursor(30, 50);
-    arcada.getCanvas()->println("JOYSTICK DOWN!");
-    arcada.getCanvas()->setCursor(50, 20);
-    arcada.getCanvas()->println(analogRead(yPin));
-    arcada.blitFrameBuffer(0, 0, true);
-  }
-  
   // Jump logic
   if (buttonState & ARCADA_BUTTONMASK_A) {
     if (!jumpPressed) {
@@ -212,6 +169,28 @@ void moveInGame(){
   }
 }
 
+void moveCompanionInGame(){
+  // schiessen
+  //if (js_getButton()){
+    
+  //}
+
+  if (js_getDirection() == JS_RIGHT){
+    moveCompanion(speedComp, 0);
+  }
+
+   else if (js_getDirection() == JS_LEFT){
+    moveCompanion(-speedComp, 0);
+  }
+
+  else if (js_getDirection() == JS_UP){
+    moveCompanion(0,-speedComp);
+  }
+
+  else if (js_getDirection() == JS_DOWN){
+    moveCompanion(0,speedComp);
+  }
+}
 void game(){
   // Show lives
   show_lives();
@@ -225,6 +204,8 @@ void game(){
   // Movement
   moveInGame();
 
+  // Companion movement
+  moveCompanionInGame();
   // Pick item
   pickItem();
 

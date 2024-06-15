@@ -24,6 +24,15 @@ int lives = 5;
 int rightLimit = 50;
 int leftLimit = 20;
 
+// COMPANION
+int speedComp = 1;
+int companionX = 20;
+int companionY = 12;
+const int companionWidht = 40;
+const int companionHeigh = 20;
+int upLimit = 0;
+int downLimit = 25;
+
 // GAME
 bool inGame = false;
 const char *menu_options[3] = {"Start", "Options", "Credits"};
