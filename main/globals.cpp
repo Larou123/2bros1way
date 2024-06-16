@@ -32,6 +32,7 @@ const int companionWidht = 40;
 const int companionHeigh = 20;
 int upLimit = 0;
 int downLimit = 25;
+bool flyRight = true;
 
 // GAME
 bool inGame = false;

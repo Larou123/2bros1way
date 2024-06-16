@@ -55,6 +55,7 @@ extern const int companionWidht;
 extern const int companionHeigh;
 extern int upLimit;
 extern int downLimit;
+extern bool flyRight;
 // --------------------------------- GAMEPLAY ---------------------------------
 // ----------- VARIABLES
 extern bool inGame;

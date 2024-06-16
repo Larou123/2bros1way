@@ -98,11 +98,10 @@ void show_lives() {
 
 //--------------------------- VOGEL -------------------------------------------------------------
 // Sprites für die Laufanimation
-/*
-const unsigned short *flyUpSprites[] = {fly_frame_0, fly_frame_2};
-const unsigned short *flyDownSprites[] = {fly_frame_1, fly_frame_3};
-const unsigned char *flyUpMasks[] = {fly_frame_0_mask, fly_frame_2_mask};
-const unsigned char *flyDownMasks[] = {fly_frame_1_mask, fly_frame_3_mask};*/
+const unsigned short *flyRightSprites[] = {companionRightUp, companionRightDown};
+const unsigned short *flyLeftSprites[] = {companionLeftUp, companionLeftDown};
+const unsigned char *flyRightMasks[] = {companionRightUp_mask, companionRightDown_mask};
+const unsigned char *flyLeftMasks[] = {companionLeftUp_mask, companionLeftDown_mask};
 
 int currentSpriteComp = 0; // Aktuelles Sprite
 
@@ -111,16 +110,19 @@ unsigned long lastFrameChangeComp = 0;
 
 void drawCompanion() {
   // Überprüfe, ob genug Zeit vergangen ist, um das Sprite zu wechseln
-  unsigned long currentMillis = millis();
-  if (currentMillis - lastFrameChangeChar >= frameDelay) {
-    lastFrameChangeComp = currentMillis;
+  unsigned long currentMillisComp = millis();
+  if (currentMillisComp - lastFrameChangeComp >= 300) {
+    lastFrameChangeComp = currentMillisComp;
     currentSpriteComp = (currentSpriteComp + 1) % 2; // Wechsel zwischen den Lauf-Sprites
   }
   // Zeichne das aktuelle Sprite basierend auf der Richtung und dem Zustand (springend oder laufend)
 
-  //arcada.getCanvas()->drawRGBBitmap(companionX, companionY, flyUpSprites[currentSpriteComp], flyUpMasks[currentSpriteComp], companionWidht, companionHeigh);
-  //arcada.getCanvas()->drawRGBBitmap(companionX, companionY, flyDownSprites[currentSpriteComp], flyDownMasks[currentSpriteComp], companionWidht, companionHeigh);
-  arcada.getCanvas()->fillRect(companionX, companionY,companionWidht, companionHeigh,ARCADA_WHITE);
+  if (flyRight){
+    arcada.getCanvas()->drawRGBBitmap(companionX, companionY, flyRightSprites[currentSpriteComp], flyRightMasks[currentSpriteComp], companionWidht, companionHeigh);
+  } else{
+    arcada.getCanvas()->drawRGBBitmap(companionX, companionY, flyLeftSprites[currentSpriteComp], flyLeftMasks[currentSpriteComp], companionWidht, companionHeigh);
+  }
+  //arcada.getCanvas()->fillRect(companionX, companionY,companionWidht, companionHeigh,ARCADA_WHITE);
 }
 
 // Move character

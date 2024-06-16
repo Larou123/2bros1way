@@ -177,10 +177,12 @@ void moveCompanionInGame(){
 
   if (js_getDirection() == JS_RIGHT){
     moveCompanion(speedComp, 0);
+    flyRight = true;
   }
 
    else if (js_getDirection() == JS_LEFT){
     moveCompanion(-speedComp, 0);
+    flyRight = false;
   }
 
   else if (js_getDirection() == JS_UP){
