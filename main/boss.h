@@ -3,7 +3,8 @@
 #include "globals.h"
 
 void drawBoss(){
-  arcada.getCanvas()->fillRect(bossX-characterPos,bossY,bossW,bossH,ARCADA_BLACK);
+  //arcada.getCanvas()->fillRect(bossX-characterPos,bossY,bossW,bossH,ARCADA_BLACK);
+  arcada.getCanvas()->drawRGBBitmap(bossX-characterPos, ground-32, boss1, boss1_mask, 32, 32);
 }
 
 void moveBoss(){
