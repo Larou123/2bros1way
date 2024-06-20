@@ -1,14 +1,8 @@
 #ifndef JOYSTICK_H
 #define JOYSTICK_H
 
-//! The enum of that consists of all possible directions from the joystick.
-typedef enum{
-	JS_LEFT,
-	JS_RIGHT,
-	JS_UP,
-	JS_DOWN,
-	JS_NEUTRAL
-} Direction;
+#include "globals.h"
+
 
 // var
 const int xPin = A0; // X-axis of joystick connected to analog pin A2
@@ -26,13 +20,13 @@ Direction js_getDirection(void){
 	int horizontal = analogRead(xPin);
 	int vertical = analogRead(yPin);
 
-	if (horizontal < neutral - 300) {
+	if (horizontal < neutral - 100) {
     return JS_LEFT;
-  } else if (horizontal > neutral + 300) {
+  } else if (horizontal > neutral + 100) {
     return JS_RIGHT;
-  } else if (vertical < neutral - 300) {
+  } else if (vertical < neutral - 100) {
     return JS_UP;
-  } else if (vertical > neutral + 300) {
+  } else if (vertical > neutral + 100) {
     return JS_DOWN;
   } else {
     return JS_NEUTRAL;

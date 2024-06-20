@@ -26,7 +26,7 @@ void drawMap() {
   drawCloud();
 
   // Draw item
-  if (!itemPicked && item->active){
+  if (!item->picked && item->active){
     drawItem(item->itemX-characterPos,item->itemY);
   }
   

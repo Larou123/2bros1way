@@ -12,6 +12,16 @@
 extern Adafruit_Arcada arcada;
 extern Adafruit_NeoPixel neopixels;
 extern unsigned long frameDelay;
+
+//! The enum of that consists of all possible directions from the joystick.
+typedef enum{
+	JS_LEFT,
+	JS_RIGHT,
+	JS_UP,
+	JS_DOWN,
+	JS_NEUTRAL
+} Direction;
+
 // --------------------------------- MAP ---------------------------------
 // ----------- VARIABLES
 extern int cloudX;
@@ -56,6 +66,10 @@ extern const int companionHeigh;
 extern int upLimit;
 extern int downLimit;
 extern bool flyRight;
+extern int laserX;
+extern int laserY;
+extern bool laser_active;
+extern Direction laser_direction;
 // --------------------------------- GAMEPLAY ---------------------------------
 // ----------- VARIABLES
 extern bool inGame;
@@ -90,13 +104,17 @@ extern int expl_count;
 extern bool item_active;
 
 typedef struct{
-  int itemX;
+  float itemX;
   int itemY;
   const unsigned short *img;
   const unsigned char *mask;
   int itemW;
   int itemH;
+  bool init;
   bool active;
+  bool picked;
+  bool flying;
+  int count;
 } Item;
 
 //! Realizes a pointer to the Heap intHeap__.

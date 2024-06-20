@@ -40,6 +40,10 @@ const int companionHeigh = 30;
 int upLimit = 0;
 int downLimit = 25;
 bool flyRight = true;
+int laserX = companionX + companionWidht;
+int laserY = companionY+20;
+bool laser_active = false;
+Direction laser_direction = JS_NEUTRAL;
 
 // GAME
 bool inGame = false;
@@ -47,12 +51,6 @@ const char *menu_options[3] = {"Start", "Options", "Credits"};
 bool inMenu = true;
 
 // ITEM
-bool itemPicked = false;
-int itemW = 16;
-int itemH = 16;
-float itemX = 60;
-int itemY = ground - itemH;
-int itemC = ARCADA_BLACK;
 bool isThrowing = false;
 bool wasThrown = false;
 // Variables for throw item physics
@@ -64,8 +62,6 @@ bool hasBounced = false;
 
 bool bomb_expl = false;
 int expl_count = 0;
-bool item_active = false;
-
 
 Item item__ = {
   .itemX = 0,
@@ -74,7 +70,11 @@ Item item__ = {
   .mask = bomb_img_mask,
   .itemW = 0,
   .itemH = 0,
-  .active = false
+  .init = false,
+  .active = false,
+  .picked = false,
+  .flying = false,
+  .count = 3,
 };
 
 // ENEMY

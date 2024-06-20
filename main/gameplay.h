@@ -20,6 +20,8 @@ void updateDisplay(){
   drawCompanion();
   // Bomb explosion
   bomb_explode();
+  //laser
+  arcada.getCanvas()->fillCircle(laserX,laserY,3,ARCADA_BLUE);
   arcada.blitFrameBuffer(0, 0, true);
 }
 
@@ -114,10 +116,18 @@ void moveInGame(){
     isRunning = false; // Steht
   }
 
+  // Check win condition
+  if (characterPos >= 540) { // Adjusting the win condition for easier testing
+    showWinScreen();
+  }
+}
+
+void bombMovement(){
+  int buttonState = arcada.readButtons();
   // Throw item
-  if ((buttonState & ARCADA_BUTTONMASK_B) && itemPicked) {
+  if ((buttonState & ARCADA_BUTTONMASK_B) && item->picked) {
     isThrowing = true;
-    itemPicked = false;
+    item->picked = false;
     item->itemX += characterPos;
     if (isJumping){
       bouncePower = 2;
@@ -159,22 +169,48 @@ void moveInGame(){
         throwVelocityY = 0;
         wasThrown = false;
         bomb_expl = true;
+        item->count--;
         item->active = false;
       }
     }
   }
-
-  // Check win condition
-  if (characterPos >= 540) { // Adjusting the win condition for easier testing
-    showWinScreen();
-  }
 }
-
 void moveCompanionInGame(){
   // schiessen
-  //if (js_getButton()){
-    
-  //}
+  if ((js_getButton() && js_getDirection() != JS_NEUTRAL) || laser_active){
+    if (!laser_active){
+      laser_direction = js_getDirection();
+    }
+    laser_active = true;
+
+    if (laser_direction == JS_RIGHT){
+      laserX += 2;
+      if (laserX  > 170){
+        laser_active = false;
+      }
+    }
+
+    else if (laser_direction == JS_LEFT){
+      laserX -= 2;
+      if (laserX < -10){
+        laser_active = false;
+      }
+    }
+
+    else if (laser_direction == JS_UP){
+      laserY -= 2;
+      if (laserY < -10){
+        laser_active = false;
+      }
+    }
+
+    else if (laser_direction == JS_DOWN){
+      laserY += 2;
+      if (laserY > 130){
+        laser_active = false;
+      }
+    }
+  }
 
   if (js_getDirection() == JS_RIGHT){
     moveCompanion(speedComp, 0);
@@ -195,11 +231,6 @@ void moveCompanionInGame(){
   }
 }
 void game(){
-  // Start item if not active
-  if (!item->active){
-    initItem();
-  }
-
   // Show lives
   show_lives();
 
@@ -215,6 +246,17 @@ void game(){
   // Companion movement
   moveCompanionInGame();
 
+  // Start item if not active
+  if (!item->init){
+    initItem();
+  }
+
+  // flying object
+  flyingItem();
+
+  if (level1){
+    bombMovement();
+  }
   // Pick item
   pickItem();
 

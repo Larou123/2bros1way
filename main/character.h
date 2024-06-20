@@ -57,7 +57,7 @@ void drawCharacter() {
   }
 
   // If item picked, then draw it next to the character
-  if (itemPicked) {
+  if (item->picked) {
     item->itemX = characterX + (facingRight ? 27 : -5);
     item->itemY = characterY + 5;
     drawItem(item->itemX,item->itemY);  
@@ -146,6 +146,12 @@ void moveCompanion(int nx, int ny) {
 
   if (companionY > downLimit) {
     companionY = downLimit;
+  }
+
+  //set laser
+  if (!laser_active){
+    laserX = companionX + (flyRight ? companionWidht : 0);
+    laserY = companionY+20;
   }
 }
 
