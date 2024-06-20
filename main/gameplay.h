@@ -118,7 +118,7 @@ void moveInGame(){
   if ((buttonState & ARCADA_BUTTONMASK_B) && itemPicked) {
     isThrowing = true;
     itemPicked = false;
-    itemX += characterPos;
+    item->itemX += characterPos;
     if (isJumping){
       bouncePower = 2;
     } else {
@@ -143,13 +143,13 @@ void moveInGame(){
 
   // Item movement after being thrown
   if (wasThrown) {
-    itemX += throwVelocityX;
-    itemY += throwVelocityY;
+    item->itemX += throwVelocityX;
+    item->itemY += throwVelocityY;
 
     throwVelocityY += gravity;
 
-    if ((itemY + itemH) >= ground) {
-      itemY = ground - itemH;
+    if ((item->itemY + item->itemH) >= ground) {
+      item->itemY = ground - item->itemH;
 
       if (!hasBounced) {
         throwVelocityY = -bouncePower;
@@ -159,6 +159,7 @@ void moveInGame(){
         throwVelocityY = 0;
         wasThrown = false;
         bomb_expl = true;
+        item->active = false;
       }
     }
   }
@@ -194,6 +195,11 @@ void moveCompanionInGame(){
   }
 }
 void game(){
+  // Start item if not active
+  if (!item->active){
+    initItem();
+  }
+
   // Show lives
   show_lives();
 
@@ -208,6 +214,7 @@ void game(){
 
   // Companion movement
   moveCompanionInGame();
+
   // Pick item
   pickItem();
 

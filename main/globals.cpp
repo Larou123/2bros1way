@@ -1,8 +1,15 @@
 #include "globals.h"
+#include "item_img.h"
 
 Adafruit_Arcada arcada;
 Adafruit_NeoPixel neopixels = Adafruit_NeoPixel(NEOPIXEL_COUNT, NEOPIXEL_PIN, NEO_GRB + NEO_KHZ800);
 unsigned long frameDelay = 100; // Zeit zwischen den Frames in Millisekunden
+
+//GAME
+bool level1 = true;
+bool level2 = false;
+bool level3 = false;
+bool itemActive = false;
 
 // MAP
 int cloudX = 60;
@@ -57,7 +64,18 @@ bool hasBounced = false;
 
 bool bomb_expl = false;
 int expl_count = 0;
-bool item_active = true;
+bool item_active = false;
+
+
+Item item__ = {
+  .itemX = 0,
+  .itemY = 0,
+  .img = bomb_img,
+  .mask = bomb_img_mask,
+  .itemW = 0,
+  .itemH = 0,
+  .active = false
+};
 
 // ENEMY
 int enemyW = 10;

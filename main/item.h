@@ -10,12 +10,30 @@ const unsigned char *explosion_mask[] = {bombexpl1_mask,bombexpl2_mask,bombexpl3
 // Zeitsteuerung für die Animation
 unsigned long lastFrameChangeIt = 0;
 
+
 void drawItem(int x, int y) {
-  arcada.getCanvas()->drawRGBBitmap(x, y, bomb_img, bomb_img_mask, 16, 16);
+  arcada.getCanvas()->drawRGBBitmap(x, y, item->img, item->mask, item->itemW, item->itemH);
 }
 
+void initItem(){
+  if (level1 && !bomb_expl){
+    item->itemX = 60;
+    item->itemY = ground - 16;
+    item->img = bomb_img;
+    item->mask = bomb_img_mask;
+    item->itemH = 16;
+    item->itemW = 16;
+    item->active = true;
+  }
+  else if(level2){
+    level2 = false;
+  }
+  else if(level3){
+    level3 = false;
+  }
+}
 void pickItem() {
-    int itemTmp = itemX - characterPos;
+    int itemTmp = item->itemX - characterPos;
     if (!itemPicked) {
         if ((-32 <= characterX - itemTmp) && ((characterX - itemTmp) <= 32) && (arcada.readButtons() & ARCADA_BUTTONMASK_DOWN)) {
             itemPicked = true;
@@ -29,7 +47,7 @@ void bomb_explode(){
     unsigned long currentMillis = millis();
     if (currentMillis - lastFrameChangeIt >= 200) {
       lastFrameChangeIt = currentMillis;
-      arcada.getCanvas()->drawRGBBitmap(itemX-characterPos, itemY, explosion[expl_count], explosion_mask[expl_count], 25, 25);
+      arcada.getCanvas()->drawRGBBitmap(item->itemX-characterPos, item->itemY, explosion[expl_count], explosion_mask[expl_count], 25, 25);
       expl_count++;
     }
 

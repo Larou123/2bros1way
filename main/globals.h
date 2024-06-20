@@ -59,7 +59,10 @@ extern bool flyRight;
 // --------------------------------- GAMEPLAY ---------------------------------
 // ----------- VARIABLES
 extern bool inGame;
-
+extern bool level1;
+extern bool level2;
+extern bool level3;
+extern bool itemActive;
 // --------------------------------- MENU ---------------------------------
 // ----------- VARIABLES
 extern const char *menu_options[3];
@@ -85,6 +88,23 @@ extern float bouncePower;
 extern bool bomb_expl;
 extern int expl_count;
 extern bool item_active;
+
+typedef struct{
+  int itemX;
+  int itemY;
+  const unsigned short *img;
+  const unsigned char *mask;
+  int itemW;
+  int itemH;
+  bool active;
+} Item;
+
+//! Realizes a pointer to the Heap intHeap__.
+#define item (&item__)
+
+//! The Heap structure for the internal Heap.
+extern Item item__;
+
 // ----------- FUNCTIONS
 extern void drawItem(int x, int y);
 extern void pickItem();

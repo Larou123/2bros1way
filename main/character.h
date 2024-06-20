@@ -58,9 +58,9 @@ void drawCharacter() {
 
   // If item picked, then draw it next to the character
   if (itemPicked) {
-    itemX = characterX + (facingRight ? 27 : -5);
-    itemY = characterY + 5;
-    drawItem(itemX,itemY);  
+    item->itemX = characterX + (facingRight ? 27 : -5);
+    item->itemY = characterY + 5;
+    drawItem(item->itemX,item->itemY);  
   }
 }
 
