@@ -23,6 +23,7 @@ void drawBoss(){
         attack1_counter++;
         if (attack1_counter == 2){
           boss1Attack = false;
+          characterDamage = false;
           attack1_counter = 30;
         }
       }
@@ -56,6 +57,23 @@ void showBossHP(){
   }  
 }
 
+void boss1At(){
+  currentBossX = bossX-characterPos;
+  if (boss1Attack){
+    if (bossRight){
+      if (!characterDamage && (currentBossX + 50 + 10 >= characterX && currentBossX < characterX) && characterY > ground-32-5){
+        lives--;
+        characterDamage = true;
+      }
+    } else{
+      if (!characterDamage && (characterX+32 >= currentBossX - 26 && characterX < currentBossX) && characterY > ground-32-5){
+        lives--;
+        characterDamage = true;
+      }
+    }
+  }
+}
+
 void moveBoss(){
   currentBossX = bossX-characterPos;
   currentItemX = item->itemX-characterPos;
@@ -75,29 +93,22 @@ void moveBoss(){
     bossRight = true;
     }
 
-    //kollision
-    if (bomb_expl && !bossDamage && (abs(currentBossX - currentItemX) <= 20)){
-      bossHP -= 30;
+    //kollision für level1
+    if (level1){
+      if (bomb_expl && !bossDamage && (abs(currentBossX - currentItemX) <= 15)){
+      bossHP -= 100;
       bossDamage = true;
-      if (bossHP <= 0){
-        //wait till end bomb animation
-        bossDamage = false;
-        bossActive = false;
-        bossHP = 100;
-        showWinScreen();  
-      }
     }
-
+    boss1At();
     if (!boss1Attack){
       attack1_counter--;
       if (attack1_counter == 0){
         boss1Attack = true;
       }
     }
-      
-   
+    } else {
+
+    }
   }
 }
-
-
 #endif

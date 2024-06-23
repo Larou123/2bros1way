@@ -14,6 +14,7 @@ extern Adafruit_NeoPixel neopixels;
 extern unsigned long frameDelay;
 
 extern void showWinScreen();
+extern void showGameOverScreen();
 //! The enum of that consists of all possible directions from the joystick.
 typedef enum{
 	JS_LEFT,
@@ -47,6 +48,7 @@ extern bool wasJumping;
 extern int lives;
 extern int rightLimit;
 extern int leftLimit;
+extern bool characterDamage;
 
 // Sprite-Daten für die Laufanimation
 extern const unsigned short run_frame_0[1024];

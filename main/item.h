@@ -73,6 +73,10 @@ void bomb_explode(){
       expl_count = 0;
       bomb_expl = false;
       bossDamage = false;
+      //if boss killed, game win screen
+      if (bossHP <= 0){
+        showWinScreen();  
+      }
     }
   }
 }

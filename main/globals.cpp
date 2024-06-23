@@ -30,7 +30,7 @@ bool wasJumping = false;
 int lives = 5;
 int rightLimit = 50;
 int leftLimit = 20;
-
+bool characterDamage = false;
 // COMPANION
 int speedComp = 1;
 int companionX = 20;

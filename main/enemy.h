@@ -5,7 +5,7 @@
 
 void drawEnemy(){
   //arcada.getCanvas()->fillRect(enemyX-characterPos,enemyY,enemyW,enemyH,ARCADA_BLACK);
-  arcada.getCanvas()->drawRGBBitmap(enemyX-characterPos, enemyY-16, minienemy, minienemy_mask, 16, 16);
+  arcada.getCanvas()->drawRGBBitmap(enemyX-characterPos, enemyY-12, minienemy, minienemy_mask, 16, 16);
 }
 
 void moveEnemy(){

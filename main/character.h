@@ -90,10 +90,19 @@ void moveCharacter(int nx, int ny) {
 void show_lives() {
   neopixels.clear();
   for (uint8_t i = 0; i < lives; i++) {
-    neopixels.setPixelColor(i, neopixels.Color(0, 15, 0));
+    if (lives == 3){
+      //orange
+      neopixels.setPixelColor(i, neopixels.Color(15, 7, 0));
+    } else if (lives == 1 || lives == 2){
+      //red
+      neopixels.setPixelColor(i, neopixels.Color(15, 0, 0));
+    } else{
+      //green
+      neopixels.setPixelColor(i, neopixels.Color(0, 15, 0));
+    }
   }
   neopixels.show();
-  if (lives == 0) lives = 5;
+  if (lives == 0) showGameOverScreen();
 }
 
 //--------------------------- VOGEL -------------------------------------------------------------

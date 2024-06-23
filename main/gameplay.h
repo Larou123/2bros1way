@@ -44,7 +44,41 @@ void showWinScreen() {
       rightLimit = 50;
       leftLimit = 20;
       characterX = 20;
+      lives = 5;
       inGame = true;
+      bossDamage = false;
+      bossActive = false;
+      bossHP = 100;
+      updateDisplay();
+      break;
+    }
+    yield();
+  }
+}
+
+// Function to show "GAME OVER" screen
+void showGameOverScreen() {
+  arcada.getCanvas()->fillScreen(ARCADA_BLACK);
+  arcada.getCanvas()->setTextColor(ARCADA_RED);
+  arcada.getCanvas()->setCursor(50, 40);
+  arcada.getCanvas()->println("GAME OVER");
+  arcada.getCanvas()->setCursor(30, 60);
+  arcada.getCanvas()->println("Press A to Restart");
+  arcada.blitFrameBuffer(0, 0, true);
+
+  while (true) {
+    uint8_t buttonState = arcada.readButtons();
+    if (buttonState & ARCADA_BUTTONMASK_A) {
+      // Reset game state and restart
+      characterPos = 0;  // Reset character position
+      rightLimit = 50;
+      leftLimit = 20;
+      characterX = 20;
+      lives = 5;
+      inGame = true;
+      bossDamage = false;
+      bossActive = false;
+      bossHP = 100;
       updateDisplay();
       break;
     }
@@ -134,7 +168,7 @@ void bombMovement(){
     item->picked = false;
     item->itemX += characterPos;
     if (bossActive){
-      throwPower = 1.5;
+      throwPower = 1;
       bouncePower = 0;
     } else {
       throwPower = 3;
