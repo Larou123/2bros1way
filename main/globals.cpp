@@ -59,7 +59,7 @@ float throwVelocityY = 0;
 float throwPower = 3;
 float bouncePower = 1;
 bool hasBounced = false;
-
+float currentItemX = 0;
 bool bomb_expl = false;
 int expl_count = 0;
 
@@ -96,4 +96,5 @@ bool bossRight = true;
 bool bossActive = false;
 float currentBossX = bossX;
 float bossHP = 100;
+bool bossDamage = false;
 

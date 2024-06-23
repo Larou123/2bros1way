@@ -41,6 +41,9 @@ void showWinScreen() {
     if (buttonState & ARCADA_BUTTONMASK_A) {
       // Reset game state and restart
       characterPos = 0;  // Reset character position
+      rightLimit = 50;
+      leftLimit = 20;
+      characterX = 20;
       inGame = true;
       updateDisplay();
       break;
@@ -130,11 +133,18 @@ void bombMovement(){
     isThrowing = true;
     item->picked = false;
     item->itemX += characterPos;
+    if (bossActive){
+      throwPower = 1.5;
+      bouncePower = 0;
+    } else {
+      throwPower = 3;
+    }
     if (isJumping){
       bouncePower = 2;
     } else {
       bouncePower = 1;
     }
+    
   }
 
   // Item movement
@@ -248,7 +258,8 @@ void game(){
   moveCompanionInGame();
 
   // Start item if not active
-  if (!item->init){
+  if (!item->active && !bomb_expl){
+    // nur einmal mit !item->init
     initItem();
   }
 
@@ -266,8 +277,6 @@ void game(){
 
   // Boss movement
   moveBoss();
-
-  
 
   // Update display
   updateDisplay();

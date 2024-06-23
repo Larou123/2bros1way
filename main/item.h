@@ -17,7 +17,7 @@ void drawItem(int x, int y) {
 
 void initItem(){
   if (level1){
-    item->itemX = 170;
+    item->itemX = 170 + characterPos;
     item->itemY = 20;
     item->img = bomb_img;
     item->mask = bomb_img_mask;
@@ -46,7 +46,7 @@ void pickItem() {
 void flyingItem(){
   // item flies
   if (item->flying){
-    if (item->itemX > 30){
+    if (item->itemX - characterPos > 30){
       item->itemX -= 1;
     }
     // item falls
@@ -72,6 +72,7 @@ void bomb_explode(){
     if (expl_count == 3){
       expl_count = 0;
       bomb_expl = false;
+      bossDamage = false;
     }
   }
 }

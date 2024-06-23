@@ -3,7 +3,7 @@
 
 #include <Adafruit_Arcada.h>
 #include <Adafruit_NeoPixel.h>
-
+#include <stdlib.h>
 
 // Arcada and Neopixel defines
 #define NEOPIXEL_PIN    8
@@ -13,6 +13,7 @@ extern Adafruit_Arcada arcada;
 extern Adafruit_NeoPixel neopixels;
 extern unsigned long frameDelay;
 
+extern void showWinScreen();
 //! The enum of that consists of all possible directions from the joystick.
 typedef enum{
 	JS_LEFT,
@@ -98,6 +99,7 @@ extern float throwVelocity;
 extern float throwPower;
 extern bool hasBounced;
 extern float bouncePower;
+extern float currentItemX;
 
 extern bool bomb_expl;
 extern int expl_count;
@@ -149,4 +151,5 @@ extern int distanceboss;
 extern bool bossActive;
 extern float currentBossX;
 extern float bossHP;
+extern bool bossDamage;
 #endif
