@@ -23,7 +23,7 @@ void showBossHP(){
 
 void moveBoss(){
   currentBossX = bossX-characterPos;
-  currentItemX = item->itemX;
+  currentItemX = item->itemX-characterPos;
   if (currentBossX - (characterX+characterWidht) < 60){
     bossActive = true;
     leftLimit = 15;
