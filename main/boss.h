@@ -96,7 +96,7 @@ void moveBoss(){
     //kollision für level1
     if (level1){
       if (bomb_expl && !bossDamage && (abs(currentBossX - currentItemX) <= 15)){
-      bossHP -= 100;
+      bossHP -= 30;
       bossDamage = true;
     }
     boss1At();
