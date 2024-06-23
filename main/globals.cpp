@@ -95,4 +95,5 @@ float bossSpeed = 0.5;
 bool bossRight = true;
 bool bossActive = false;
 float currentBossX = bossX;
+float bossHP = 100;
 

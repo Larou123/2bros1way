@@ -148,4 +148,5 @@ extern bool bossRight;
 extern int distanceboss;
 extern bool bossActive;
 extern float currentBossX;
+extern float bossHP;
 #endif

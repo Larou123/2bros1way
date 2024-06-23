@@ -21,6 +21,7 @@ void updateDisplay(){
   // Bomb explosion
   bomb_explode();
   //laser
+  showBossHP();
   arcada.getCanvas()->fillCircle(laserX,laserY,3,ARCADA_BLUE);
   arcada.blitFrameBuffer(0, 0, true);
 }
@@ -265,6 +266,8 @@ void game(){
 
   // Boss movement
   moveBoss();
+
+  
 
   // Update display
   updateDisplay();
