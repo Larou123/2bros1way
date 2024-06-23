@@ -92,9 +92,10 @@ int bossH = 50;
 float bossX = 530;
 int bossY = ground - bossH;
 float bossSpeed = 0.5;
-bool bossRight = true;
+bool bossRight = false;
 bool bossActive = false;
 float currentBossX = bossX;
 float bossHP = 100;
 bool bossDamage = false;
-
+bool boss1Attack = false;
+int attack1_counter = 30;

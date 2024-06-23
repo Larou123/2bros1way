@@ -97,7 +97,7 @@ void show_lives() {
 }
 
 //--------------------------- VOGEL -------------------------------------------------------------
-// Sprites für die Laufanimation
+// Sprites für die Flieganimation
 const unsigned short *flyRightSprites[] = {companionRightUp, companionRightDown};
 const unsigned short *flyLeftSprites[] = {companionLeftUp, companionLeftDown};
 const unsigned char *flyRightMasks[] = {companionRightUp_mask, companionRightDown_mask};

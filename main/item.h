@@ -52,7 +52,7 @@ void flyingItem(){
     // item falls
     else {
       if (item->itemY < ground - 16){
-        item->itemY += 1;
+        item->itemY += 2;
       } else {
         item->flying = false;
       }     

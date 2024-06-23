@@ -152,4 +152,7 @@ extern bool bossActive;
 extern float currentBossX;
 extern float bossHP;
 extern bool bossDamage;
+extern bool bossRight;
+extern bool boss1Attack;
+extern int attack1_counter;
 #endif
