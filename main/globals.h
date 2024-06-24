@@ -133,7 +133,8 @@ extern void pickItem();
 extern void bomb_explode();
 // --------------------------------- ENEMY ---------------------------------
 // ----------- VARIABLES
-extern float enemyX;
+extern float enemyX1;
+extern float enemyX2;
 extern int enemyY;
 extern int enemyW;
 extern int enemyH;
@@ -157,4 +158,12 @@ extern bool bossDamage;
 extern bool bossRight;
 extern bool boss1Attack;
 extern int attack1_counter;
+
+// OBSTACLES
+extern int kaktusX1;
+extern int kaktusX2;
+
+extern int hydrantX;
+extern bool damageAgain;
+extern int damageCounter;
 #endif

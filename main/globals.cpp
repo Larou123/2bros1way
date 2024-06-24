@@ -78,9 +78,10 @@ Item item__ = {
 };
 
 // ENEMY
-int enemyW = 10;
-int enemyH = 5;
-float enemyX = 100;
+int enemyW = 16;
+int enemyH = 16;
+float enemyX1 = 80;
+float enemyX2 = 380;
 int enemyY = ground - enemyH;
 float enemySpeed = 0.5;
 bool movingRight = true;
@@ -99,3 +100,11 @@ float bossHP = 100;
 bool bossDamage = false;
 bool boss1Attack = false;
 int attack1_counter = 30;
+
+// OBSTACLES
+int kaktusX1 = 150;
+int kaktusX2 = 300;
+
+int hydrantX = 230;
+int damageCounter = 60;
+bool damageAgain = true;
