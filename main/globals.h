@@ -106,7 +106,7 @@ extern float currentItemX;
 extern bool bomb_expl;
 extern int expl_count;
 extern bool item_active;
-
+extern bool itemCollision;
 typedef struct{
   float itemX;
   int itemY;

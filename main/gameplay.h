@@ -49,6 +49,8 @@ void showWinScreen() {
       bossDamage = false;
       bossActive = false;
       bossHP = 100;
+      bossX = 530;
+      item->active = false;
       updateDisplay();
       break;
     }
@@ -79,6 +81,8 @@ void showGameOverScreen() {
       bossDamage = false;
       bossActive = false;
       bossHP = 100;
+      bossX = 530;
+      item->active = false;
       updateDisplay();
       break;
     }

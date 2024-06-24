@@ -12,7 +12,12 @@ unsigned long lastFrameChangeIt = 0;
 
 
 void drawItem(int x, int y) {
-  arcada.getCanvas()->drawRGBBitmap(x, y, item->img, item->mask, item->itemW, item->itemH);
+  if (item->flying && item->itemY == 20){
+    //bomb, we have to adjust it, we have to save the img to item->img, like down
+    arcada.getCanvas()->drawRGBBitmap(x, y,fly_bomb, fly_bomb_mask, 20, 20);
+  } else{
+    arcada.getCanvas()->drawRGBBitmap(x, y, item->img, item->mask, item->itemW, item->itemH);
+  }
 }
 
 void initItem(){
@@ -46,8 +51,11 @@ void pickItem() {
 void flyingItem(){
   // item flies
   if (item->flying){
-    if (item->itemX - characterPos > 30){
+    if (!itemCollision){
       item->itemX -= 1;
+      if (item->itemX-characterPos <= -50){
+        item->active = false;
+      }
     }
     // item falls
     else {
@@ -55,6 +63,7 @@ void flyingItem(){
         item->itemY += 2;
       } else {
         item->flying = false;
+        itemCollision = false;
       }     
     }
   }

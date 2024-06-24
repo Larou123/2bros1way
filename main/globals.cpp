@@ -62,6 +62,7 @@ bool hasBounced = false;
 float currentItemX = 0;
 bool bomb_expl = false;
 int expl_count = 0;
+bool itemCollision = false;
 
 Item item__ = {
   .itemX = 0,

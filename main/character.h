@@ -134,6 +134,17 @@ void drawCompanion() {
   //arcada.getCanvas()->fillRect(companionX, companionY,companionWidht, companionHeigh,ARCADA_WHITE);
 }
 
+void laserCollision(){
+  if (item->itemX-characterPos >= 0 && item->itemX-characterPos <= 155 && laser_active && !itemCollision &&  (abs(laserX+3 - (item->itemX-characterPos)) <= 2 || abs(laserX - (item->itemX-characterPos)-item->itemW) <= 2) && abs(laserY - item->itemY) <= 16){
+    itemCollision = true;
+  }
+  
+  if (laser_active && !bossDamage && laserY+2 >= bossY+20 && laserX >= bossX - characterPos && laserX <= bossX-characterPos+29){
+    bossHP -= 20;
+    bossDamage = true;
+  }
+}
+
 // Move character
 void moveCompanion(int nx, int ny) {
   // Update character position
@@ -159,9 +170,11 @@ void moveCompanion(int nx, int ny) {
 
   //set laser
   if (!laser_active){
-    laserX = companionX + (flyRight ? companionWidht : 0);
+    laserX = companionX + (flyRight ? companionWidht+3 : 0);
     laserY = companionY+20;
+    bossDamage = false;
   }
-}
 
+  laserCollision();
+}
 #endif
