@@ -15,6 +15,36 @@ void menu(){
     inMenu = false;
     inGame = true;
     updateDisplay();
+  } else if (menu_opt == 1){
+    // Reset game state and restart
+    characterPos = 0;  // Reset character position
+    rightLimit = 50;
+    leftLimit = 20;
+    characterX = 20;
+    lives = 5;
+    bossDamage = false;
+    bossActive = false;
+    bossHP = 100;
+    bossX = 530;
+    item->active = false;
+    inMenu = false;
+    inGame = true;
+  } else if (menu_opt == 2){
+    // Reset game state and restart
+    characterPos = 0;  // Reset character position
+    rightLimit = 50;
+    leftLimit = 20;
+    characterX = 20;
+    lives = 5;
+    bossDamage = false;
+    bossActive = false;
+    bossHP = 100;
+    bossX = 530;
+    item->active = false;
+    level1 = true;
+    level2 = false;
+    inMenu = false;
+    inCover = true;
   }
 }
 

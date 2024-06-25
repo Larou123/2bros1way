@@ -13,9 +13,12 @@ extern Adafruit_Arcada arcada;
 extern Adafruit_NeoPixel neopixels;
 extern unsigned long frameDelay;
 
+extern bool inCover;
 extern void showWinScreen();
 extern void showGameOverScreen();
 extern void startLevel2Screen(); 
+extern void showCover();
+
 //! The enum of that consists of all possible directions from the joystick.
 typedef enum{
 	JS_LEFT,

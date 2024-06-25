@@ -10,6 +10,8 @@
 #include "enemy.h"
 #include "boss.h"
 #include "joystick.h"
+#include "cover.h"
+
 
 // Help function to update display
 void updateDisplay(){
@@ -24,6 +26,37 @@ void updateDisplay(){
   showBossHP();
   arcada.getCanvas()->fillCircle(laserX,laserY,3,ARCADA_BLUE);
   arcada.blitFrameBuffer(0, 0, true);
+}
+
+int startCounter = 100;
+// Show cover
+void showCover() {
+  while (true) {
+    if (arcada.readButtons() & ARCADA_BUTTONMASK_START) {
+      //if (!(arcada.readButtons() & ARCADA_BUTTONMASK_START)){
+        inCover = false;
+        inGame = true;
+        updateDisplay();
+        break;
+      //}
+    }
+    arcada.getCanvas()->drawRGBBitmap(0, 0 , gameCover, 160,128);
+    if (startCounter <= 50){
+      arcada.getCanvas()->setTextColor(ARCADA_BLACK);
+      arcada.getCanvas()->setCursor(2, 85);
+      arcada.getCanvas()->println("Press");
+      arcada.getCanvas()->setCursor(2, 95);
+      arcada.getCanvas()->println("START!");
+    }
+
+    if (startCounter == 0){
+      startCounter = 100;
+    }
+    
+    arcada.blitFrameBuffer(0, 0, true);
+    startCounter--;
+    yield();
+  }
 }
 
 // Function to show "You Win" screen

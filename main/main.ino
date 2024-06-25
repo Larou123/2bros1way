@@ -42,6 +42,8 @@ void loop() {
         menu();
     } else if (inGame) {
         game();
+    } else if (inCover){
+      showCover();
     }
 
     // Perform standard board functions

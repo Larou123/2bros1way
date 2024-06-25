@@ -47,8 +47,9 @@ Direction laser_direction = JS_NEUTRAL;
 
 // GAME
 bool inGame = false;
-const char *menu_options[3] = {"Start", "Options", "Credits"};
-bool inMenu = true;
+const char *menu_options[3] = {"Start", "Restart", "Quit"};
+bool inMenu = false;
+bool inCover = true;
 
 // ITEM
 bool isThrowing = false;
