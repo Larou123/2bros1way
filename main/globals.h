@@ -15,6 +15,7 @@ extern unsigned long frameDelay;
 
 extern void showWinScreen();
 extern void showGameOverScreen();
+extern void startLevel2Screen(); 
 //! The enum of that consists of all possible directions from the joystick.
 typedef enum{
 	JS_LEFT,

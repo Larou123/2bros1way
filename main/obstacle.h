@@ -67,5 +67,4 @@ void drawObstacleL1(){
   obstacleCollisionL1();
 }
 
-
 #endif

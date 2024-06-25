@@ -84,7 +84,7 @@ void bomb_explode(){
       bossDamage = false;
       //if boss killed, game win screen
       if (bossHP <= 0){
-        showWinScreen();  
+        startLevel2Screen();  
       }
     }
   }

@@ -58,6 +58,41 @@ void showWinScreen() {
   }
 }
 
+// Function to show "You Win" screen
+void startLevel2Screen() {
+  arcada.getCanvas()->fillScreen(ARCADA_DARKGREEN);
+  arcada.getCanvas()->setTextColor(ARCADA_WHITE);
+  arcada.getCanvas()->setCursor(30, 40);
+  arcada.getCanvas()->println("Level 1 Completed!");
+  arcada.getCanvas()->setCursor(10, 60);
+  arcada.getCanvas()->setTextColor(ARCADA_GREENYELLOW);
+  arcada.getCanvas()->println("Press A to start Level 2");
+  arcada.blitFrameBuffer(0, 0, true);
+
+  while (true) {
+    uint8_t buttonState = arcada.readButtons();
+    if (buttonState & ARCADA_BUTTONMASK_A) {
+      // Reset game state and restart
+      characterPos = 0;  // Reset character position
+      rightLimit = 50;
+      leftLimit = 20;
+      characterX = 20;
+      lives = 5;
+      inGame = true;
+      bossDamage = false;
+      bossActive = false;
+      bossHP = 100;
+      bossX = 530;
+      level1 = false;
+      level2 = true;
+      item->active = false;
+      updateDisplay();
+      break;
+    }
+    yield();
+  }
+}
+
 // Function to show "GAME OVER" screen
 void showGameOverScreen() {
   arcada.getCanvas()->fillScreen(ARCADA_BLACK);

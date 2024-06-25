@@ -145,7 +145,7 @@ void laserCollision(){
     //if boss killed, game win screen
     if (bossHP <= 0){
       arcada.getCanvas()->fillRoundRect(10,ground+8,(bossHP/100)*140,8,8,ARCADA_ORANGE);
-      showWinScreen();
+      startLevel2Screen();
     }
     bossDamageLaser = true;
   }
