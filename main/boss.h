@@ -41,6 +41,8 @@ void drawBoss(){
         arcada.getCanvas()->drawRGBBitmap(bossX-characterPos, ground-32, boss1_left, boss1_left_mask, 32, 32);
       }
     }
+  } else if(level2){
+    arcada.getCanvas()->drawRGBBitmap(bossX-characterPos, ground-32, boss2, boss2_mask, 32, 32);
   }
   
 }

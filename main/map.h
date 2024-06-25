@@ -17,22 +17,26 @@ void drawCloud(){
 // Draws map
 void drawMap() {
   // Draws from image
-  arcada.getCanvas()->drawRGBBitmap(0, 0 , background1, 160,81);
-  arcada.getCanvas()->drawRGBBitmap(0-characterPos, 81 , ground1, 320,48);
-  arcada.getCanvas()->drawRGBBitmap(320-characterPos, 81 , ground1, 320,48);
+  if (level1){
+    arcada.getCanvas()->drawRGBBitmap(0, 0 , background1, 160,81);
+    arcada.getCanvas()->drawRGBBitmap(0-characterPos, 81 , ground1, 320,48);
+    arcada.getCanvas()->drawRGBBitmap(320-characterPos, 81 , ground1, 320,48);
+    // Draw cloud
+    drawCloud();
+    // Draw obstacle
+    drawObstacleL1();
+  } else if(level2){
+    arcada.getCanvas()->drawRGBBitmap(0, 0 , background2, 160,81);
+    arcada.getCanvas()->drawRGBBitmap(0-characterPos, 81 , ground2, 320,48);
+    arcada.getCanvas()->drawRGBBitmap(320-characterPos, 81 , ground2, 320,48);
+  }
   
-
-  // Draw cloud
-  drawCloud();
-
   // Draw item
   if (!item->picked && item->active){
     drawItem(item->itemX-characterPos,item->itemY);
   }
   
   
-  // Draw obstacle
-  drawObstacle();
 }
 
 #endif

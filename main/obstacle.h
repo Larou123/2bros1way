@@ -9,7 +9,7 @@
 unsigned long lastFrameChangeH = 0;
 int currentSpriteH = 0;
 
-void obstacleCollision(){
+void obstacleCollisionL1(){
   if (damageAgain && !characterDamage && characterX + 26 >= kaktusX1-characterPos && characterX <= kaktusX1-characterPos + 17 && characterY + 32 >= ground-10){
     lives--;
     damageAgain = false;
@@ -33,7 +33,7 @@ void obstacleCollision(){
   }
 }
 
-void drawObstacle(){
+void drawObstacleL1(){
   //arcada.getCanvas()->fillTriangle(320-characterPos, ground+1, 340-characterPos,ground+1,330-characterPos,ground-10,ARCADA_BLACK);
   // KAKTUS
   arcada.getCanvas()->drawRGBBitmap(kaktusX1-characterPos, ground-27, kaktus, kaktus_mask, 27, 27);
@@ -64,7 +64,7 @@ void drawObstacle(){
     hydrantCounter--;
   }
   // comprove 
-  obstacleCollision();
+  obstacleCollisionL1();
 }
 
 

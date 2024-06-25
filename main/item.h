@@ -33,7 +33,7 @@ void initItem(){
     item->flying = true;
   }
   else if(level2){
-    level2 = false;
+    level2 = true;
   }
   else if(level3){
     level3 = false;
