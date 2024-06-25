@@ -141,6 +141,8 @@ extern int enemyH;
 extern float enemySpeed;
 extern bool movingRight;
 extern int distanceEnemy;
+extern bool damageAgainEn;
+extern int damageCounterEn;
 
 // --------------------------------- BOSS ---------------------------------
 // ----------- VARIABLES
@@ -155,6 +157,7 @@ extern bool bossActive;
 extern float currentBossX;
 extern float bossHP;
 extern bool bossDamage;
+extern bool bossDamageLaser;
 extern bool bossRight;
 extern bool boss1Attack;
 extern int attack1_counter;
@@ -166,4 +169,6 @@ extern int kaktusX2;
 extern int hydrantX;
 extern bool damageAgain;
 extern int damageCounter;
+extern bool hydrantActive;
+extern int hydrantCounter;
 #endif

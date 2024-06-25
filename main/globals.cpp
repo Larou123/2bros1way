@@ -87,6 +87,8 @@ int enemyY = ground - enemyH;
 float enemySpeed = 0.5;
 bool movingRight = true;
 int distanceEnemy = 25;
+int damageCounterEn = 60;
+bool damageAgainEn = true;
 
 // BOSS
 int bossW = 30;
@@ -99,6 +101,7 @@ bool bossActive = false;
 float currentBossX = bossX;
 float bossHP = 100;
 bool bossDamage = false;
+bool bossDamageLaser = false;
 bool boss1Attack = false;
 int attack1_counter = 30;
 
@@ -109,3 +112,5 @@ int kaktusX2 = 300;
 int hydrantX = 230;
 int damageCounter = 60;
 bool damageAgain = true;
+bool hydrantActive = false;
+int hydrantCounter = 45;

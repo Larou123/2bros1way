@@ -13,12 +13,19 @@ void drawEnemy(){
 }
 
 void enemyCollision(){
-  if (!characterDamage && !isJumping && characterX + 25 >= enemyX1-characterPos && characterX <= enemyX1-characterPos + 5){
+  if (damageAgainEn && !isJumping && characterX + 25 >= enemyX1-characterPos && characterX <= enemyX1-characterPos + 5){
     lives--;
-    characterDamage = true;
-  } else if (!characterDamage && !isJumping && characterX + 25 >= enemyX2-characterPos && characterX <= enemyX2-characterPos + 5){
+    damageAgainEn = false;
+  } else if (damageAgainEn && !isJumping && characterX + 25 >= enemyX2-characterPos && characterX <= enemyX2-characterPos + 5){
     lives--;
-    characterDamage = true;
+    damageAgainEn = false;
+  }
+
+  if (damageCounterEn == 0){
+    damageCounterEn = 60;
+    damageAgainEn = true;
+  } else {
+    damageCounterEn--;
   }
 }
 
@@ -38,7 +45,6 @@ void moveEnemy(){
   if (distanceEnemy == 0){
     movingRight = !movingRight;
     distanceEnemy = 25;
-    characterDamage = false;
   }
 }
 

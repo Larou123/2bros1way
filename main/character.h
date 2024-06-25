@@ -139,9 +139,9 @@ void laserCollision(){
     itemCollision = true;
   }
   
-  if (laser_active && !bossDamage && laserY+2 >= bossY+20 && laserX >= bossX - characterPos && laserX <= bossX-characterPos+29){
+  if (laser_active && !bossDamageLaser && laserY+2 >= bossY+20 && laserX >= bossX - characterPos && laserX <= bossX-characterPos+29){
     bossHP -= 20;
-    bossDamage = true;
+    bossDamageLaser = true;
   }
 }
 
@@ -172,7 +172,7 @@ void moveCompanion(int nx, int ny) {
   if (!laser_active){
     laserX = companionX + (flyRight ? companionWidht+3 : 0);
     laserY = companionY+20;
-    bossDamage = false;
+    bossDamageLaser = false;
   }
 
   laserCollision();
