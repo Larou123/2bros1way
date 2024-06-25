@@ -19,8 +19,11 @@ void obstacleCollision(){
   }
 
   //water collision
-  if (hydrantActive && currentSpriteH == 1){
-    
+  if (damageAgain && hydrantActive && currentSpriteH == 1){
+    if (characterX+27 >= hydrantX-characterPos && characterX <= hydrantX+13-characterPos){
+      lives--;
+      damageAgain = false;
+    }
   }
   if (damageCounter == 0){
     damageCounter = 60;

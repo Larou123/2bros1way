@@ -226,7 +226,7 @@ void bombMovement(){
 }
 void moveCompanionInGame(){
   // schiessen
-  if ((js_getButton() && js_getDirection() != JS_NEUTRAL) || laser_active){
+  if ((js_getButton()) || laser_active){
     if (!laser_active){
       laser_direction = js_getDirection();
     }
@@ -253,7 +253,7 @@ void moveCompanionInGame(){
       }
     }
 
-    else if (laser_direction == JS_DOWN){
+    else {
       laserY += 2;
       if (laserY > 130){
         laser_active = false;

@@ -42,6 +42,7 @@ void drawBoss(){
       }
     }
   }
+  
 }
 
 void showBossHP(){

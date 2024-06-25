@@ -139,8 +139,14 @@ void laserCollision(){
     itemCollision = true;
   }
   
-  if (laser_active && !bossDamageLaser && laserY+2 >= bossY+20 && laserX >= bossX - characterPos && laserX <= bossX-characterPos+29){
+
+  if (laser_active && !bossDamageLaser && laserY+2 >= bossY+20 && laserX >= bossX-characterPos && laserX+3 <= bossX+32-characterPos){
     bossHP -= 20;
+    //if boss killed, game win screen
+    if (bossHP <= 0){
+      arcada.getCanvas()->fillRoundRect(10,ground+8,(bossHP/100)*140,8,8,ARCADA_ORANGE);
+      showWinScreen();
+    }
     bossDamageLaser = true;
   }
 }
