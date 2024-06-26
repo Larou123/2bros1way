@@ -10,6 +10,7 @@
 #include "enemy.h"
 #include "boss.h"
 #include "joystick.h"
+#include "music.h"
 
 void setup() {
     // Initialize Arcada library
@@ -17,6 +18,8 @@ void setup() {
         errorReporter("Fatal error: Arcada library failed.");
     }
 
+    loadMusic();
+    
     // Enable backlight
     arcada.setBacklight(255);
 
@@ -37,6 +40,18 @@ void setup() {
 }
 
 void loop() {
+  //-----------------------Music------------------------
+  //prepare music buffer if needed
+  if(musicPlaying){
+    if(arcada.WavReadyForData()){
+      wavStatus status = arcada.WavReadFile();
+      }
+    }
+  //enable music at the end of track
+  if(!musicPlaying){
+    loadMusic();
+    }
+
     // Mode selection
     if (inMenu) {
         menu();

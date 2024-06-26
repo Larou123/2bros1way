@@ -13,6 +13,9 @@ extern Adafruit_Arcada arcada;
 extern Adafruit_NeoPixel neopixels;
 extern unsigned long frameDelay;
 
+extern File musicDatei;
+extern bool musicPlaying;
+
 extern bool inCover;
 extern void showWinScreen();
 extern void showGameOverScreen();
@@ -175,4 +178,8 @@ extern bool damageAgain;
 extern int damageCounter;
 extern bool hydrantActive;
 extern int hydrantCounter;
+
+// --------------------------------- Music ---------------------------------
+
+
 #endif

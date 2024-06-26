@@ -5,6 +5,9 @@ Adafruit_Arcada arcada;
 Adafruit_NeoPixel neopixels = Adafruit_NeoPixel(NEOPIXEL_COUNT, NEOPIXEL_PIN, NEO_GRB + NEO_KHZ800);
 unsigned long frameDelay = 100; // Zeit zwischen den Frames in Millisekunden
 
+File musicDatei;
+bool musicPlaying;
+
 //GAME
 bool level1 = true;
 bool level2 = false;
