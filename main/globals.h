@@ -169,7 +169,11 @@ extern bool bossDamageLaser;
 extern bool bossRight;
 extern bool boss1Attack;
 extern int attack1_counter;
-
+extern bool boss2Attack;
+extern int attack2_counter;
+extern int fireCanonX;
+extern const int fireCanonY;
+extern bool fireCanon;
 // OBSTACLES
 extern int kaktusX1;
 extern int kaktusX2;

@@ -110,7 +110,11 @@ bool bossDamage = false;
 bool bossDamageLaser = false;
 bool boss1Attack = false;
 int attack1_counter = 30;
-
+bool boss2Attack = false;
+int attack2_counter = 30;
+int fireCanonX = 0;
+const int fireCanonY = 20;
+bool fireCanon = false;
 // OBSTACLES
 int kaktusX1 = 150;
 int kaktusX2 = 300;

@@ -12,6 +12,46 @@ const unsigned char *attack1LeftMasks[] = {boss1_midanim_left_mask, boss1_endani
 // Zeitsteuerung für die Animation
 unsigned long lastFrameChangeAt1 = 0;
 int currentSpriteAt1 = 0;
+
+// Sprites für die Attack 1 anim
+const unsigned short *attack2RightSprites[] = {fourArms_animation_right, fourArms_canon_right,fourArms_right};
+const unsigned short *attack2LeftSprites[] = {fourArms_animation_left, fourArms_canon_left,fourArms_left};
+const unsigned char *attack2RightMasks[] = {fourArms_animation_right_mask, fourArms_canon_right_mask,fourArms_right_mask};
+const unsigned char *attack2LeftMasks[] = {fourArms_animation_left_mask, fourArms_canon_left_mask,fourArms_left_mask};
+
+// Zeitsteuerung für die Animation
+unsigned long lastFrameChangeAt2 = 0;
+int currentSpriteAt2 = 0;
+int fireCanonSpeed = 1;
+bool fireCanonRight = bossRight;
+
+void drawFireCanon(){
+  if (fireCanon){
+    if (bossHP < 66){
+      fireCanonSpeed = 2;
+    } else if (bossHP < 33){
+      fireCanonSpeed = 3;
+    }
+    if (fireCanonRight){
+      fireCanonX += fireCanonSpeed;
+      if (fireCanonX+30 > 160){
+        fireCanon = false;
+        boss2Attack = false;
+        attack2_counter = 50;
+      }
+      arcada.getCanvas()->drawRGBBitmap(fireCanonX, ground-32,fire_canon_right, fire_canon_right_mask, 27, 10);
+    } else {
+      fireCanonX -= fireCanonSpeed;
+      if (fireCanonX-3 < 0){
+        fireCanon = false;
+        boss2Attack = false;
+        attack2_counter = 50;
+      }
+      arcada.getCanvas()->drawRGBBitmap(fireCanonX, ground-32,fire_canon_left, fire_canon_left_mask, 27, 10);
+    }
+
+  }
+}
 void drawBoss(){
   //arcada.getCanvas()->fillRect(bossX-characterPos,bossY,bossW,bossH,ARCADA_BLACK);
   if (level1){
@@ -42,7 +82,44 @@ void drawBoss(){
       }
     }
   } else if(level2){
-    arcada.getCanvas()->drawRGBBitmap(bossX-characterPos, ground-32, boss2, boss2_mask, 32, 32);
+    if (boss2Attack && !fireCanon){
+      unsigned long currentMillisAt2 = millis();
+      if (currentMillisAt2 - lastFrameChangeAt2 >= 300) {
+        lastFrameChangeAt2 = currentMillisAt2;
+        currentSpriteAt2 = (currentSpriteAt2 + 1) % 3; // Wechsel zwischen den Lauf-Sprites
+        attack2_counter++;
+
+        if ((currentSpriteAt2 + 1) == 3){
+          characterDamage = false;
+
+          fireCanon = true;
+          fireCanonRight = bossRight;
+          if (fireCanonRight){
+            fireCanonX = bossX-characterPos+30;
+          } else {
+            fireCanonX = bossX-characterPos-17;
+          }
+        }
+      }
+
+      if (bossRight){
+        fireCanonX = bossX-characterPos+30;
+        arcada.getCanvas()->drawRGBBitmap(fireCanonX, ground-32,fire_canon_right , fire_canon_right_mask, 27, 10);
+        arcada.getCanvas()->drawRGBBitmap(bossX-characterPos, ground-40,attack2RightSprites[currentSpriteAt2] , attack2RightMasks[currentSpriteAt2], 40, 40);
+      } else {
+        fireCanonX = bossX-characterPos-17;
+        arcada.getCanvas()->drawRGBBitmap(fireCanonX, ground-32,fire_canon_left , fire_canon_left_mask, 27, 10);
+        arcada.getCanvas()->drawRGBBitmap(bossX-characterPos, ground-40, attack2LeftSprites[currentSpriteAt2] , attack2LeftMasks[currentSpriteAt2], 40, 40);
+      }
+
+    } else {
+      if (bossRight){
+          arcada.getCanvas()->drawRGBBitmap(bossX-characterPos, ground-40, fourArms_right, fourArms_right_mask, 40, 40);
+      } else {
+        arcada.getCanvas()->drawRGBBitmap(bossX-characterPos, ground-40, fourArms_left, fourArms_left_mask, 40, 40);
+      }
+    }
+    drawFireCanon();
   }
   
 }
@@ -63,6 +140,23 @@ void showBossHP(){
 void boss1At(){
   currentBossX = bossX-characterPos;
   if (boss1Attack){
+    if (bossRight){
+      if (!characterDamage && (currentBossX + 50 + 10 >= characterX && currentBossX < characterX) && characterY > ground-32-5){
+        lives--;
+        characterDamage = true;
+      }
+    } else{
+      if (!characterDamage && (characterX+32 >= currentBossX - 26 && characterX < currentBossX) && characterY > ground-32-5){
+        lives--;
+        characterDamage = true;
+      }
+    }
+  }
+}
+
+void boss2At(){
+  currentBossX = bossX-characterPos;
+  if (boss2Attack){
     if (bossRight){
       if (!characterDamage && (currentBossX + 50 + 10 >= characterX && currentBossX < characterX) && characterY > ground-32-5){
         lives--;
@@ -110,7 +204,17 @@ void moveBoss(){
       }
     }
     } else {
-
+      if (attackActive && !bossDamage && ( (abs(currentBossX + 32 - characterX) <= 15) |(abs(currentBossX - characterX + 45) <= 15) )){
+        bossHP -= 30;
+      bossDamage = true;
+      }
+      //boss2At();
+      if (!boss2Attack){
+      attack2_counter--;
+      if (attack2_counter == 0){
+        boss2Attack = true;
+      }
+    }
     }
   }
 }

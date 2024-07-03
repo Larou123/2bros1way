@@ -38,6 +38,12 @@ void enemyCollision(){
 }
 
 void moveEnemy(){
+  if (level2){
+    enemySpeed = 1;
+  } else {
+    enemySpeed = 0.5;
+  }
+
   if (movingRight){
     enemyX1 += enemySpeed;
     enemyX2 += enemySpeed;

@@ -72,17 +72,17 @@ void drawObstacleL1(){
 
 //-------Level2---------
 void obstacleCollisionL2(){
-  if (damageAgain && !characterDamage && characterX + 26 >= feuerX1-characterPos && characterX <= feuerX1-characterPos + 17 && characterY + 32 >= ground-10){
+  if (damageAgain && !characterDamage && characterX + 22 >= feuerX1-characterPos && characterX <= feuerX1-characterPos + 17 && characterY + 32 >= ground-10){
     lives--;
     damageAgain = false;
-  } else if (damageAgain && !characterDamage && characterX + 26 >= feuerX2-characterPos && characterX <= feuerX2-characterPos + 17 && characterY + 32 >= ground-10){
+  } else if (damageAgain && !characterDamage && characterX + 22 >= feuerX2-characterPos && characterX <= feuerX2-characterPos + 17 && characterY + 32 >= ground-10){
     lives--;
     damageAgain = false;
   }
 
   //fire collision
   if (damageAgain && fackelActive && currentSpriteF == 1){
-    if (characterX+27 >= fackelX-characterPos && characterX <= fackelX+13-characterPos){
+    if (characterX+29 >= fackelX-characterPos && characterX <= fackelX+13-characterPos){
       lives--;
       damageAgain = false;
     }
