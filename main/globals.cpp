@@ -112,9 +112,16 @@ int attack1_counter = 30;
 // OBSTACLES
 int kaktusX1 = 150;
 int kaktusX2 = 300;
+int feuerX1 = 150;
+int feuerX2 = 300;
 
 int hydrantX = 230;
 int damageCounter = 60;
 bool damageAgain = true;
 bool hydrantActive = false;
 int hydrantCounter = 45;
+
+
+int fackelX = 230;
+bool fackelActive = false;
+int fackelCounter = 45;

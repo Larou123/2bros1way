@@ -29,6 +29,8 @@ void drawMap() {
     arcada.getCanvas()->drawRGBBitmap(0, 0 , background2, 160,81);  
     arcada.getCanvas()->drawRGBBitmap(0-characterPos, 81 , ground2, 320,48);
     arcada.getCanvas()->drawRGBBitmap(320-characterPos, 81 , ground2, 320,48);
+
+    drawObstacleL2();
   }
   
   // Draw item

@@ -179,6 +179,13 @@ extern int damageCounter;
 extern bool hydrantActive;
 extern int hydrantCounter;
 
+extern int feuerX1;
+extern int feuerX2;
+
+extern int fackelX;
+extern bool fackelActive;
+extern int fackelCounter;
+
 // --------------------------------- Music ---------------------------------
 
 
