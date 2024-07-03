@@ -12,9 +12,11 @@ unsigned long lastFrameChangeIt = 0;
 
 
 void drawItem(int x, int y) {
-  if (item->flying && item->itemY == 20){
+  if (item->flying && item->itemY == 20 && level1){
     //bomb, we have to adjust it, we have to save the img to item->img, like down
     arcada.getCanvas()->drawRGBBitmap(x, y,fly_bomb, fly_bomb_mask, 20, 20);
+  } else if (item->flying && item->itemY == 20 && level2){
+    arcada.getCanvas()->drawRGBBitmap(x, y,flysword, flysword_mask, 28, 28);
   } else{
     arcada.getCanvas()->drawRGBBitmap(x, y, item->img, item->mask, item->itemW, item->itemH);
   }
@@ -33,10 +35,15 @@ void initItem(){
     item->flying = true;
   }
   else if(level2){
-    level2 = true;
-  }
-  else if(level3){
-    level3 = false;
+    item->itemX = 170 + characterPos;
+    item->itemY = 20;
+    item->img = sword_boden;
+    item->mask = sword_boden_mask;
+    item->itemH = 16;
+    item->itemW = 16;
+    item->init = true;
+    item->active = true;
+    item->flying = true;
   }
 }
 void pickItem() {

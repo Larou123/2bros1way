@@ -50,7 +50,7 @@ void loop() {
   //enable music at the end of track
   if(!musicPlaying){
     loadMusic();
-    }
+  }
 
     // Mode selection
     if (inMenu) {

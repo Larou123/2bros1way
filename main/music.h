@@ -3,9 +3,6 @@
 
 #include "globals.h"
 
-
-
-
 /*
 Die Musik:
 Title Derp Nugget (incompetech.com)
