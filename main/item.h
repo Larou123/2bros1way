@@ -44,8 +44,6 @@ void initItem(){
     item->init = true;
     item->active = true;
     item->flying = true;
-    //for test
-    item->picked = true;
   }
 }
 void pickItem() {

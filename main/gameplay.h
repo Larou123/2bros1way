@@ -155,6 +155,8 @@ void showGameOverScreen() {
       bossActive = false;
       bossHP = 100;
       bossX = 530;
+      fireCanon = false;
+      item->picked = false;
       item->active = false;
       updateDisplay();
       break;

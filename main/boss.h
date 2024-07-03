@@ -37,7 +37,7 @@ void drawFireCanon(){
       if (fireCanonX+30 > 160){
         fireCanon = false;
         boss2Attack = false;
-        attack2_counter = 50;
+        attack2_counter = 30;
       }
       arcada.getCanvas()->drawRGBBitmap(fireCanonX, ground-32,fire_canon_right, fire_canon_right_mask, 27, 10);
     } else {
@@ -158,12 +158,12 @@ void boss2At(){
   currentBossX = bossX-characterPos;
   if (boss2Attack){
     if (bossRight){
-      if (!characterDamage && (currentBossX + 50 + 10 >= characterX && currentBossX < characterX) && characterY > ground-32-5){
+      if (!characterDamage && (characterX < fireCanonX)){
         lives--;
         characterDamage = true;
       }
     } else{
-      if (!characterDamage && (characterX+32 >= currentBossX - 26 && characterX < currentBossX) && characterY > ground-32-5){
+      if (!characterDamage && (characterX > fireCanonX)){
         lives--;
         characterDamage = true;
       }
@@ -208,7 +208,7 @@ void moveBoss(){
         bossHP -= 30;
       bossDamage = true;
       }
-      //boss2At();
+      boss2At();
       if (!boss2Attack){
       attack2_counter--;
       if (attack2_counter == 0){
