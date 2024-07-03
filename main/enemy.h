@@ -21,10 +21,10 @@ void drawEnemy(){
 }
 
 void enemyCollision(){
-  if (damageAgainEn && !isJumping && characterX + 25 >= enemyX1-characterPos && characterX <= enemyX1-characterPos + 5){
+  if (damageAgainEn && !isJumping && characterX + 25 >= enemyX1-characterPos && characterX <= enemyX1-characterPos + 5 && !bossActive){
     lives--;
     damageAgainEn = false;
-  } else if (damageAgainEn && !isJumping && characterX + 25 >= enemyX2-characterPos && characterX <= enemyX2-characterPos + 5){
+  } else if (damageAgainEn && !isJumping && characterX + 25 >= enemyX2-characterPos && characterX <= enemyX2-characterPos + 5 && !bossActive){
     lives--;
     damageAgainEn = false;
   }
