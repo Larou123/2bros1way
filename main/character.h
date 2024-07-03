@@ -8,17 +8,18 @@
 #include "item.h"
 
 // Sprites für die Laufanimation
-const unsigned short *runRightSprites[] = {run_frame_0, run_frame_2};
-const unsigned short *runLeftSprites[] = {run_frame_1, run_frame_3};
-const unsigned char *runRightMasks[] = {run_frame_0_mask, run_frame_2_mask};
-const unsigned char *runLeftMasks[] = {run_frame_1_mask, run_frame_3_mask};
+const unsigned short *runRightSprites[] = {run_frame_0, run_frame_2,charsword1, charsword1_run};
+const unsigned short *runLeftSprites[] = {run_frame_1, run_frame_3,charsword1_left, charsword1_run_left};
+const unsigned char *runRightMasks[] = {run_frame_0_mask, run_frame_2_mask,charsword1_mask, charsword1_run_mask};
+const unsigned char *runLeftMasks[] = {run_frame_1_mask, run_frame_3_mask,charsword1_left_mask, charsword1_run_left_mask};
 
-
+int currentAnim = 0;
 // Sprites für die Sprunganimation
-const unsigned short *jumpRightSprite = char_jump_right;
-const unsigned short *jumpLeftSprite = char_jump_left;
-const unsigned char *jumpRightMask = char_jump_right_mask;
-const unsigned char *jumpLeftMask = char_jump_left_mask;
+const unsigned short *jumpRightSprite[] = {char_jump_right,charsword1_jump};
+const unsigned short *jumpLeftSprite[] = {char_jump_left,charsword1_jump_left};
+const unsigned char *jumpRightMask[] = {char_jump_right_mask,charsword1_jump_mask};
+const unsigned char *jumpLeftMask[] = {char_jump_left_mask,charsword1_jump_left_mask};
+int currentJump = 0;
 
 int currentSprite = 0; // Aktuelles Sprite
 
@@ -44,23 +45,27 @@ void drawCharacter() {
   // Zeichne das aktuelle Sprite basierend auf der Richtung und dem Zustand (springend oder laufend)
   if (isJumping) {
     if (facingRight) {
-      arcada.getCanvas()->drawRGBBitmap(characterX, characterY, jumpRightSprite, jumpRightMask, characterWidht, characterHeigh);
+      arcada.getCanvas()->drawRGBBitmap(characterX, characterY, jumpRightSprite[currentJump], jumpRightMask[currentJump], characterWidht, characterHeigh);
     } else {
-      arcada.getCanvas()->drawRGBBitmap(characterX, characterY, jumpLeftSprite, jumpLeftMask, characterWidht, characterHeigh);
+      arcada.getCanvas()->drawRGBBitmap(characterX, characterY, jumpLeftSprite[currentJump], jumpLeftMask[currentJump], characterWidht, characterHeigh);
     }
   } else {
     if (facingRight) {
-      arcada.getCanvas()->drawRGBBitmap(characterX, characterY, runRightSprites[currentSprite], runRightMasks[currentSprite], characterWidht, characterHeigh);
+      arcada.getCanvas()->drawRGBBitmap(characterX, characterY, runRightSprites[currentSprite + currentAnim], runRightMasks[currentSprite + currentAnim], characterWidht, characterHeigh);
     } else {
-      arcada.getCanvas()->drawRGBBitmap(characterX, characterY, runLeftSprites[currentSprite], runLeftMasks[currentSprite], characterWidht, characterHeigh);
+      arcada.getCanvas()->drawRGBBitmap(characterX, characterY, runLeftSprites[currentSprite + currentAnim], runLeftMasks[currentSprite + currentAnim], characterWidht, characterHeigh);
     }
   }
 
   // If item picked, then draw it next to the character
-  if (item->picked) {
+  if (item->picked && level1) {
     item->itemX = characterX + (facingRight ? 27 : -5);
     item->itemY = characterY + 5;
     drawItem(item->itemX,item->itemY);  
+  } else if(item->picked && level2){
+    currentAnim = 2;
+    currentJump = 1;
+    
   }
 }
 
