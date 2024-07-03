@@ -16,7 +16,12 @@
 // Help function to update display
 void updateDisplay(){
   drawMap();
-  drawCharacter();
+  if (item->picked && level2 && (arcada.readButtons() & ARCADA_BUTTONMASK_B | attackActive)){
+    attackActive = true;
+    drawAttackAnim();
+  } else {
+    drawCharacter();
+  }
   drawEnemy();
   drawBoss();
   drawCompanion();
@@ -235,7 +240,7 @@ void moveInGame(){
 void bombMovement(){
   int buttonState = arcada.readButtons();
   // Throw item
-  if ((buttonState & ARCADA_BUTTONMASK_B) && item->picked) {
+  if ((buttonState & ARCADA_BUTTONMASK_B) && item->picked && level1) {
     isThrowing = true;
     item->picked = false;
     item->itemX += characterPos;

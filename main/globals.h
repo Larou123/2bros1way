@@ -56,7 +56,8 @@ extern int lives;
 extern int rightLimit;
 extern int leftLimit;
 extern bool characterDamage;
-
+extern bool attackActive;
+extern bool attackSword;
 // Sprite-Daten für die Laufanimation
 extern const unsigned short run_frame_0[1024];
 extern const unsigned short run_frame_1[1024];

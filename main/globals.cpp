@@ -34,6 +34,8 @@ int lives = 5;
 int rightLimit = 50;
 int leftLimit = 20;
 bool characterDamage = false;
+bool attackActive = false;
+bool attackSword = false;
 // COMPANION
 int speedComp = 1;
 int companionX = 20;

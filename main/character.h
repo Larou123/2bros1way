@@ -69,6 +69,42 @@ void drawCharacter() {
   }
 }
 
+// Sprites für die Attackanim
+const unsigned short *attackRightSprites[] = {charsword1,charsword2,charsword3};
+const unsigned short *attackLeftSprites[] = {charsword1_left,charsword2_left,charsword3_left};
+const unsigned char *attackRightMasks[] = {charsword1_mask,charsword2_mask,charsword3_mask};
+const unsigned char *attackLeftMasks[] = {charsword1_left_mask,charsword2_left_mask,charsword3_left_mask};
+int currentSpriteA = 0; // Aktuelles Sprite
+
+// Zeitsteuerung für die Animation
+unsigned long lastFrameChangeA = 0;
+void drawAttackAnim(){
+  unsigned long currentMillisA = millis();
+  if (currentMillisA - lastFrameChangeA >= 175) {
+    lastFrameChangeA = currentMillisA;
+    currentSpriteA = (currentSpriteA + 1) % 4;
+  }
+  if (currentSpriteA < 2){
+    if (facingRight){
+      arcada.getCanvas()->drawRGBBitmap(characterX, characterY, attackRightSprites[currentSpriteA], attackRightMasks[currentSpriteA], characterWidht, characterHeigh);
+    } else {
+      arcada.getCanvas()->drawRGBBitmap(characterX, characterY, attackLeftSprites[currentSpriteA], attackLeftMasks[currentSpriteA], characterWidht, characterHeigh);
+    } 
+  } else if (currentSpriteA == 2){
+    if (facingRight){
+      arcada.getCanvas()->drawRGBBitmap(characterX, characterY-13, attackRightSprites[currentSpriteA], attackRightMasks[currentSpriteA], 45, 45);
+    } else {
+      arcada.getCanvas()->drawRGBBitmap(characterX, characterY-13, attackLeftSprites[currentSpriteA], attackLeftMasks[currentSpriteA], 45, 45);
+    } 
+  } else {
+    if (facingRight){
+      arcada.getCanvas()->drawRGBBitmap(characterX, characterY, charsword1, charsword1_mask, characterWidht, characterHeigh);
+    } else {
+      arcada.getCanvas()->drawRGBBitmap(characterX, characterY, charsword1_left, charsword1_left_mask, characterWidht, characterHeigh);
+    }
+    attackActive = false;
+  }
+}
 // Move character
 void moveCharacter(int nx, int ny) {
   // Update character position
