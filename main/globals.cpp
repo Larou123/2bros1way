@@ -9,8 +9,8 @@ File musicDatei;
 bool musicPlaying;
 
 //GAME
-bool level1 = true;
-bool level2 = false;
+bool level1 = false;
+bool level2 = true;
 bool level3 = false;
 bool itemActive = false;
 

@@ -4,11 +4,19 @@
 #include "boos_img.h"
 
 void drawEnemy(){
+  if (level1){ 
   //arcada.getCanvas()->fillRect(enemyX-characterPos,enemyY,enemyW,enemyH,ARCADA_BLACK);
   arcada.getCanvas()->drawRGBBitmap(enemyX1-characterPos, enemyY, minienemy, minienemy_mask, 16, 16);
   if (!bossActive){
       arcada.getCanvas()->drawRGBBitmap(enemyX2-characterPos, enemyY, minienemy, minienemy_mask, 16, 16);
 
+  }}
+  else{
+      arcada.getCanvas()->drawRGBBitmap(enemyX1-characterPos, enemyY, mini_enemy_lava, mini_enemy_lava_mask, 16, 16);
+  if (!bossActive){
+      arcada.getCanvas()->drawRGBBitmap(enemyX2-characterPos, enemyY, mini_enemy_lava, mini_enemy_lava_mask, 16, 16);
+
+  }
   }
 }
 
