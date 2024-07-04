@@ -65,7 +65,9 @@ void drawCharacter() {
   } else if(item->picked && level2){
     currentAnim = 2;
     currentJump = 1;
-    
+  } else if(!item->picked && level2 ){
+    currentAnim = 0;
+    currentJump = 0;
   }
 }
 
@@ -91,6 +93,7 @@ void drawAttackAnim(){
       arcada.getCanvas()->drawRGBBitmap(characterX, characterY, attackLeftSprites[currentSpriteA], attackLeftMasks[currentSpriteA], characterWidht, characterHeigh);
     } 
   } else if (currentSpriteA == 2){
+    attackDamage = true;
     if (facingRight){
       arcada.getCanvas()->drawRGBBitmap(characterX, characterY-13, attackRightSprites[currentSpriteA], attackRightMasks[currentSpriteA], 45, 45);
     } else {
@@ -103,6 +106,11 @@ void drawAttackAnim(){
       arcada.getCanvas()->drawRGBBitmap(characterX, characterY, charsword1_left, charsword1_left_mask, characterWidht, characterHeigh);
     }
     attackActive = false;
+    bossDamage = false;
+    attackDamage = false;
+    if (bossHP <= 0){
+      showWinScreen();
+    }
   }
 }
 // Move character
@@ -185,8 +193,14 @@ void laserCollision(){
     bossHP -= 20;
     //if boss killed, game win screen
     if (bossHP <= 0){
-      arcada.getCanvas()->fillRoundRect(10,ground+8,(bossHP/100)*140,8,8,ARCADA_ORANGE);
-      startLevel2Screen();
+      if (level1){
+        arcada.getCanvas()->fillRoundRect(10,ground+8,(bossHP/100)*140,8,8,ARCADA_ORANGE);
+        startLevel2Screen();
+      } else if (level2){
+        arcada.getCanvas()->fillRoundRect(10,ground+8,(bossHP/100)*140,8,8,ARCADA_RED);
+        showWinScreen();
+      }
+      
     }
     bossDamageLaser = true;
   }
@@ -217,11 +231,25 @@ void moveCompanion(int nx, int ny) {
 
   //set laser
   if (!laser_active){
-    laserX = companionX + (flyRight ? companionWidht+3 : 0);
+    laserX = companionX + (flyRight ? companionWidht+3 : -3);
     laserY = companionY+20;
     bossDamageLaser = false;
   }
 
   laserCollision();
+}
+
+void drawLaserDirection(){
+  if (!laser_active){
+    if (laser_pre_direction == JS_RIGHT){
+      arcada.getCanvas()->fillTriangle(laserDirectionX,laserDirectionY-4,laserDirectionX,laserDirectionY,laserDirectionX+3,laserDirectionY-1.5,ARCADA_CYAN);
+    } else if (laser_pre_direction == JS_LEFT){
+      arcada.getCanvas()->fillTriangle(laserDirectionX,laserDirectionY-4,laserDirectionX,laserDirectionY,laserDirectionX-3,laserDirectionY-1.5,ARCADA_CYAN);
+    } else if (laser_pre_direction == JS_UP){
+      arcada.getCanvas()->fillTriangle(laserDirectionX-2,laserDirectionY,laserDirectionX+2,laserDirectionY,laserDirectionX,laserDirectionY-2,ARCADA_CYAN);
+    } else{
+     arcada.getCanvas()->fillTriangle(laserDirectionX-2,laserDirectionY+3,laserDirectionX+2,laserDirectionY+3,laserDirectionX,laserDirectionY+5,ARCADA_CYAN);
+    }
+  }
 }
 #endif

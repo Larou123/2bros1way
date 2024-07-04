@@ -9,8 +9,8 @@ File musicDatei;
 bool musicPlaying;
 
 //GAME
-bool level1 = false;
-bool level2 = true;
+bool level1 = true;
+bool level2 = false;
 bool level3 = false;
 bool itemActive = false;
 
@@ -35,6 +35,7 @@ int rightLimit = 50;
 int leftLimit = 20;
 bool characterDamage = false;
 bool attackActive = false;
+bool attackDamage = false;
 bool attackSword = false;
 // COMPANION
 int speedComp = 1;
@@ -49,6 +50,9 @@ int laserX = companionX + companionWidht;
 int laserY = companionY+20;
 bool laser_active = false;
 Direction laser_direction = JS_NEUTRAL;
+Direction laser_pre_direction = JS_RIGHT;
+int laserDirectionX = laserX;
+float laserDirectionY = laserY;
 
 // GAME
 bool inGame = false;

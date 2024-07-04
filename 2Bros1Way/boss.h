@@ -155,15 +155,14 @@ void boss1At(){
 }
 
 void boss2At(){
-  currentBossX = bossX-characterPos;
   if (boss2Attack){
     if (bossRight){
-      if (!characterDamage && (characterX < fireCanonX)){
+      if (!characterDamage && (abs(fireCanonX - characterX) <= 32) && !isJumping){
         lives--;
         characterDamage = true;
       }
     } else{
-      if (!characterDamage && (characterX > fireCanonX)){
+      if (!characterDamage && (abs(fireCanonX - characterX) <= 32) && !isJumping){
         lives--;
         characterDamage = true;
       }
@@ -204,11 +203,11 @@ void moveBoss(){
       }
     }
     } else {
-      if (attackActive && !bossDamage && ( (abs(currentBossX + 32 - characterX) <= 15) |(abs(currentBossX - characterX + 45) <= 15) )){
-        bossHP -= 30;
-      bossDamage = true;
+      if (attackDamage && !bossDamage && ( (abs(currentBossX - (characterX + 30)) <= 15) | (abs((currentBossX + 40) - characterX) <= 15) )){
+        bossHP -= 20;
+        bossDamage = true;
       }
-      boss2At();
+      //boss2At();
       if (!boss2Attack){
       attack2_counter--;
       if (attack2_counter == 0){

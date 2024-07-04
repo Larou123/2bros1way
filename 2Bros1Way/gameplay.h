@@ -27,9 +27,10 @@ void updateDisplay(){
   drawCompanion();
   // Bomb explosion
   bomb_explode();
-  //laser
   showBossHP();
+  //laser
   arcada.getCanvas()->fillCircle(laserX,laserY,3,ARCADA_BLUE);
+  drawLaserDirection();
   arcada.blitFrameBuffer(0, 0, true);
 }
 
@@ -41,6 +42,22 @@ void showCover() {
       //if (!(arcada.readButtons() & ARCADA_BUTTONMASK_START)){
         inCover = false;
         inGame = true;
+        // Reset game state and restart
+        level1 = true;
+        level2 = false;
+        characterPos = 0;  // Reset character position
+        rightLimit = 50;
+        leftLimit = 20;
+        characterX = 20;
+        lives = 5;
+        bossDamage = false;
+        bossActive = false;
+        bossHP = 100;
+        bossX = 530;
+        item->active = false;
+        item->picked = false;
+        currentAnim = 0;
+        currentJump = 0;
         updateDisplay();
         break;
       //}
@@ -66,29 +83,30 @@ void showCover() {
 
 // Function to show "You Win" screen
 void showWinScreen() {
-  arcada.getCanvas()->fillScreen(ARCADA_WHITE);
-  arcada.getCanvas()->setTextColor(ARCADA_BLACK);
-  arcada.getCanvas()->setCursor(50, 40);
-  arcada.getCanvas()->println("You Win!");
-  arcada.getCanvas()->setCursor(30, 60);
-  arcada.getCanvas()->println("Press A to Restart");
+  arcada.getCanvas()->drawRGBBitmap(0, 0 , win_screen, 160,128);
   arcada.blitFrameBuffer(0, 0, true);
 
   while (true) {
     uint8_t buttonState = arcada.readButtons();
     if (buttonState & ARCADA_BUTTONMASK_A) {
       // Reset game state and restart
+      level1 = true;
+      level2 = false;
       characterPos = 0;  // Reset character position
       rightLimit = 50;
       leftLimit = 20;
       characterX = 20;
       lives = 5;
-      inGame = true;
+      inGame = false;
+      inCover = true;
       bossDamage = false;
       bossActive = false;
       bossHP = 100;
       bossX = 530;
       item->active = false;
+      item->picked = false;
+      currentAnim = 0;
+      currentJump = 0;
       updateDisplay();
       break;
     }
@@ -124,6 +142,9 @@ void startLevel2Screen() {
       level1 = false;
       level2 = true;
       item->active = false;
+      item->picked = false;
+      currentAnim = 0;
+      currentJump = 0;
       updateDisplay();
       break;
     }
@@ -158,6 +179,8 @@ void showGameOverScreen() {
       fireCanon = false;
       item->picked = false;
       item->active = false;
+      currentAnim = 0;
+      currentJump = 0;
       updateDisplay();
       break;
     }
@@ -300,10 +323,28 @@ void bombMovement(){
   }
 }
 void moveCompanionInGame(){
+  // save last direction of laser
+  if (js_getDirection() == JS_RIGHT){
+    laserDirectionX = laserX + 7;
+    laserDirectionY = laserY+3;
+    laser_pre_direction = JS_RIGHT;
+  } else if (js_getDirection() == JS_LEFT){
+    laserDirectionX = laserX-6;
+    laserDirectionY = laserY+3;
+    laser_pre_direction = JS_LEFT;
+  } else if (js_getDirection() == JS_UP){
+    laserDirectionX = laserX;
+    laserDirectionY = laserY-6;
+    laser_pre_direction = JS_UP;
+  } else if (js_getDirection() == JS_DOWN){
+    laserDirectionX = laserX;
+    laserDirectionY = laserY+6;
+    laser_pre_direction = JS_DOWN;
+  }
   // schiessen
   if ((js_getButton()) || laser_active){
     if (!laser_active){
-      laser_direction = js_getDirection();
+      laser_direction = laser_pre_direction;
     }
     laser_active = true;
 

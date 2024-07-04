@@ -57,6 +57,7 @@ extern int rightLimit;
 extern int leftLimit;
 extern bool characterDamage;
 extern bool attackActive;
+extern bool attackDamage;
 extern bool attackSword;
 // Sprite-Daten für die Laufanimation
 extern const unsigned short run_frame_0[1024];
@@ -81,6 +82,9 @@ extern int laserX;
 extern int laserY;
 extern bool laser_active;
 extern Direction laser_direction;
+extern Direction laser_pre_direction;
+extern int laserDirectionX;
+extern float laserDirectionY;
 // --------------------------------- GAMEPLAY ---------------------------------
 // ----------- VARIABLES
 extern bool inGame;
