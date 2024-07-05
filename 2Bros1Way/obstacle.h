@@ -82,7 +82,7 @@ void obstacleCollisionL2(){
 
   //fire collision
   if (damageAgain && fackelActive && currentSpriteF == 1){
-    if (characterX+29 >= fackelX-characterPos && characterX <= fackelX+13-characterPos){
+    if (characterX+27 >= fackelX-characterPos && characterX <= fackelX+11-characterPos){
       lives--;
       damageAgain = false;
     }

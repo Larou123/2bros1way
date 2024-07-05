@@ -28,8 +28,10 @@ void reset_stats(){
   currentAnim = 0;
   currentJump = 0;
   laser_active = false;
-  fireCanon = false;
+  fireCanonRight = true;
+  fireCanonX = 160;
 }
+
 // Help function to update display
 void updateDisplay(){
   drawMap();
@@ -56,6 +58,10 @@ int startCounter = 100;
 void showCover() {
   while (true) {
     if (arcada.readButtons() & ARCADA_BUTTONMASK_START) {
+        //just for test 
+        level1 = false;
+        level2 = true;
+        //then remove
         inCover = false;
         inGame = true;
         // Reset game state and restart
