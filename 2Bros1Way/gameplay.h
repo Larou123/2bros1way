@@ -58,10 +58,6 @@ int startCounter = 100;
 void showCover() {
   while (true) {
     if (arcada.readButtons() & ARCADA_BUTTONMASK_START) {
-        //just for test 
-        level1 = false;
-        level2 = true;
-        //then remove
         inCover = false;
         inGame = true;
         // Reset game state and restart
