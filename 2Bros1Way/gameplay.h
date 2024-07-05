@@ -12,7 +12,24 @@
 #include "joystick.h"
 #include "cover.h"
 
-
+// Reset stats
+void reset_stats(){
+  characterPos = 0;  // Reset character position
+  rightLimit = 50;
+  leftLimit = 20;
+  characterX = 20;
+  lives = 5;
+  bossDamage = false;
+  bossActive = false;
+  bossHP = 100;
+  bossX = 530;
+  item->active = false;
+  item->picked = false;
+  currentAnim = 0;
+  currentJump = 0;
+  laser_active = false;
+  fireCanon = false;
+}
 // Help function to update display
 void updateDisplay(){
   drawMap();
@@ -39,28 +56,12 @@ int startCounter = 100;
 void showCover() {
   while (true) {
     if (arcada.readButtons() & ARCADA_BUTTONMASK_START) {
-      //if (!(arcada.readButtons() & ARCADA_BUTTONMASK_START)){
         inCover = false;
         inGame = true;
         // Reset game state and restart
-        level1 = true;
-        level2 = false;
-        characterPos = 0;  // Reset character position
-        rightLimit = 50;
-        leftLimit = 20;
-        characterX = 20;
-        lives = 5;
-        bossDamage = false;
-        bossActive = false;
-        bossHP = 100;
-        bossX = 530;
-        item->active = false;
-        item->picked = false;
-        currentAnim = 0;
-        currentJump = 0;
+        reset_stats();
         updateDisplay();
         break;
-      //}
     }
     arcada.getCanvas()->drawRGBBitmap(0, 0 , gameCover, 160,128);
     if (startCounter <= 50){
@@ -89,24 +90,13 @@ void showWinScreen() {
   while (true) {
     uint8_t buttonState = arcada.readButtons();
     if (buttonState & ARCADA_BUTTONMASK_A) {
-      // Reset game state and restart
       level1 = true;
       level2 = false;
-      characterPos = 0;  // Reset character position
-      rightLimit = 50;
-      leftLimit = 20;
-      characterX = 20;
-      lives = 5;
       inGame = false;
       inCover = true;
-      bossDamage = false;
-      bossActive = false;
-      bossHP = 100;
-      bossX = 530;
-      item->active = false;
-      item->picked = false;
-      currentAnim = 0;
-      currentJump = 0;
+      
+      // Reset game state and restart
+      reset_stats();
       updateDisplay();
       break;
     }
@@ -116,35 +106,31 @@ void showWinScreen() {
 
 // Function to show "You Win" screen
 void startLevel2Screen() {
-  arcada.getCanvas()->fillScreen(ARCADA_DARKGREEN);
-  arcada.getCanvas()->setTextColor(ARCADA_WHITE);
-  arcada.getCanvas()->setCursor(30, 40);
-  arcada.getCanvas()->println("Level 1 Completed!");
-  arcada.getCanvas()->setCursor(10, 60);
-  arcada.getCanvas()->setTextColor(ARCADA_GREENYELLOW);
-  arcada.getCanvas()->println("Press A to start Level 2");
+  arcada.getCanvas()->drawRGBBitmap(0, 0 , level_win1, 160,128);
+  arcada.getCanvas()->setTextColor(ARCADA_BLACK);
+  arcada.getCanvas()->setCursor(70, 115);
+  arcada.getCanvas()->println("A to continue!");
   arcada.blitFrameBuffer(0, 0, true);
+  while (true) {
+    if (arcada.readButtons() & ARCADA_BUTTONMASK_A) {
+      break;
+    }
+  }
 
+  while (arcada.readButtons() & ARCADA_BUTTONMASK_A){}
+
+  arcada.getCanvas()->drawRGBBitmap(0, 0 , level_win2, 160,128);
+  arcada.getCanvas()->setTextColor(ARCADA_BLACK);
+  arcada.getCanvas()->setCursor(70, 110);
+  arcada.getCanvas()->println("A to continue!");
+  arcada.blitFrameBuffer(0, 0, true);
   while (true) {
     uint8_t buttonState = arcada.readButtons();
     if (buttonState & ARCADA_BUTTONMASK_A) {
-      // Reset game state and restart
-      characterPos = 0;  // Reset character position
-      rightLimit = 50;
-      leftLimit = 20;
-      characterX = 20;
-      lives = 5;
-      inGame = true;
-      bossDamage = false;
-      bossActive = false;
-      bossHP = 100;
-      bossX = 530;
       level1 = false;
       level2 = true;
-      item->active = false;
-      item->picked = false;
-      currentAnim = 0;
-      currentJump = 0;
+      // Reset game state and restart
+      reset_stats();
       updateDisplay();
       break;
     }
@@ -166,22 +152,7 @@ void showGameOverScreen() {
     uint8_t buttonState = arcada.readButtons();
     if (buttonState & ARCADA_BUTTONMASK_A) {
       // Reset game state and restart
-      characterPos = 0;  // Reset character position
-      rightLimit = 50;
-      leftLimit = 20;
-      characterX = 20;
-      lives = 5;
-      inGame = true;
-      bossDamage = false;
-      bossActive = false;
-      bossHP = 100;
-      bossX = 530;
-      fireCanon = false;
-      item->picked = false;
-      item->active = false;
-      currentAnim = 0;
-      currentJump = 0;
-      updateDisplay();
+      reset_stats();
       break;
     }
     yield();
