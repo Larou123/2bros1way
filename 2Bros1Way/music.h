@@ -4,12 +4,8 @@
 #include "globals.h"
 
 /*
-Die Musik:
-Title Derp Nugget (incompetech.com)
-Licensed under Creative Commons: By Attribution 3.0
-http://creativecommons.org/licenses/by/3.0/
+Music by <a href="https://pixabay.com/de/users/moodmode-33139253/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=158815">Vlad Krotov</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=158815">Pixabay</a>
 */
-
 
 void timedInterruptCallback(void) {
 
