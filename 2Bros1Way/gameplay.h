@@ -56,6 +56,8 @@ void updateDisplay(){
 int startCounter = 100;
 // Show cover
 void showCover() {
+  level1 = false;
+  level2 = true;
   while (true) {
     if (arcada.readButtons() & ARCADA_BUTTONMASK_START) {
         inCover = false;

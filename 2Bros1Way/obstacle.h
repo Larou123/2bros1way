@@ -21,13 +21,22 @@ void obstacleCollisionL1(){
     damageAgain = false;
   }
 
-  //water collision
+  //water collision for character
   if (damageAgain && hydrantActive && currentSpriteH == 1){
     if (characterX+27 >= hydrantX-characterPos && characterX <= hydrantX+13-characterPos){
       lives--;
       damageAgain = false;
     }
   }
+
+  //water collision for companion
+  if (damageAgain && hydrantActive && currentSpriteH == 1){
+    if (companionX+35 >= hydrantX-characterPos && companionX <= hydrantX+13-characterPos){
+      lives--;
+      damageAgain = false;
+    }
+  }
+
   if (damageCounter == 0){
     damageCounter = 60;
     damageAgain = true;
@@ -80,9 +89,16 @@ void obstacleCollisionL2(){
     damageAgain = false;
   }
 
-  //fire collision
+  //fire collision for character
   if (damageAgain && fackelActive && currentSpriteF == 1){
     if (characterX+27 >= fackelX-characterPos && characterX <= fackelX+11-characterPos){
+      lives--;
+      damageAgain = false;
+    }
+  }
+  //fire collision for companion
+  if (damageAgain && fackelActive && currentSpriteF == 1){
+    if (companionX+35 >= fackelX-characterPos && companionX <= fackelX+11-characterPos){
       lives--;
       damageAgain = false;
     }
