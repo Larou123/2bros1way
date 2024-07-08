@@ -3,9 +3,9 @@
 #include "globals.h"
 #include "boos_img.h"
 
+// Draw enemy depending of the level
 void drawEnemy(){
   if (level1){ 
-  //arcada.getCanvas()->fillRect(enemyX-characterPos,enemyY,enemyW,enemyH,ARCADA_BLACK);
   arcada.getCanvas()->drawRGBBitmap(enemyX1-characterPos, enemyY, minienemy, minienemy_mask, 16, 16);
   if (!bossActive){
       arcada.getCanvas()->drawRGBBitmap(enemyX2-characterPos, enemyY, minienemy, minienemy_mask, 16, 16);
@@ -20,6 +20,7 @@ void drawEnemy(){
   }
 }
 
+// Comprove if character has touched an enemy
 void enemyCollision(){
   if (damageAgainEn && !isJumping && characterX + 25 >= enemyX1-characterPos && characterX <= enemyX1-characterPos + 5 && !bossActive){
     lives--;
@@ -37,6 +38,7 @@ void enemyCollision(){
   }
 }
 
+// Changes the movement of the enemy, so it goes to left and right in a fixed distance
 void moveEnemy(){
   if (level2){
     enemySpeed = 1;

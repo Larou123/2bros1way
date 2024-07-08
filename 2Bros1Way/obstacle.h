@@ -5,13 +5,15 @@
 #include "globals.h"
 #include "obstacle_img.h"
 
-// Zeitsteuerung für die Animation
+// Timing for Hydrant animation
 unsigned long lastFrameChangeH = 0;
 int currentSpriteH = 0;
 
+// Timing for Fire animation
 unsigned long lastFrameChangeF = 0;
 int currentSpriteF = 0;
 
+// Comprove if charachter has touched an obstacle
 void obstacleCollisionL1(){
   if (damageAgain && !characterDamage && characterX + 26 >= kaktusX1-characterPos && characterX <= kaktusX1-characterPos + 17 && characterY + 32 >= ground-10){
     lives--;
@@ -21,7 +23,7 @@ void obstacleCollisionL1(){
     damageAgain = false;
   }
 
-  //water collision for character
+  // Water collision for character
   if (damageAgain && hydrantActive && currentSpriteH == 1){
     if (characterX+27 >= hydrantX-characterPos && characterX <= hydrantX+13-characterPos){
       lives--;
@@ -29,7 +31,7 @@ void obstacleCollisionL1(){
     }
   }
 
-  //water collision for companion
+  // Water collision for companion
   if (damageAgain && hydrantActive && currentSpriteH == 1){
     if (companionX+35 >= hydrantX-characterPos && companionX <= hydrantX+13-characterPos){
       lives--;
@@ -46,12 +48,11 @@ void obstacleCollisionL1(){
 }
 
 void drawObstacleL1(){
-  //arcada.getCanvas()->fillTriangle(320-characterPos, ground+1, 340-characterPos,ground+1,330-characterPos,ground-10,ARCADA_BLACK);
   // KAKTUS
   arcada.getCanvas()->drawRGBBitmap(kaktusX1-characterPos, ground-27, kaktus, kaktus_mask, 27, 27);
   arcada.getCanvas()->drawRGBBitmap(kaktusX2-characterPos, ground-27, kaktus, kaktus_mask, 27, 27);
   
-  // HYDRANT
+  // HYDRANT animation
   arcada.getCanvas()->drawRGBBitmap(hydrantX-characterPos, ground-15,hydrant, hydrant_mask, 20, 20);
   if (hydrantActive){
     unsigned long currentMillisH = millis();
@@ -69,13 +70,13 @@ void drawObstacleL1(){
     }
   } 
   
-  //für anim
+  // needen for animation
   if (hydrantCounter == 0){
     hydrantActive = true;
   } else{
     hydrantCounter--;
   }
-  // comprove 
+
   obstacleCollisionL1();
 }
 
@@ -89,14 +90,14 @@ void obstacleCollisionL2(){
     damageAgain = false;
   }
 
-  //fire collision for character
+  // Fire collision for character
   if (damageAgain && fackelActive && currentSpriteF == 1){
     if (characterX+27 >= fackelX-characterPos && characterX <= fackelX+11-characterPos){
       lives--;
       damageAgain = false;
     }
   }
-  //fire collision for companion
+  // Fire collision for companion
   if (damageAgain && fackelActive && currentSpriteF == 1){
     if (companionX+35 >= fackelX-characterPos && companionX <= fackelX+11-characterPos){
       lives--;
@@ -112,7 +113,6 @@ void obstacleCollisionL2(){
 }
 
 void drawObstacleL2(){
-  //arcada.getCanvas()->fillTriangle(320-characterPos, ground+1, 340-characterPos,ground+1,330-characterPos,ground-10,ARCADA_BLACK);
   // KAKTUS
   arcada.getCanvas()->drawRGBBitmap(feuerX1-characterPos, ground-27, fire, fire_mask, 32, 32);
   arcada.getCanvas()->drawRGBBitmap(feuerX2-characterPos, ground-27, fire, fire_mask, 32, 32);
@@ -135,13 +135,12 @@ void drawObstacleL2(){
     }
   } 
   
-  //für anim
+  // needed for aniamtion
   if (fackelCounter == 0){
     fackelActive = true;
   } else{
     fackelCounter--;
   }
-  // comprove 
   obstacleCollisionL2();
 }
 

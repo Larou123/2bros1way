@@ -4,24 +4,26 @@
 #include "globals.h"
 #include "item_img.h" // Einbinden der Bombenbilddaten und -masken
 
-
+// Sprites for the bomb animation
 const unsigned short *explosion[] = {bombexplosion1,bombexplosion2,bombexplosion3,bombexplosion4};
 const unsigned char *explosion_mask[] = {bombexpl1_mask,bombexpl2_mask,bombexpl3_mask,bombexpl4_mask};
-// Zeitsteuerung für die Animation
+// Timing
 unsigned long lastFrameChangeIt = 0;
 
 
 void drawItem(int x, int y) {
+  // When item flying, use sprite with wings
   if (item->flying && item->itemY == 20 && level1){
-    //bomb, we have to adjust it, we have to save the img to item->img, like down
     arcada.getCanvas()->drawRGBBitmap(x, y,fly_bomb, fly_bomb_mask, 20, 20);
   } else if (item->flying && item->itemY == 20 && level2){
     arcada.getCanvas()->drawRGBBitmap(x, y,flysword, flysword_mask, 28, 28);
+    // When item falling/on the floor, use normal sprite
   } else{
     arcada.getCanvas()->drawRGBBitmap(x, y, item->img, item->mask, item->itemW, item->itemH);
   }
 }
 
+// Init item struct depending on the level
 void initItem(){
   if (level1){
     item->itemX = 170 + characterPos;
@@ -46,6 +48,8 @@ void initItem(){
     item->flying = true;
   }
 }
+
+// Comprove if character has picked the item
 void pickItem() {
     int itemTmp = item->itemX - characterPos;
     if (!item->picked && !item->flying && item->init) {
@@ -55,8 +59,9 @@ void pickItem() {
     }
 }
 
+// Controlls the item while its flying until it falls
 void flyingItem(){
-  // item flies
+  // Item flies
   if (item->flying){
     if (!itemCollision){
       item->itemX -= 1;
@@ -64,7 +69,7 @@ void flyingItem(){
         item->active = false;
       }
     }
-    // item falls
+    // Item falls
     else {
       if (item->itemY < ground - 16){
         item->itemY += 2;
@@ -76,6 +81,7 @@ void flyingItem(){
   }
 }
 
+// Animation for the bomb explosion
 void bomb_explode(){
   if (bomb_expl){
     unsigned long currentMillis = millis();

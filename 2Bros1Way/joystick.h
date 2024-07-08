@@ -3,14 +3,16 @@
 
 #include "globals.h"
 
+// X-axis of joystick connected to analog pin A2
+const int xPin = A0;
+// Y-axis of joystick connected to analog pin A1
+const int yPin = A1; 
+ // Button of joystick connected to digital pin 5
+const int buttonPin = 5;
 
-// var
-const int xPin = A0; // X-axis of joystick connected to analog pin A2
-const int yPin = A1; // Y-axis of joystick connected to analog pin A1
-const int buttonPin = 5; // Button of joystick connected to digital pin 5
 const int neutral = 512;
-//! Initializes joystick.
 
+//! Initializes joystick button
 void js_init(){
   pinMode(buttonPin, INPUT_PULLUP);
 }

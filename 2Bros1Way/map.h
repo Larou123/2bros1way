@@ -6,15 +6,15 @@
 #include "map_img.h"
 #include "item.h"
 #include "obstacle.h"
-// 160 * 128
 
 
+// Draws a cloud
 void drawCloud(){
   // Draws from image and tries to give movement
   arcada.getCanvas()->drawRGBBitmap(cloudX-characterPos, cloudY , cloud_img,cloud_mask,40,20);
 }
 
-// Draws map
+// Draws map and all extra elements on the map
 void drawMap() {
   // Draws from image
   if (level1){
@@ -37,8 +37,6 @@ void drawMap() {
   if (!item->picked && item->active){
     drawItem(item->itemX-characterPos,item->itemY);
   }
-  
-  
 }
 
 #endif

@@ -8,19 +8,23 @@ unsigned long frameDelay = 100; // Zeit zwischen den Frames in Millisekunden
 File musicDatei;
 bool musicPlaying;
 
-//GAME
+//GAME variables
 bool level1 = true;
 bool level2 = false;
 bool level3 = false;
-bool itemActive = false;
+bool inGame = false;
+const char *menu_options[3] = {"Start", "Restart", "Quit"};
+bool inMenu = false;
+bool inCover = true;
 
-// MAP
+
+// MAP variables
 int cloudX = 60;
 int cloudY = 27;
 int distanceCloud = 60;
 int ground = 110;
 
-// CHARACTER
+// CHARACTER variables
 int speed = 1;
 int characterPos = 0;
 int characterX = 20;
@@ -37,7 +41,8 @@ bool characterDamage = false;
 bool attackActive = false;
 bool attackDamage = false;
 bool attackSword = false;
-// COMPANION
+
+// COMPANION variables
 int speedComp = 1;
 int companionX = 20;
 int companionY = 12;
@@ -54,13 +59,9 @@ Direction laser_pre_direction = JS_RIGHT;
 int laserDirectionX = laserX;
 float laserDirectionY = laserY;
 
-// GAME
-bool inGame = false;
-const char *menu_options[3] = {"Start", "Restart", "Quit"};
-bool inMenu = false;
-bool inCover = true;
 
-// ITEM
+
+// ITEM variables
 bool isThrowing = false;
 bool wasThrown = false;
 // Variables for throw item physics
@@ -73,6 +74,7 @@ float currentItemX = 0;
 bool bomb_expl = false;
 int expl_count = 0;
 bool itemCollision = false;
+bool itemActive = false;
 
 Item item__ = {
   .itemX = 0,
@@ -88,7 +90,7 @@ Item item__ = {
   .count = 3,
 };
 
-// ENEMY
+// ENEMY variables
 int enemyW = 16;
 int enemyH = 16;
 float enemyX1 = 80;
@@ -100,7 +102,7 @@ int distanceEnemy = 25;
 int damageCounterEn = 60;
 bool damageAgainEn = true;
 
-// BOSS
+// BOSS variables
 int bossW = 30;
 int bossH = 50;
 float bossX = 530;
@@ -119,7 +121,8 @@ int attack2_counter = 30;
 int fireCanonX = 0;
 const int fireCanonY = 20;
 bool fireCanon = false;
-// OBSTACLES
+
+// OBSTACLES variables
 int kaktusX1 = 150;
 int kaktusX2 = 300;
 int feuerX1 = 150;

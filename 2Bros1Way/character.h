@@ -6,15 +6,16 @@
 #include "char.h"
 #include "map_img.h"
 #include "item.h"
-
-// Sprites für die Laufanimation
+// ------------------ Character movement animation
+// Sprites for walking
 const unsigned short *runRightSprites[] = {run_frame_0, run_frame_2,charsword1, charsword1_run};
 const unsigned short *runLeftSprites[] = {run_frame_1, run_frame_3,charsword1_left, charsword1_run_left};
 const unsigned char *runRightMasks[] = {run_frame_0_mask, run_frame_2_mask,charsword1_mask, charsword1_run_mask};
 const unsigned char *runLeftMasks[] = {run_frame_1_mask, run_frame_3_mask,charsword1_left_mask, charsword1_run_left_mask};
 
 int currentAnim = 0;
-// Sprites für die Sprunganimation
+
+// Sprites for Jump and Double Jump
 const unsigned short *jumpRightSprite[] = {char_jump_right,charsword1_jump};
 const unsigned short *jumpLeftSprite[] = {char_jump_left,charsword1_jump_left};
 const unsigned char *jumpRightMask[] = {char_jump_right_mask,charsword1_jump_mask};
@@ -23,15 +24,16 @@ int currentJump = 0;
 
 int currentSprite = 0; // Aktuelles Sprite
 
-// Zeitsteuerung für die Animation
+// Timing
 unsigned long lastFrameChangeChar = 0;
 
-// Richtung des Charakters
-bool facingRight = true; // True = rechts, False = links
-bool isRunning = false; // True = läuft, False = steht
+// Direction
+bool facingRight = true; // True = right, False = left
+bool isRunning = false; // True = walking, False = standing
 
+// Draw the character depending on wich state he is
 void drawCharacter() {
-  // Überprüfe, ob genug Zeit vergangen ist, um das Sprite zu wechseln
+  // Check if enough time has passed to change the sprite
   unsigned long currentMillis = millis();
   if (currentMillis - lastFrameChangeChar >= frameDelay) {
     lastFrameChangeChar = currentMillis;
@@ -42,7 +44,7 @@ void drawCharacter() {
     }
 }
 
-  // Zeichne das aktuelle Sprite basierend auf der Richtung und dem Zustand (springend oder laufend)
+  //Draw the current sprite based on direction and state (jumping or running)
   if (isJumping) {
     if (facingRight) {
       arcada.getCanvas()->drawRGBBitmap(characterX, characterY, jumpRightSprite[currentJump], jumpRightMask[currentJump], characterWidht, characterHeigh);
@@ -71,15 +73,18 @@ void drawCharacter() {
   }
 }
 
-// Sprites für die Attackanim
+// ------------------ Character attack animation
+// Sprites
 const unsigned short *attackRightSprites[] = {charsword1,charsword2,charsword3};
 const unsigned short *attackLeftSprites[] = {charsword1_left,charsword2_left,charsword3_left};
 const unsigned char *attackRightMasks[] = {charsword1_mask,charsword2_mask,charsword3_mask};
 const unsigned char *attackLeftMasks[] = {charsword1_left_mask,charsword2_left_mask,charsword3_left_mask};
 int currentSpriteA = 0; // Aktuelles Sprite
 
-// Zeitsteuerung für die Animation
+// Timing
 unsigned long lastFrameChangeA = 0;
+
+// Draws the attack animation using the sprites
 void drawAttackAnim(){
   unsigned long currentMillisA = millis();
   if (currentMillisA - lastFrameChangeA >= 175) {
@@ -154,8 +159,9 @@ void show_lives() {
   if (lives == 0) showGameOverScreen();
 }
 
-//--------------------------- VOGEL -------------------------------------------------------------
-// Sprites für die Flieganimation
+//--------------------------- COMPANION -------------------------------------------------------------
+// ------------------ Companion movement animation
+// Sprites
 const unsigned short *flyRightSprites[] = {companionRightUp, companionRightDown};
 const unsigned short *flyLeftSprites[] = {companionLeftUp, companionLeftDown};
 const unsigned char *flyRightMasks[] = {companionRightUp_mask, companionRightDown_mask};
@@ -163,17 +169,17 @@ const unsigned char *flyLeftMasks[] = {companionLeftUp_mask, companionLeftDown_m
 
 int currentSpriteComp = 0; // Aktuelles Sprite
 
-// Zeitsteuerung für die Animation
+// Timing
 unsigned long lastFrameChangeComp = 0;
 
 void drawCompanion() {
-  // Überprüfe, ob genug Zeit vergangen ist, um das Sprite zu wechseln
+  // Check if enough time has passed to change the sprite
   unsigned long currentMillisComp = millis();
   if (currentMillisComp - lastFrameChangeComp >= 300) {
     lastFrameChangeComp = currentMillisComp;
     currentSpriteComp = (currentSpriteComp + 1) % 2; // Wechsel zwischen den Lauf-Sprites
   }
-  // Zeichne das aktuelle Sprite basierend auf der Richtung und dem Zustand (springend oder laufend)
+  // Draw the current sprite based on direction
 
   if (flyRight){
     arcada.getCanvas()->drawRGBBitmap(companionX, companionY, flyRightSprites[currentSpriteComp], flyRightMasks[currentSpriteComp], companionWidht, companionHeigh);
@@ -183,12 +189,14 @@ void drawCompanion() {
   //arcada.getCanvas()->fillRect(companionX, companionY,companionWidht, companionHeigh,ARCADA_WHITE);
 }
 
+// Controlls the possible laser collisions
 void laserCollision(){
+  // Comproves if laser has impacted item while item is flying
   if (item->itemX-characterPos >= 0 && item->itemX-characterPos <= 155 && laser_active && !itemCollision &&  (abs(laserX+3 - (item->itemX-characterPos)) <= 2 || abs(laserX - (item->itemX-characterPos)-item->itemW) <= 2) && abs(laserY - item->itemY) <= 16){
     itemCollision = true;
   }
   
-
+  // Comproves if laser has impacted Boss
   if (laser_active && !bossDamageLaser && laserY+2 >= bossY+20 && laserX >= bossX-characterPos && laserX+3 <= bossX+32-characterPos){
     bossHP -= 20;
     //if boss killed, game win screen
@@ -206,7 +214,7 @@ void laserCollision(){
   }
 }
 
-// Move character
+// Move companion
 void moveCompanion(int nx, int ny) {
   // Update character position
   companionX += nx;
@@ -229,7 +237,7 @@ void moveCompanion(int nx, int ny) {
     companionY = downLimit;
   }
 
-  //set laser
+  // Set laser
   if (!laser_active){
     laserX = companionX + (flyRight ? companionWidht+3 : -3);
     laserY = companionY+20;
@@ -239,6 +247,7 @@ void moveCompanion(int nx, int ny) {
   laserCollision();
 }
 
+// Show in wich direction the laser points
 void drawLaserDirection(){
   if (!laser_active){
     if (laser_pre_direction == JS_RIGHT){

@@ -3,28 +3,33 @@
 #include "globals.h"
 #include "boos_img.h"
 
-// Sprites für die Attack 1 anim
+// -------------Boss 1 Attack animation--------------------
+// Sprites
 const unsigned short *attack1RightSprites[] = {boss1_midanim_right, boss1_endanim_right};
 const unsigned short *attack1LeftSprites[] = {boss1_midanim_left, boss1_endanim_left};
 const unsigned char *attack1RightMasks[] = {boss1_midanim_right_mask, boss1_endanim_right_mask};
 const unsigned char *attack1LeftMasks[] = {boss1_midanim_left_mask, boss1_endanim_left_mask};
 
-// Zeitsteuerung für die Animation
+// Timing
 unsigned long lastFrameChangeAt1 = 0;
 int currentSpriteAt1 = 0;
 
-// Sprites für die Attack 1 anim
+// -------------Boss 2 Attack animation--------------------
+// Sprites
 const unsigned short *attack2RightSprites[] = {fourArms_animation_right, fourArms_canon_right,fourArms_right};
 const unsigned short *attack2LeftSprites[] = {fourArms_animation_left, fourArms_canon_left,fourArms_left};
 const unsigned char *attack2RightMasks[] = {fourArms_animation_right_mask, fourArms_canon_right_mask,fourArms_right_mask};
 const unsigned char *attack2LeftMasks[] = {fourArms_animation_left_mask, fourArms_canon_left_mask,fourArms_left_mask};
 
-// Zeitsteuerung für die Animation
+// Timing
 unsigned long lastFrameChangeAt2 = 0;
 int currentSpriteAt2 = 0;
+
+// Variables for the canon fire animation
 int fireCanonSpeed = 1;
 bool fireCanonRight = bossRight;
 
+// Draw the fire canon
 void drawFireCanon(){
   if (fireCanon){
     if (bossHP < 66){
@@ -52,11 +57,14 @@ void drawFireCanon(){
 
   }
 }
+
+// Draw the boss, depending on wich level we are
 void drawBoss(){
-  //arcada.getCanvas()->fillRect(bossX-characterPos,bossY,bossW,bossH,ARCADA_BLACK);
+
   if (level1){
     if (boss1Attack){
       unsigned long currentMillisAt1 = millis();
+      // Check if enough time has passed to change the sprite
       if (currentMillisAt1 - lastFrameChangeAt1 >= 300) {
         lastFrameChangeAt1 = currentMillisAt1;
         currentSpriteAt1 = (currentSpriteAt1 + 1) % 2; // Wechsel zwischen den Lauf-Sprites
@@ -127,6 +135,7 @@ void drawBoss(){
   
 }
 
+// Draws the boss HP bar when fight begins
 void showBossHP(){
   //draw bar
   if (bossActive){
@@ -140,6 +149,7 @@ void showBossHP(){
   }  
 }
 
+// Damage control for Boss 1 when he attacks
 void boss1At(){
   currentBossX = bossX-characterPos;
   if (boss1Attack){
@@ -157,6 +167,7 @@ void boss1At(){
   }
 }
 
+// Damage control for Boss 1 when he attacks
 void boss2At(){
   if (boss2Attack){
     if (bossRight){
@@ -173,6 +184,7 @@ void boss2At(){
   }
 }
 
+// Control all the movement of the bosses, it configurates also the timing of attack
 void moveBoss(){
   currentBossX = bossX-characterPos;
   currentItemX = item->itemX-characterPos;
@@ -192,7 +204,7 @@ void moveBoss(){
     bossRight = true;
     }
 
-    //kollision für level1
+    // Comprobe if Boss was attacked
     if (level1){
       if (bomb_expl && !bossDamage && (abs(currentBossX - currentItemX) <= 15)){
       bossHP -= 30;

@@ -133,10 +133,9 @@ typedef struct{
   int count;
 } Item;
 
-//! Realizes a pointer to the Heap intHeap__.
+//! Realizes a pointer to the Item item__
 #define item (&item__)
 
-//! The Heap structure for the internal Heap.
 extern Item item__;
 
 // ----------- FUNCTIONS

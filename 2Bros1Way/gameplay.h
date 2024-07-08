@@ -47,14 +47,15 @@ void updateDisplay(){
   // Bomb explosion
   bomb_explode();
   showBossHP();
-  //laser
+  // Laser
   arcada.getCanvas()->fillCircle(laserX,laserY,3,ARCADA_BLUE);
   drawLaserDirection();
   arcada.blitFrameBuffer(0, 0, true);
 }
 
-int startCounter = 100;
+
 // Show cover
+int startCounter = 100; // Variable to make "Start" appear and disappear at the Cover screen
 void showCover() {
   level1 = false;
   level2 = true;
@@ -108,7 +109,7 @@ void showWinScreen() {
   }
 }
 
-// Function to show "You Win" screen
+// Function to show the story between wininng level 1 and entering level 2
 void startLevel2Screen() {
   arcada.getCanvas()->drawRGBBitmap(0, 0 , level_win1, 160,128);
   arcada.getCanvas()->setTextColor(ARCADA_BLACK);
@@ -237,6 +238,7 @@ void moveInGame(){
   }
 }
 
+// Controles the movement of the bomb after she is thrown
 void bombMovement(){
   int buttonState = arcada.readButtons();
   // Throw item
@@ -297,6 +299,8 @@ void bombMovement(){
     }
   }
 }
+
+// Movement of the companion
 void moveCompanionInGame(){
   // save last direction of laser
   if (js_getDirection() == JS_RIGHT){
@@ -316,7 +320,7 @@ void moveCompanionInGame(){
     laserDirectionY = laserY+6;
     laser_pre_direction = JS_DOWN;
   }
-  // schiessen
+  // Shoot laser when Joystick Button is pressed
   if ((js_getButton()) || laser_active){
     if (!laser_active){
       laser_direction = laser_pre_direction;
@@ -370,6 +374,8 @@ void moveCompanionInGame(){
     moveCompanion(0,speedComp);
   }
 }
+
+// Function that controlls what should happend, when the game is on
 void game(){
   // Show lives
   show_lives();
@@ -392,12 +398,14 @@ void game(){
     initItem();
   }
 
-  // flying object
+  // Flying object
   flyingItem();
 
+  // Level 1, then we need the bomb movement
   if (level1){
     bombMovement();
   }
+
   // Pick item
   pickItem();
 
