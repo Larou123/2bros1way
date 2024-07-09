@@ -57,8 +57,8 @@ void updateDisplay(){
 // Show cover
 int startCounter = 100; // Variable to make "Start" appear and disappear at the Cover screen
 void showCover() {
-  level1 = false;
-  level2 = true;
+  level1 = true;
+  level2 = false;
   while (true) {
     if (arcada.readButtons() & ARCADA_BUTTONMASK_START) {
         inCover = false;
