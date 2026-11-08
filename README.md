@@ -10,8 +10,8 @@ Uni-Projekt im Lab *Multimodal Media Madness* (M3), Lehr- und Forschungsgebiet I
 
 [![C++](https://img.shields.io/badge/C%2B%2B-00599C?style=flat-square&logo=cplusplus&logoColor=white)](#stack)
 [![Arduino](https://img.shields.io/badge/Arduino-00878F?style=flat-square&logo=arduino&logoColor=white)](#selbst-starten)
-[![Adafruit PyBadge](https://img.shields.io/badge/Hardware-Adafruit_PyBadge-FF2D55?style=flat-square)](https://www.adafruit.com/product/4200)
-[![Projektseite](https://img.shields.io/badge/Projektseite-hci.rwth--aachen.de-00549F?style=flat-square)](https://hci.rwth-aachen.de/m3-2bros1way)
+[![Adafruit PyBadge](https://img.shields.io/badge/Adafruit_PyBadge-FF2D55?style=flat-square)](https://www.adafruit.com/product/4200)
+[![Projektseite](https://img.shields.io/badge/Projektseite-00549F?style=flat-square)](https://hci.rwth-aachen.de/m3-2bros1way)
 
 </div>
 
