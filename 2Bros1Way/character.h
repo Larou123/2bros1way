@@ -192,12 +192,12 @@ void drawCompanion() {
 // Controlls the possible laser collisions
 void laserCollision(){
   // Comproves if laser has impacted item while item is flying
-  if (item->itemX-characterPos >= 0 && item->itemX-characterPos <= 155 && laser_active && !itemCollision &&  (abs(laserX+3 - (item->itemX-characterPos)) <= 2 || abs(laserX - (item->itemX-characterPos)-item->itemW) <= 2) && abs(laserY - item->itemY) <= 16){
+  if (item->itemX-characterPos >= 0 && item->itemX-characterPos <= 155 && laser_active && !itemCollision &&  (abs(laserX+3 - (item->itemX-characterPos)) <= 3 || abs(laserX - (item->itemX-characterPos)-item->itemW) <= 3) && laserY+3 >= item->itemY && laserY <= item->itemY+25){
     itemCollision = true;
   }
   
   // Comproves if laser has impacted Boss
-  if (laser_active && !bossDamageLaser && laserY+2 >= bossY+20 && laserX >= bossX-characterPos && laserX+3 <= bossX+32-characterPos){
+  if (laser_active && !bossDamageLaser && laserY+2 >= bossY+20 && laserX >= bossX-characterPos && laserX+3 <= bossX+37-characterPos){
     bossHP -= 20;
     //if boss killed, game win screen
     if (bossHP <= 0){

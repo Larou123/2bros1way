@@ -27,8 +27,16 @@ void menu(){
     bossHP = 100;
     bossX = 530;
     item->active = false;
+    item->picked = false;
     inMenu = false;
     inGame = true;
+    currentAnim = 0;
+    currentJump = 0;
+    companionX = 20;
+    companionY = 12;
+    laser_active = false;
+    fireCanonRight = true;
+    fireCanonX = 160;
   } else if (menu_opt == 2){
     // Reset game state and restart
     characterPos = 0;  // Reset character position

@@ -1,93 +1,172 @@
-# M3-Gruppe7
+<div align="center">
 
+<img src="docs/media/cover.png" width="320" alt="2Bros1Way Titelbild">
 
+# 2Bros1Way
 
-## Getting started
+**Ein Jump-'n'-Run, das nicht im Browser läuft, sondern auf einem Mikrocontroller — mit Framebuffer, Joystick und einer Lebensanzeige aus fünf LEDs.**
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+Uni-Projekt im Lab *Multimodal Media Madness* (M3), Lehr- und Forschungsgebiet Informatik 10 — Media Computing and Human-Computer Interaction, RWTH Aachen · Sommersemester 2024 · Gruppe 7
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+[![C++](https://img.shields.io/badge/C%2B%2B-00599C?style=flat-square&logo=cplusplus&logoColor=white)](#stack)
+[![Arduino](https://img.shields.io/badge/Arduino-00878F?style=flat-square&logo=arduino&logoColor=white)](#selbst-starten)
+[![Adafruit Arcada](https://img.shields.io/badge/Adafruit-Arcada-FF2D55?style=flat-square)](https://github.com/adafruit/Adafruit_Arcada)
+[![Projektseite](https://img.shields.io/badge/Projektseite-hci.rwth--aachen.de-00549F?style=flat-square)](https://hci.rwth-aachen.de/m3-2bros1way)
 
-## Add your files
+</div>
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+<br>
 
+<!-- DEMO: Kommentarzeichen entfernen, sobald docs/media/2bros1way-demo.gif und
+     -demo.mp4 existieren. Erzeugt werden sie mit:
+     ~/Projekte/github-showcase/tools/make-demo.sh <aufnahme> --name 2bros1way
+<div align="center">
+  <a href="docs/media/2bros1way-demo.mp4">
+    <img src="docs/media/2bros1way-demo.gif" width="720" alt="Gameplay: Kilum rennt und springt durch Level 1, der Vogel Yalik schießt auf Gegner, die NeoPixel-Leiste zeigt die verbleibenden Leben">
+  </a>
+  <p><sub>Klick auf die Vorschau für das vollständige Demo-Video</sub></p>
+</div>
+-->
+
+---
+
+## Die Idee
+
+Kilum und Arin sind unzertrennlich, bis der finstere Dämonenkönig sie verflucht:
+Kilum verliert seine Kräfte, Arin wird in den Vogel Yalik verwandelt. Die beiden
+ziehen los, um den Dämonenkönig zu finden und den Fluch zu brechen.
+
+Daraus wird ein Jump-'n'-Run, in dem die zwei Figuren unterschiedliche Rollen
+haben: Kilum läuft, springt und schlägt mit dem Schwert, Yalik fliegt und
+schießt. Das Interessante daran ist nicht die Story, sondern wo das Spiel läuft.
+Kein Browser, keine Engine, kein Betriebssystem — ein Mikrocontroller mit einem
+kleinen TFT-Display, ein paar Kilobyte RAM und einem analogen Joystick an zwei
+Pins. Jedes Sprite, jede Kollision und jeder Frame ist handgeschrieben.
+
+---
+
+## Was man damit machen kann
+
+- 🎮 **Spielen** — zwei Level, jedes mit Endboss, dazu Cover, Menü, Win- und
+  Game-Over-Screen.
+- 🐦 **Den Vogel einsetzen** — Yalik schießt geradeaus und nach unten und nimmt
+  selbst Schaden durch Feuer und Wasser.
+- ⚔️ **Angreifen** — Schwertangriff mit eigener Animation und eigener
+  Trefferprüfung.
+- 💡 **Leben ablesen, ohne auf das Display zu schauen** — die fünf NeoPixel auf
+  der Platine sind die Lebensanzeige.
+- 🎵 **Musik hören** — ein WAV-Track wird gepuffert von der Karte gestreamt und
+  am Ende automatisch neu gestartet.
+
+---
+
+## Wie es gebaut ist
+
+Das Spiel läuft auf einem Board mit der
+[Adafruit-Arcada-Bibliothek](https://github.com/adafruit/Adafruit_Arcada), die
+Display, Dateisystem und WAV-Wiedergabe zusammenfasst. Gezeichnet wird nicht
+direkt auf das Display, sondern in einen Framebuffer in der Größe des Panels —
+sonst flackert jedes Bild sichtbar, während es aufgebaut wird.
+
+Die Hauptschleife in [`2Bros1Way.ino`](2Bros1Way/2Bros1Way.ino) macht nur zwei
+Dinge: sie hält den Musikpuffer gefüllt und schaltet zwischen drei Zuständen um
+— Cover, Menü, Spiel. Alles andere liegt in Modulen, ein Header pro
+Verantwortlichkeit:
+
+| Modul | Aufgabe |
+| :-- | :-- |
+| `character.h` | Bewegung, Sprung, Schaden, Angriff der Spielfigur |
+| `gameplay.h` | Spielschleife, Zustandsübergänge, Treffer- und Siegprüfung |
+| `map.h` · `map_img.h` | Level-Aufbau und Hintergrund-Sprites |
+| `enemy.h` · `boss.h` · `boos_img.h` | Gegner, Endbosse und ihre Grafiken |
+| `item.h` · `obstacle.h` | Items, Hindernisse, Feuer und Wasser |
+| `joystick.h` | analoger Joystick an `A0`/`A1`, Taster an Pin 5 |
+| `music.h` | WAV-Streaming über Arcada |
+| `globals.h` · `globals.cpp` | gemeinsamer Spielzustand |
+
+Von den etwa 15.000 Codezeilen ist der größte Teil keine Logik, sondern
+Bilddaten: die Sprites liegen als Arrays in den `*_img.h`-Dateien im
+Programmspeicher, weil sie in den RAM nicht passen. Jedes davon wurde in
+[Piskel](https://www.piskelapp.com/) selbst gezeichnet, zusammen mit einer
+Maske pro Sprite für die transparenten Bereiche — die `.piskel`-Quelldateien
+liegen in [`img/`](img/).
+
+---
+
+## Stack
+
+| Bereich | Technologie |
+| :-- | :-- |
+| Sprache | C++ (Arduino) |
+| Framework | Adafruit Arcada, Adafruit GFX, Adafruit NeoPixel |
+| Grafik | Framebuffer in Panelgröße, Sprites als `PROGMEM`-Arrays |
+| Eingabe | analoger Joystick (zwei Achsen, ein Taster) |
+| Ausgabe | TFT-Display, 5 NeoPixel, WAV-Audio |
+| Assets | Pixel-Art selbst gezeichnet in Piskel |
+
+---
+
+## Selbst starten
+
+<!-- TODO: Boardnamen eintragen, mit dem das Projekt im Lab lief
+     (Arcada unterstützt u. a. PyBadge, PyGamer, PyPortal, CLUE und HalloWing).
+     Danach diesen Kommentar löschen. -->
+
+```bash
+git clone https://github.com/Larou123/2bros1way.git
+cd 2bros1way
 ```
-cd existing_repo
-git remote add origin https://git.rwth-aachen.de/volkan/m3-gruppe7.git
-git branch -M main
-git push -uf origin main
-```
 
-## Integrate with your tools
+1. Arduino IDE öffnen und den Board-Support für das verwendete Arcada-Board
+   installieren.
+2. Über den Bibliotheksverwalter installieren: **Adafruit Arcada**,
+   **Adafruit GFX**, **Adafruit NeoPixel**.
+3. Die WAV-Datei aus [`music/`](music/) auf die Karte bzw. in den Flash-Speicher
+   des Boards legen.
+4. Den Joystick anschließen: X auf `A0`, Y auf `A1`, Taster auf Pin 5
+   (mit `INPUT_PULLUP`, also gegen Masse schaltend).
+5. [`2Bros1Way/2Bros1Way.ino`](2Bros1Way/2Bros1Way.ino) öffnen und hochladen.
 
-- [ ] [Set up project integrations](https://git.rwth-aachen.de/volkan/m3-gruppe7/-/settings/integrations)
+Ohne angeschlossenen Joystick startet das Spiel, reagiert aber nicht auf
+Eingaben — die Achsen liefern dann keinen auswertbaren Neutralwert.
 
-## Collaborate with your team
+---
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+## Was im Repo liegt
 
-## Test and Deploy
+| Ordner | Inhalt |
+| :-- | :-- |
+| [`2Bros1Way/`](2Bros1Way/) | der Sketch und alle Module |
+| [`img/`](img/) | Sprites als PNG plus die `.piskel`-Quelldateien |
+| [`music/`](music/) | der WAV-Track |
+| [`docs/media/`](docs/media/) | Demo-Video, GIF-Vorschau, Titelbild |
+| `Protokoll.rtf` | Arbeitsprotokoll der Gruppe aus dem Semester |
 
-Use the built-in continuous integration in GitLab.
+---
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+## Gut zu wissen
 
-***
+- **Geplant waren fünf Level, ausgeliefert sind zwei** — jeweils mit Endboss.
+  Der Umfang wurde im Semester bewusst gekürzt, um das Spiel fertig zu
+  bekommen, statt fünf halbe Level zu haben.
+- **Der Code ist Lab-Code.** Globaler Spielzustand in `globals.h`,
+  Spiellogik in Headern statt in `.cpp`-Dateien, Dateinamen mit Tippfehlern
+  (`boos_img.h`). Das ist so entstanden und ist absichtlich nicht
+  nachträglich geglättet.
+- **Die Bilddaten dominieren die Zeilenzahl.** Wer sich den Code ansieht,
+  sollte bei `gameplay.h` und `character.h` anfangen, nicht bei den
+  `*_img.h`-Dateien.
+- **Die Musik startete lange nicht.** Siehe Commit-Verlauf — zwei Anläufe
+  „musik implementiert, spielt aber nicht ab“, bevor das Puffern in der
+  Hauptschleife saß.
 
-# Editing this README
+---
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+## Gruppe
 
-## Suggestions for a good README
+Entstanden in Gruppe 7 des M3-Labs an der RWTH Aachen im Sommersemester 2024.
+Die offizielle Projektseite des Lehrgebiets:
+[hci.rwth-aachen.de/m3-2bros1way](https://hci.rwth-aachen.de/m3-2bros1way).
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+Der Code lag ursprünglich im GitLab der RWTH und wurde für dieses Repo
+übernommen.

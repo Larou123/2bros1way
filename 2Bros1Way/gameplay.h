@@ -30,6 +30,8 @@ void reset_stats(){
   laser_active = false;
   fireCanonRight = true;
   fireCanonX = 160;
+  companionX = 20;
+  companionY = 12;
 }
 
 // Help function to update display
