@@ -10,23 +10,19 @@ Uni-Projekt im Lab *Multimodal Media Madness* (M3), Lehr- und Forschungsgebiet I
 
 [![C++](https://img.shields.io/badge/C%2B%2B-00599C?style=flat-square&logo=cplusplus&logoColor=white)](#stack)
 [![Arduino](https://img.shields.io/badge/Arduino-00878F?style=flat-square&logo=arduino&logoColor=white)](#selbst-starten)
-[![Adafruit Arcada](https://img.shields.io/badge/Adafruit-Arcada-FF2D55?style=flat-square)](https://github.com/adafruit/Adafruit_Arcada)
+[![Adafruit PyBadge](https://img.shields.io/badge/Hardware-Adafruit_PyBadge-FF2D55?style=flat-square)](https://www.adafruit.com/product/4200)
 [![Projektseite](https://img.shields.io/badge/Projektseite-hci.rwth--aachen.de-00549F?style=flat-square)](https://hci.rwth-aachen.de/m3-2bros1way)
 
 </div>
 
 <br>
 
-<!-- DEMO: Kommentarzeichen entfernen, sobald docs/media/2bros1way-demo.gif und
-     -demo.mp4 existieren. Erzeugt werden sie mit:
-     ~/Projekte/github-showcase/tools/make-demo.sh <aufnahme> --name 2bros1way
 <div align="center">
   <a href="docs/media/2bros1way-demo.mp4">
-    <img src="docs/media/2bros1way-demo.gif" width="720" alt="Gameplay: Kilum rennt und springt durch Level 1, der Vogel Yalik schießt auf Gegner, die NeoPixel-Leiste zeigt die verbleibenden Leben">
+    <img src="docs/media/2bros1way-demo.gif" width="720" alt="Das Spiel läuft auf einem Adafruit PyBadge: Kilum rennt durch das Lava-Level, weicht Feuer aus und schlägt mit dem Schwert, während unter dem Display die fünf NeoPixel die Leben anzeigen">
   </a>
   <p><sub>Klick auf die Vorschau für das vollständige Demo-Video</sub></p>
 </div>
--->
 
 ---
 
@@ -62,11 +58,16 @@ Pins. Jedes Sprite, jede Kollision und jeder Frame ist handgeschrieben.
 
 ## Wie es gebaut ist
 
-Das Spiel läuft auf einem Board mit der
+Das Spiel läuft auf einem **Adafruit PyBadge** über die
 [Adafruit-Arcada-Bibliothek](https://github.com/adafruit/Adafruit_Arcada), die
 Display, Dateisystem und WAV-Wiedergabe zusammenfasst. Gezeichnet wird nicht
 direkt auf das Display, sondern in einen Framebuffer in der Größe des Panels —
 sonst flackert jedes Bild sichtbar, während es aufgebaut wird.
+
+Die Eingabe läuft über zwei Wege: Menü, Bestätigen und Schwertangriff über die
+eingebauten Taster des PyBadge (A, B, START) via `arcada.readButtons()`,
+die Bewegung über einen **externen Analog-Joystick** an `A0`/`A1` mit Taster
+an Pin 5.
 
 Die Hauptschleife in [`2Bros1Way.ino`](2Bros1Way/2Bros1Way.ino) macht nur zwei
 Dinge: sie hält den Musikpuffer gefüllt und schaltet zwischen drei Zuständen um
@@ -100,25 +101,22 @@ liegen in [`img/`](img/).
 | Sprache | C++ (Arduino) |
 | Framework | Adafruit Arcada, Adafruit GFX, Adafruit NeoPixel |
 | Grafik | Framebuffer in Panelgröße, Sprites als `PROGMEM`-Arrays |
-| Eingabe | analoger Joystick (zwei Achsen, ein Taster) |
-| Ausgabe | TFT-Display, 5 NeoPixel, WAV-Audio |
+| Hardware | Adafruit PyBadge |
+| Eingabe | PyBadge-Taster (A, B, START) und externer Analog-Joystick |
+| Ausgabe | TFT-Display, 5 NeoPixel als Lebensanzeige, WAV-Audio |
 | Assets | Pixel-Art selbst gezeichnet in Piskel |
 
 ---
 
 ## Selbst starten
 
-<!-- TODO: Boardnamen eintragen, mit dem das Projekt im Lab lief
-     (Arcada unterstützt u. a. PyBadge, PyGamer, PyPortal, CLUE und HalloWing).
-     Danach diesen Kommentar löschen. -->
-
 ```bash
 git clone https://github.com/Larou123/2bros1way.git
 cd 2bros1way
 ```
 
-1. Arduino IDE öffnen und den Board-Support für das verwendete Arcada-Board
-   installieren.
+1. Arduino IDE öffnen und den Board-Support für den **Adafruit PyBadge**
+   installieren (Adafruit SAMD Boards).
 2. Über den Bibliotheksverwalter installieren: **Adafruit Arcada**,
    **Adafruit GFX**, **Adafruit NeoPixel**.
 3. Die WAV-Datei aus [`music/`](music/) auf die Karte bzw. in den Flash-Speicher
